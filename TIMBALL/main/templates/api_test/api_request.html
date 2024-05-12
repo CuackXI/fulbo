@@ -1,0 +1,17 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<h2> Search for an specific product </h2>
+
+<form method="POST" action="{% url 'Api request' %}">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>
+        Save
+    </button>
+</form>
+
+{% endblock %}
