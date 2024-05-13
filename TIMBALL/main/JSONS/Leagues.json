@@ -1,0 +1,17 @@
+{
+    "Leagues": [
+        {
+            "league": {
+                "id": 128,
+                "name": "Liga Profesional Argentina",
+                "type": "League",
+                "logo": "https://media.api-sports.io/football/leagues/128.png"
+            },
+            "country": {
+                "name": "Argentina",
+                "code": "AR",
+                "flag": "https://media.api-sports.io/flags/ar.svg"
+            }
+        }
+    ]
+}
