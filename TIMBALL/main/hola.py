@@ -13,6 +13,3 @@ for i in range(len(data['Teams'])):
     print(data['Teams'][i]['team']['country'])
     print(data['Teams'][i]['team']['logo'])
 
-    Team.objects.create(api_id=data['Teams'][i]['team']['id'], Name=data['Teams'][i]['team']['name'],
-                        Code=data['Teams'][i]['team']['code'], Country=data['Teams'][i]['team']['country'],
-                        Image_URL=data['Teams'][i]['team']['logo'])
