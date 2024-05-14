@@ -25,8 +25,7 @@ class Team(models.Model):
     api_ID = models.IntegerField()
     Name = models.CharField(max_length=200)
     Code = models.CharField(max_length=200)
-    League = models.IntegerField()
-    Country = models.ForeignKey(Country, null=True, on_delete=models.CASCADE)
+    Country = models.CharField(max_length=200)
     Image_URL = models.CharField(max_length=200)
 
 class Stadium(models.Model):
