@@ -130,6 +130,7 @@ class Apuesta(models.model):
     Nombre = models.CharField(max_length=200)
     Tipo = models.CharField(max_length=200)
     Multiplicador = models.IntegerField()
+    Porcentaje = models.IntegerField()
 
     def MultiplicadorAPorcentaje(Tipos, Multiplicadores):
         sumaMul = 0
@@ -143,9 +144,3 @@ class Apuesta(models.model):
             sumVal_P += Valor
         for Valor in Valores_porcentaje:
             Porcentajes.append(round((Valor*100)/sumVal_P, 2))
-
-class Porcentajes_apuesta(models.model):
-    IdApiApuesta = models.IntegerField()
-    Nombre = models.CharField(max_length=200)
-    Tipo = models.CharField(max_length=200)
-    Porcentaje = models.IntegerField()
