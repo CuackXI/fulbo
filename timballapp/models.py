@@ -99,3 +99,55 @@ class Fixture_stats(models.model):
     GolesEC = models.IntegerField()
     TirosArco = models.IntegerField()
     TirosDesviados = models.IntegerField()
+
+class Jugador(models.model):
+    IdApiJugador = models.IntegerField()
+    Nombre = models.CharField(max_length=200)
+    Edad = models.IntegerField()
+    Nacionalidad = models.CharField(max_length=200)
+    Altura = models.CharField(max_length=200)
+    Peso = models.CharField(max_length=200)
+    Image_URL = models.CharField(max_length=200)
+    IdApiEquipo = models.IntegerField()
+    Posicion = models.CharField(max_length=200)
+
+class Tecnico(models.model):
+    IdApiTecnico = models.IntegerField()
+    Nombre = models.CharField(max_length=200)
+    Edad = models.IntegerField()
+    Nacionalidad = models.CharField(max_length=200)
+    Altura = models.CharField(max_length=200)
+    Peso = models.CharField(max_length=200)
+    Image_URL = models.CharField(max_length=200)
+    IdApiEquipo = models.IntegerField()
+
+class Bookmarker(models.model):
+    IdApiBookmarker = models.IntegerField()
+    Nombre = models.CharField(max_length=200)
+
+class Apuesta(models.model):
+    IdApiApuesta = models.IntegerField()
+    Nombre = models.CharField(max_length=200)
+    Tipo = models.CharField(max_length=200)
+    Multiplicador = models.IntegerField()
+
+    def MultiplicadorAPorcentaje(Tipos, Multiplicadores):
+        Tipos = []
+        Multiplicadores = []
+        sumaMul = 0
+        Valores_porcentaje = []
+        Porcentajes = []
+        for Multiplicador in Multiplicadores:
+            sumaMul += Multiplicador
+        for Multiplicador in Multiplicadores:
+            Valores_porcentaje.append((Multiplicador / sumaMul) ** (-1))
+        for Valor in Valores_porcentaje:
+            sumVal_P += Valor
+        for Valor in Valores_porcentaje:
+            Porcentajes.append(round((Valor*100)/sumVal_P, 2))
+
+class Porcentajes_apuesta(models.model):
+    IdApiApuesta = models.IntegerField()
+    Nombre = models.CharField(max_length=200)
+    Tipo = models.CharField(max_length=200)
+    Porcentaje = models.IntegerField()
