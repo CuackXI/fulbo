@@ -3,36 +3,31 @@ from django.db import models
 # Create your models here.
 # Todo lo que no les guste diganlo o modifiquenlo si quieren, para que se guarde tienen que poner
 # python manage.py makemigrations y despues python manage.py migrate para que se guarde en la base de datos
-class Country(models.Model):
-    Name = models.CharField(max_length=200)
-    Code = models.CharField(max_length=200)
+class Pais(models.Model):
+    IdApiPais = models.IntegerField()
+    Nombre = models.CharField(max_length=200)
     Image_URL = models.CharField(max_length=200)
 
-class League(models.Model):
-    api_ID = models.IntegerField()
-    Country = models.ForeignKey(Country, null=True, on_delete=models.CASCADE)
-    Name = models.CharField(max_length=200)
-    Type = models.CharField(max_length=200)
+class Competiciones(models.Model):
+    IdApiComp = models.IntegerField()
+    IdApiPais = models.IntegerField()
+    Nombre = models.CharField(max_length=200)
     Image_URL = models.CharField(max_length=200)
 
-class Season(models.Model):
-    League = models.IntegerField()
-    Year = models.IntegerField()
-    Start = models.DateField()
-    End = models.DateField()
-
-class Team(models.Model):
-    api_ID = models.IntegerField()
-    Name = models.CharField(max_length=200)
-    Code = models.CharField(max_length=200)
-    Country = models.CharField(max_length=200)
+class Equipo(models.Model):
+    IdApiEquipo = models.IntegerField()
+    Nombre = models.CharField(max_length=200)
+    IdApiEstadio = models.IntegerField()
+    IdApiPais = models.IntegerField()
     Image_URL = models.CharField(max_length=200)
+    Fundacion = models.IntegerField()
 
-class Stadium(models.Model):
-    Country = models.ForeignKey(Country, null=True, on_delete=models.CASCADE)
-    Team = models.IntegerField()
-    Name = models.CharField(max_length=200)
-    City = models.CharField(max_length=200)
+class Estadio(models.Model):
+    IdApiEstadio = models.IntegerField()
+    Nombre = models.CharField(max_length=200)
+    Ciudad = models.CharField(max_length=200)
+    Direccion = models.CharField(max_length=200)
+    Capacidad = models.IntegerField()
     Image_URL = models.CharField(max_length=200)
 
 class Team_Stats_Season(models.Model):
