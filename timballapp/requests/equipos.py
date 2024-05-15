@@ -14,11 +14,16 @@ response = requests.get(url, headers=headers, params=querystring)
 
 response = response.json()
 
+ids = []
+
 for i in range(len(response['response'])):
     print(response['response'][i]['team']['id'])
+    ids.append(response['response'][i]['team']['id'])
     print(response['response'][i]['team']['name'])
     print(response['response'][i]['team']['country'])
     print(response['response'][i]['venue']['id']) 
     print(response['response'][i]['team']['logo'])
     print(response['response'][i]['team']['founded'])
     print("")
+
+print(ids)
