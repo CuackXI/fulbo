@@ -17,12 +17,12 @@ for i in range(len(response['response'])):
     print(response['response'][i]['fixture']['id'])
     print(response['response'][i]['bookmakers'][0]['id'])
 
-    # for y in response['response'][i]['bookmakers'][0]['bets']:
-    #     print(y['id'])
-    #     print(y['name'])
+    for y in response['response'][i]['bookmakers'][0]['bets']:
+        print(y['id'])
+        print(y['name'])
 
-    #     for x in y['values']:
-    #         print(x['value'])
-    #         print(x['odd'])
+        for x in y['values']:
+             print(x['value'])
+             print(x['odd'])
     
     print("")
