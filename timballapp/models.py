@@ -132,8 +132,6 @@ class Apuesta(models.model):
     Multiplicador = models.IntegerField()
 
     def MultiplicadorAPorcentaje(Tipos, Multiplicadores):
-        Tipos = []
-        Multiplicadores = []
         sumaMul = 0
         Valores_porcentaje = []
         Porcentajes = []
