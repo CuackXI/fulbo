@@ -16,6 +16,7 @@ class Competiciones(models.Model):
 
 class Equipo(models.Model):
     IdApiEquipo = models.IntegerField()
+    IdApiComp = models.IntegerField()
     Nombre = models.CharField(max_length=200)
     IdApiEstadio = models.IntegerField()
     IdApiPais = models.IntegerField()
@@ -30,43 +31,71 @@ class Estadio(models.Model):
     Capacidad = models.IntegerField()
     Image_URL = models.CharField(max_length=200)
 
-class Team_Stats_Season(models.Model):
-    Team = models.IntegerField()
-    Season = models.ForeignKey(Season, null=True, on_delete=models.CASCADE)
-    Rank = models.IntegerField()
-    Points = models.IntegerField()
-    GoalDiff = models.IntegerField()
-    Form = models.CharField(max_length=200) #esto seria wins/draws/losses
-    Played = models.IntegerField()
-    Wins = models.IntegerField()
-    Draws = models.IntegerField()
-    Losses = models.IntegerField()
-    Goals_For_Home = models.IntegerField()
-    Goals_For_Home_Avg = models.IntegerField()
-    Goals_For_Away = models.IntegerField()
-    Goals_For_Away_Avg = models.IntegerField()
-    Clean_sheets = models.IntegerField() #totales
+class Estadisticas_Equipo(models.Model):
+    IdStats = models.IntegerField()
+    IdApiEquipo = models.IntegerField()
+    IdApiComp = models.IntegerField()
+    Partidos_jugados = models.IntegerField()
+    IdStats_Local = models.IntegerField()
+    IdStats_Visitante = models.IntegerField()                          
+    VictoriasTot = models.IntegerField()
+    EmpatesTot = models.IntegerField()
+    DerrotasTot = models.IntegerField()
+    GolesAFTot = models.IntegerField()
+    GolesECTot = models.IntegerField()
+    IdFormaciones = models.IntegerField()
+    IdMinutosgol = models.IntegerField()
+    Posicion = models.IntegerField()
 
-class Fixture(models.Model):
-    api_ID = models.IntegerField()
-    Referee = models.CharField(max_length=200)
-    Stadium = models.IntegerField()
-    League = models.IntegerField()
-    TeamH = models.IntegerField() #ID
-    TeamA = models.IntegerField() #ID (si pones 2 foreign keys de lo mismo en una misma tabla se re bugea)
+class Stats_Local(models.model):
+    IdStats_Local = models.IntegerField()
+    IdApiEquipo = models.IntegerField()
+    IdApiComp = models.IntegerField()
+    Victorias = models.IntegerField()
+    Derrotas = models.IntegerField()
+    Empates = models.IntegerField()
+    GolesAF = models.IntegerField()
+    GolesEC = models.IntegerField()
 
-class Player(models.Model):
-    api_ID = models.IntegerField()
-    Firstname = models.CharField(max_length=200)
-    Lastname = models.CharField(max_length=200)
-    Age = models.IntegerField
-    Nationality = models.CharField(max_length=200)
-    Height = models.CharField(max_length=200)
-    Weight = models.CharField(max_length=200)
-    Injured = models.BooleanField()
-    Image_URL = models.CharField(max_length=200)
-    Team = models.IntegerField()
+class Stats_Visitante(models.model):
+    IdStats_Local = models.IntegerField()
+    IdApiEquipo = models.IntegerField()
+    IdApiComp = models.IntegerField()
+    Victorias = models.IntegerField()
+    Derrotas = models.IntegerField()
+    Empates = models.IntegerField()
+    GolesAF = models.IntegerField()
+    GolesEC = models.IntegerField()
 
-class Bookmarker(models.Model):
-    api_ID = models.IntegerField()
-    Name = models.CharField(max_length=200)
+class Formaciones(models.model):
+    Formaciones = models.IntegerField()
+    IdApiEquipo = models.IntegerField()
+    IdApiComp = models.IntegerField()
+    Usados_Local = models.IntegerField()
+    Usados_Visitante = models.IntegerField()
+
+class Minutos_Gol(models.model):
+    MinutosGol = models.IntegerField()
+    IdApiEquipo = models.IntegerField()
+    IdApiComp = models.IntegerField()
+    GAF_Local = models.IntegerField()
+    GAF_Visitante = models.IntegerField()
+    GEC_Visitante = models.IntegerField()
+    GEC_Local = models.IntegerField()
+
+class Fixture(models.model):
+    IdApiFixture = models.IntegerField()
+    Arbitro = models.CharField(max_length=200)
+    Fecha = models.DateField()
+    Hora = models.TimeField()
+    IdApiEstadio = models.IntegerField()
+    IdEquipoLocal = models.IntegerField()
+    IdEquipoVisitante = models.IntegerField()
+
+class Fixture_stats(models.model):
+    IdApiFixture = models.IntegerField()
+    IdEquipo = models.IntegerField()
+    GolesAF = models.IntegerField()
+    GolesEC = models.IntegerField()
+    TirosArco = models.IntegerField()
+    TirosDesviados = models.IntegerField()
