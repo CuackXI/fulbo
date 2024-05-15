@@ -134,6 +134,8 @@ class Apuesta(models.model):
     Multiplicador = models.IntegerField()
     Porcentaje = models.IntegerField()
 
+
+    # Esta función convierte la relación de los multiplicadores de una misma apuesta para distintos tipos de la misma, en porcentajes para la visualización de las mismas.
     def MultiplicadorAPorcentaje(Tipos, Multiplicadores):
         sumaMul = 0
         Valores_porcentaje = []

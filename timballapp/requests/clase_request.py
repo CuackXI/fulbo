@@ -13,3 +13,6 @@ class Request():
 
     def crear_paises(self, url, querystring, headers, response):
         pass
+
+    def crear_Estadisticas_Equipo(self, url, querystring, headers, response):
+        pass
