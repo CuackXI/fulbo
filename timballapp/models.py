@@ -127,6 +127,8 @@ class Bookmarker(models.model):
 
 class Apuesta(models.model):
     IdApiApuesta = models.IntegerField()
+    IdApiFixture = models.IntegerField()
+    IdApiBookmarker = models.IntegerField()
     Nombre = models.CharField(max_length=200)
     Tipo = models.CharField(max_length=200)
     Multiplicador = models.IntegerField()
