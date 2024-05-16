@@ -1,28 +1,30 @@
 import requests
 
-url = "https://api-football-v1.p.rapidapi.com/v3/odds"
+pages = [1,2,3]
+for page in pages:
+    url = "https://api-football-v1.p.rapidapi.com/v3/odds"
 
-querystring = {"league":"128","season":"2024","bookmaker":"26"}
+    querystring = {"league":"128","season":"2024","bookmaker":"26", "page":page}
 
-headers = {
-	"X-RapidAPI-Key": "36d0515859mshc128509052fcf97p1484c4jsn6f58a0e1bbb7",
-	"X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"
-}
+    headers = {
+        "X-RapidAPI-Key": "36d0515859mshc128509052fcf97p1484c4jsn6f58a0e1bbb7",
+        "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"
+    }
 
-response = requests.get(url, headers=headers, params=querystring)
+    response = requests.get(url, headers=headers, params=querystring)
 
-response = response.json()
+    response = response.json()
 
-for i in range(len(response['response'])):
-    print(response['response'][i]['fixture']['id'])
-    print(response['response'][i]['bookmakers'][0]['id'])
+    for i in range(len(response['response'])):
+        print(response['response'][i]['fixture']['id'])
+        print(response['response'][i]['bookmakers'][0]['id'])
 
-    for y in response['response'][i]['bookmakers'][0]['bets']:
-        print(y['id'])
-        print(y['name'])
+        for y in response['response'][i]['bookmakers'][0]['bets']:
+            print(y['id'])
+            print(y['name'])
 
-        for x in y['values']:
-             print(x['value'])
-             print(x['odd'])
-    
-    print("")
+            for x in y['values']:
+                print(x['value'])
+                print(x['odd'])
+        
+        print("")

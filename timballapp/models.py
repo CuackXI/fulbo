@@ -13,6 +13,7 @@ class Competiciones(models.Model):
     IdApiPais = models.IntegerField()
     Nombre = models.CharField(max_length=200)
     Image_URL = models.CharField(max_length=200)
+    Temporada = models.IntegerField()
 
 class Equipo(models.Model):
     IdApiEquipo = models.IntegerField()
@@ -32,7 +33,6 @@ class Estadio(models.Model):
     Image_URL = models.CharField(max_length=200)
 
 class Estadisticas_Equipo(models.Model):
-    IdStats = models.IntegerField()
     IdApiEquipo = models.IntegerField()
     IdApiComp = models.IntegerField()
     Partidos_jugados = models.IntegerField()
@@ -48,7 +48,6 @@ class Estadisticas_Equipo(models.Model):
     Posicion = models.IntegerField()
 
 class Stats_Local(models.model):
-    IdStats_Local = models.IntegerField()
     IdApiEquipo = models.IntegerField()
     IdApiComp = models.IntegerField()
     Victorias = models.IntegerField()
@@ -58,7 +57,6 @@ class Stats_Local(models.model):
     GolesEC = models.IntegerField()
 
 class Stats_Visitante(models.model):
-    IdStats_Local = models.IntegerField()
     IdApiEquipo = models.IntegerField()
     IdApiComp = models.IntegerField()
     Victorias = models.IntegerField()
@@ -68,20 +66,10 @@ class Stats_Visitante(models.model):
     GolesEC = models.IntegerField()
 
 class Formaciones(models.model):
-    Formaciones = models.IntegerField()
     IdApiEquipo = models.IntegerField()
     IdApiComp = models.IntegerField()
-    Usados_Local = models.IntegerField()
-    Usados_Visitante = models.IntegerField()
-
-class Minutos_Gol(models.model):
-    MinutosGol = models.IntegerField()
-    IdApiEquipo = models.IntegerField()
-    IdApiComp = models.IntegerField()
-    GAF_Local = models.IntegerField()
-    GAF_Visitante = models.IntegerField()
-    GEC_Visitante = models.IntegerField()
-    GEC_Local = models.IntegerField()
+    Formacion = models.CharField(max_length=200)
+    Usadas = models.IntegerField()
 
 class Fixture(models.model):
     IdApiFixture = models.IntegerField()
