@@ -1,0 +1,8 @@
+fixture: {{ fixture_id }}
+<form method="POST" action="{% url 'post_paises' %}">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>
+        Save
+    </button>
+</form>
