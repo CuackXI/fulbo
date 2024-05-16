@@ -4,7 +4,6 @@ from django.db import models
 # Todo lo que no les guste diganlo o modifiquenlo si quieren, para que se guarde tienen que poner
 # python manage.py makemigrations y despues python manage.py migrate para que se guarde en la base de datos
 class Pais(models.Model):
-    IdApiPais = models.IntegerField()
     Nombre = models.CharField(max_length=200)
     Image_URL = models.CharField(max_length=200)
 
@@ -32,46 +31,46 @@ class Estadio(models.Model):
     Capacidad = models.IntegerField()
     Image_URL = models.CharField(max_length=200)
 
-class Estadisticas_Equipo(models.Model):
-    IdApiEquipo = models.IntegerField()
-    IdApiComp = models.IntegerField()
-    Partidos_jugados = models.IntegerField()
-    IdStats_Local = models.IntegerField()
-    IdStats_Visitante = models.IntegerField()                          
-    VictoriasTot = models.IntegerField()
-    EmpatesTot = models.IntegerField()
-    DerrotasTot = models.IntegerField()
-    GolesAFTot = models.IntegerField()
-    GolesECTot = models.IntegerField()
-    IdFormaciones = models.IntegerField()
-    IdMinutosgol = models.IntegerField()
-    Posicion = models.IntegerField()
+# class Estadisticas_Equipo(models.Model):
+#     IdApiEquipo = models.IntegerField()
+#     IdApiComp = models.IntegerField()
+#     Partidos_jugados = models.IntegerField()
+#     IdStats_Local = models.IntegerField()
+#     IdStats_Visitante = models.IntegerField()                          
+#     VictoriasTot = models.IntegerField()
+#     EmpatesTot = models.IntegerField()
+#     DerrotasTot = models.IntegerField()
+#     GolesAFTot = models.IntegerField()
+#     GolesECTot = models.IntegerField()
+#     IdFormaciones = models.IntegerField()
+#     IdMinutosgol = models.IntegerField()
+#     Posicion = models.IntegerField()
 
-class Stats_Local(models.model):
-    IdApiEquipo = models.IntegerField()
-    IdApiComp = models.IntegerField()
-    Victorias = models.IntegerField()
-    Derrotas = models.IntegerField()
-    Empates = models.IntegerField()
-    GolesAF = models.IntegerField()
-    GolesEC = models.IntegerField()
+# class Stats_Local(models.Model):
+#     IdApiEquipo = models.IntegerField()
+#     IdApiComp = models.IntegerField()
+#     Victorias = models.IntegerField()
+#     Derrotas = models.IntegerField()
+#     Empates = models.IntegerField()
+#     GolesAF = models.IntegerField()
+#     GolesEC = models.IntegerField()
 
-class Stats_Visitante(models.model):
-    IdApiEquipo = models.IntegerField()
-    IdApiComp = models.IntegerField()
-    Victorias = models.IntegerField()
-    Derrotas = models.IntegerField()
-    Empates = models.IntegerField()
-    GolesAF = models.IntegerField()
-    GolesEC = models.IntegerField()
+# class Stats_Visitante(models.Model):
+#     IdApiEquipo = models.IntegerField()
+#     IdApiComp = models.IntegerField()
+#     Victorias = models.IntegerField()
+#     Derrotas = models.IntegerField()
+#     Empates = models.IntegerField()
+#     GolesAF = models.IntegerField()
+#     GolesEC = models.IntegerField()
 
-class Formaciones(models.model):
-    IdApiEquipo = models.IntegerField()
-    IdApiComp = models.IntegerField()
-    Formacion = models.CharField(max_length=200)
-    Usadas = models.IntegerField()
+# class Formaciones(models.Model):
+#     IdApiEquipo = models.IntegerField()
+#     IdApiComp = models.IntegerField()
+#     Formacion = models.CharField(max_length=200)
+#     Usadas = models.IntegerField()
 
-class Fixture(models.model):
+class Fixture(models.Model):
     IdApiFixture = models.IntegerField()
     Arbitro = models.CharField(max_length=200)
     Fecha = models.DateField()
@@ -81,15 +80,15 @@ class Fixture(models.model):
     IdEquipoVisitante = models.IntegerField()
     Status = models.CharField(max_length=200)
 
-class Fixture_stats(models.model):
-    IdApiFixture = models.IntegerField()
-    IdEquipo = models.IntegerField()
-    GolesAF = models.IntegerField()
-    GolesEC = models.IntegerField()
-    TirosArco = models.IntegerField()
-    TirosDesviados = models.IntegerField()
+# class Fixture_stats(models.Model):
+#     IdApiFixture = models.IntegerField()
+#     IdEquipo = models.IntegerField()
+#     GolesAF = models.IntegerField()
+#     GolesEC = models.IntegerField()
+#     TirosArco = models.IntegerField()
+#     TirosDesviados = models.IntegerField()
 
-class Jugador(models.model):
+class Jugador(models.Model):
     IdApiJugador = models.IntegerField()
     Nombre = models.CharField(max_length=200)
     Edad = models.IntegerField()
@@ -100,7 +99,7 @@ class Jugador(models.model):
     IdApiEquipo = models.IntegerField()
     Posicion = models.CharField(max_length=200)
 
-class Tecnico(models.model):
+class Tecnico(models.Model):
     IdApiTecnico = models.IntegerField()
     Nombre = models.CharField(max_length=200)
     Edad = models.IntegerField()
@@ -110,11 +109,11 @@ class Tecnico(models.model):
     Image_URL = models.CharField(max_length=200)
     IdApiEquipo = models.IntegerField()
 
-class Bookmaker(models.model):
+class Bookmaker(models.Model):
     Bookmaker = models.IntegerField()
     Nombre = models.CharField(max_length=200)
 
-class Apuesta(models.model):
+class Apuesta(models.Model):
     IdApiFixture = models.IntegerField()
     IdApiBookmaker = models.IntegerField()
     IdApiApuesta = models.IntegerField()

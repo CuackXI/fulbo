@@ -1,4 +1,6 @@
 import requests
+from django.db import models
+from ..models import *
 
 url = "https://api-football-v1.p.rapidapi.com/v3/countries"
 
@@ -11,5 +13,6 @@ headers = {
 response = requests.get(url, headers=headers)
 response = response.json()
 
+print(response)
 for i in range(len(response['response'])):
-    print(response['response'][i]['name'])
+    Pais.objects.create(Nombre=response['response'][i]['name'], Image_URL=response['response'][i]['flag'])
