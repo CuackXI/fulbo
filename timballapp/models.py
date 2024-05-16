@@ -98,6 +98,7 @@ class Jugador(models.Model):
     Image_URL = models.CharField(max_length=200)
     IdApiEquipo = models.IntegerField()
     Posicion = models.CharField(max_length=200)
+    Numero = models.IntegerField()
 
 class Tecnico(models.Model):
     IdApiTecnico = models.IntegerField()
