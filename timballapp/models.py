@@ -9,7 +9,7 @@ class Pais(models.Model):
 
 class Competiciones(models.Model):
     IdApiComp = models.IntegerField()
-    IdApiPais = models.IntegerField()
+    Pais = models.CharField(max_length=200)
     Nombre = models.CharField(max_length=200)
     Image_URL = models.CharField(max_length=200)
     Temporada = models.IntegerField()
@@ -19,7 +19,7 @@ class Equipo(models.Model):
     IdApiComp = models.IntegerField()
     Nombre = models.CharField(max_length=200)
     IdApiEstadio = models.IntegerField()
-    IdApiPais = models.IntegerField()
+    Pais = models.CharField(max_length=200)
     Image_URL = models.CharField(max_length=200)
     Fundacion = models.IntegerField()
 
