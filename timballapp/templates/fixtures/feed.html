@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/timballapp/static/main.css">
+    <title>Timball</title>
+</head>
+<body>  
+    <nav>
+        <ul>
+            <li>
+                <a href="/index.html">
+                    Incio
+                </a>
+            </li>
+            <li>
+                <a href="/html/about.html">
+                    Acerca de
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <section>
+        <h1>Timball</h1>
+        <p>Te damos la bienvenida.</p>
+        <p>Tené cuidado al momento de apostar. El juego en exceso es perjudicial para vos y tus seres queridos.</p>
+        
+
+
+        <!--
+        <div class="sidebar">
+            <h2>Secciones</h2>
+            <section>
+                <h3>Sección 1</h3>
+                <p>Contenido de la sección 1</p>
+            </section>
+            <section>
+                <h3>Sección 2</h3>
+                <p>Contenido de la sección 2</p>
+            </section>
+            <section>
+                <h3>Sección 3</h3>
+                <p>Contenido de la sección 3</p>
+            </section>
+            Aca añadimos todos los filtros como liga lo que sea.
+        </div>
+        -->
+
+
+        <!--la sidebar no la pondría por ahora ngl
+            
+            
+            hacelo -->
+
+        <!--cada tarjeta de partido va en un tag de artículo-->
+        <h2>Partidos</h2>
+        {% for i in range(fixtures | count) %}
+
+        <article>
+            <h3>Próximo</h3>
+            <table border="4px" class="centrar paddin-top">
+                <tr>
+                    <td>{{ locales[i] }}</td>
+                    <td>vs</td>
+                    <td>{{ visitantes[i] }}</td>
+                
+                </tr>
+                <tr>
+                    <td><img src="" alt="" width="90px" height="90px"></td>
+                    <td></td>
+                    <td><img src="" alt="" width="90px" height="90px"></td>
+                    
+                </tr>
+            </table>
+            <table border="4px" class="centrar paddin-top">
+                <tr>
+                    <td>fecha</td>
+                    <td>hora</td>
+                    <td>liga</td>
+                    <td>prob-emp</td>
+                    <td>prob-vic1</td>
+                    <td>prob-vic2</td>
+                    
+                    <!-- Este resultado va a ser si la prediccion acerto o no con un ✔ --> 
+                </tr>
+                <tr>
+                    <td>{{ fixture.Fecha }}</td>
+                    <td>{{ fixture.Hora }}</td>
+                    <td>{{ fixture.IdApiComp }}</td>
+                    <td>-%%-</td>
+                    <td>-%%-</td>
+                    <td>-%%-</td>
+                </tr>
+                
+            </table>
+            <ul class="container-flex">
+                <li><button>Predicciones</button></li>
+                <li><button><a href="html/match.html">Ver más...</a></button></li>
+                <!--<li><button><a href="https://www.google.com.ar/maps/place/">Ubicación</a></button></li>
+                Ya tenemos una forma para poder ubicar el estadio en el que se va a 
+                jugar despues del link place/ poner la direccion del estadio usando Jinja--> 
+            </ul>
+            
+        </article>
+        
+        {% endfor %}
+
+    </section>
+
+    <footer>
+        <p>@INTELIGENCIA MURUCHi</p>
+        <p>Para apostar debes tener más de 18 años y saber sus consecuencias. Tené cuidado al momento de apostar. El juego en exceso es perjudicial para vos y tus seres queridos.</p>
+        <a href="html/about.html">Integrantes</a>
+    </footer>
+</body>
+</html>

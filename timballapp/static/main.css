@@ -1,0 +1,101 @@
+*{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 0;
+    margin: 0 ;
+}
+body{
+    background-color: rgb(240, 240, 240);;
+}
+
+table{
+    border: 5px;
+}
+td{
+    color: black;
+}
+th{
+    color: black;
+}
+/* nav */
+.tablas{
+    color: azure;
+    display: flex;
+    justify-content: space-between;
+}
+nav {
+    background-color: black;
+}
+nav ul{
+    height: 3rem;
+    align-items: center;
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    padding: 0 20px;
+}
+nav ul li a {
+    padding: 0 10px;
+    font-size: 1.5rem;
+    color: white;
+    text-decoration: none;
+}
+/* footer */
+td{
+    text-align: center; 
+}
+a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+footer {
+    background-color: black;
+    color: white;
+}
+ul li{
+    list-style: none;
+}
+.container-flex{
+    display: flex;
+}
+.display-flex{
+    text-align: center;
+}
+.paddin-top{
+    padding-top: 30px;
+}
+.centrar{
+    display: flex;
+    justify-content: space-evenly;
+}
+.tamaño{
+    background-color: brown ;
+    width: 500px;
+}
+
+/*La barra del costado*/
+.sidebar {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0;
+    width: 250px;
+    background-color: #474747;
+    padding: 15px;
+    height: 1000px;
+}
+.sidebar h2 {
+    text-align: center;
+}
+.sidebar section {
+    margin-bottom: 20px;
+}
+.content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+article {
+    background-color: lightgray;
+    width: 550px;
+    margin: 20px;
+}

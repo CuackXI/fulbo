@@ -71,6 +71,7 @@ class Estadio(models.Model):
 #     Usadas = models.IntegerField()
 
 class Fixture(models.Model):
+    IdApiComp = models.IntegerField()
     IdApiFixture = models.IntegerField()
     Arbitro = models.CharField(max_length=200)
     Fecha = models.DateField()
@@ -105,8 +106,6 @@ class Tecnico(models.Model):
     Nombre = models.CharField(max_length=200)
     Edad = models.IntegerField()
     Nacionalidad = models.CharField(max_length=200)
-    Altura = models.CharField(max_length=200)
-    Peso = models.CharField(max_length=200)
     Image_URL = models.CharField(max_length=200)
     IdApiEquipo = models.IntegerField()
 
@@ -120,10 +119,8 @@ class Apuesta(models.Model):
     IdApiApuesta = models.IntegerField()
     Nombre = models.CharField(max_length=200)
     Tipo = models.CharField(max_length=200)
-    Multiplicador = models.IntegerField()
-    Porcentaje = models.IntegerField()
+    Multiplicador = models.DecimalField(max_digits=10, decimal_places=2)
 
-    # Esta función convierte la relación de los multiplicadores de una misma apuesta para distintos tipos de la misma, en porcentajes para la visualización de las mismas.
     def MultiplicadorAPorcentaje(Tipos, Multiplicadores):
         sumaMul = 0
         Valores_porcentaje = []
@@ -136,3 +133,12 @@ class Apuesta(models.Model):
             sumVal_P += Valor
         for Valor in Valores_porcentaje:
             Porcentajes.append(round((Valor*100)/sumVal_P, 2))
+
+# class Apuesta_P(models.Model):
+#     IdApiFixture = models.IntegerField()
+#     IdApiBookmaker = models.IntegerField()
+#     IdApiApuesta = models.IntegerField()
+#     Nombre = models.CharField(max_length=200)
+#     Tipo = models.CharField(max_length=200)
+#     Multiplicador = models.IntegerField()
+#     Porcentaje = models.IntegerField()

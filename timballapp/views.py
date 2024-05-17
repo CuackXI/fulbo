@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 import requests
 from .requests.clase_request import Request
 from .models import *
@@ -7,6 +7,22 @@ from .forms import *
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
+
+def fixtures(request):
+    fixtures = Fixture.objects.filter(IdApiComp=128)
+    locales = []
+    visitantes = []
+    for i in range(len(fixtures)):
+        locales.append(get_object_or_404(Equipo, IdApiEquipo=fixtures[i].IdEquipoLocal))
+        visitantes.append(get_object_or_404(Equipo, IdApiEquipo=fixtures[i].IdEquipoVisitante))
+    return render(request, 'fixtures/feed.html', {
+        'fixtures': fixtures,
+        'locales': locales,
+        'visitantes': visitantes
+    })
+
+def fixture_detalle(request, id):
+    return render(request, 'fixtures/fixture_detalle.html', {})
 
 def post_paises(request):
     if request.method == 'GET':
@@ -103,7 +119,7 @@ def post_fixtures(request):
 
         querystring = {"league":"128",
                     "season":"2024",
-                    "from": "2024-05-17", 
+                    "from": "2024-05-09", 
                     "to": "2024-05-21"}
 
         headers = {
@@ -152,6 +168,7 @@ def post_fixtures(request):
             datestr = datestr + str(dia)
 
             Fixture.objects.create(
+                IdApiComp=response['response'][i]['league']['id'],
                 IdApiFixture=response['response'][i]['fixture']['id'],
                 Arbitro=response['response'][i]['fixture']['referee'],
                 Fecha=datestr,
@@ -218,5 +235,42 @@ def post_bookmakers(request):
                 Bookmaker=response['response'][i]['id'],
                 Nombre=response['response'][i]['name']
             )
+        print("Se ejecutó el POST :)")
+        return render(request, 'index.html')
+    
+def post_apuestas(request):
+    if request.method == 'GET':
+        return render(request, 'post_requests/post_apuestas.html', {
+            'form': activateRequest()
+        })
+    else:
+        pages = [1,2,3]
+        for page in pages:
+            url = "https://api-football-v1.p.rapidapi.com/v3/odds"
+
+            querystring = {"league":"128","season":"2024","bookmaker":"26", "page":page}
+
+            headers = {
+                "X-RapidAPI-Key": "36d0515859mshc128509052fcf97p1484c4jsn6f58a0e1bbb7",
+                "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"
+            }
+
+            response = requests.get(url, headers=headers, params=querystring)
+
+            response = response.json()
+
+            for i in range(len(response['response'])):
+                for b in range(len(response['response'][i]['bookmakers'])):
+                    for y in response['response'][i]['bookmakers'][b]['bets']:
+                        for x in y['values']:
+                            Apuesta.objects.create(
+                                IdApiFixture=response['response'][i]['fixture']['id'],
+                                IdApiBookmaker=response['response'][i]['bookmakers'][b]['id'],
+                                IdApiApuesta=y['id'],
+                                Nombre=y['name'],
+                                Tipo=x['value'],
+                                Multiplicador=x['odd']
+                            )
+
         print("Se ejecutó el POST :)")
         return render(request, 'index.html')
