@@ -73,6 +73,21 @@ ul li{
     width: 500px;
 }
 
+.content {
+    flex-grow: 1;
+    padding: 20px;
+}
+article {
+    background-color: lightgray;
+    width: 550px;
+    margin: 20px;
+}
+
+.flex-container{
+    display: flex;
+    flex-flow: row wrap;
+}
+
 /*La barra del costado*/
 .sidebar {
     position: -webkit-sticky;
@@ -88,14 +103,4 @@ ul li{
 }
 .sidebar section {
     margin-bottom: 20px;
-}
-.content {
-    flex-grow: 1;
-    padding: 20px;
-}
-
-article {
-    background-color: lightgray;
-    width: 550px;
-    margin: 20px;
 }

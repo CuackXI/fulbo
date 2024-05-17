@@ -8,15 +8,15 @@ class Pais(models.Model):
     Image_URL = models.CharField(max_length=200)
 
 class Competiciones(models.Model):
-    IdApiComp = models.IntegerField()
+    IdApiComp_id = models.IntegerField(primary_key=True)
     Pais = models.CharField(max_length=200)
     Nombre = models.CharField(max_length=200)
     Image_URL = models.CharField(max_length=200)
     Temporada = models.IntegerField()
 
 class Equipo(models.Model):
-    IdApiEquipo = models.IntegerField()
-    IdApiComp = models.IntegerField()
+    IdApiEquipo_id = models.IntegerField(primary_key=True)
+    IdApiComp = models.ForeignKey(Competiciones, on_delete=models.CASCADE)
     Nombre = models.CharField(max_length=200)
     IdApiEstadio = models.IntegerField()
     Pais = models.CharField(max_length=200)
@@ -24,7 +24,7 @@ class Equipo(models.Model):
     Fundacion = models.IntegerField()
 
 class Estadio(models.Model):
-    IdApiEstadio = models.IntegerField()
+    IdApiEstadio_id = models.IntegerField(primary_key=True)
     Nombre = models.CharField(max_length=200)
     Ciudad = models.CharField(max_length=200)
     Direccion = models.CharField(max_length=200)
@@ -32,8 +32,8 @@ class Estadio(models.Model):
     Image_URL = models.CharField(max_length=200)
 
 # class Estadisticas_Equipo(models.Model):
-#     IdApiEquipo = models.IntegerField()
-#     IdApiComp = models.IntegerField()
+#     IdApiEquipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
+#     IdApiComp = models.ForeignKey(Competiciones, on_delete=models.CASCADE)
 #     Partidos_jugados = models.IntegerField()
 #     IdStats_Local = models.IntegerField()
 #     IdStats_Visitante = models.IntegerField()                          
@@ -47,8 +47,8 @@ class Estadio(models.Model):
 #     Posicion = models.IntegerField()
 
 # class Stats_Local(models.Model):
-#     IdApiEquipo = models.IntegerField()
-#     IdApiComp = models.IntegerField()
+#     IdApiEquipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
+#     IdApiComp = models.ForeignKey(Competiciones, on_delete=models.CASCADE)
 #     Victorias = models.IntegerField()
 #     Derrotas = models.IntegerField()
 #     Empates = models.IntegerField()
@@ -56,8 +56,8 @@ class Estadio(models.Model):
 #     GolesEC = models.IntegerField()
 
 # class Stats_Visitante(models.Model):
-#     IdApiEquipo = models.IntegerField()
-#     IdApiComp = models.IntegerField()
+#     IdApiEquipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
+#     IdApiComp = models.ForeignKey(Competiciones, on_delete=models.CASCADE)
 #     Victorias = models.IntegerField()
 #     Derrotas = models.IntegerField()
 #     Empates = models.IntegerField()
@@ -65,20 +65,20 @@ class Estadio(models.Model):
 #     GolesEC = models.IntegerField()
 
 # class Formaciones(models.Model):
-#     IdApiEquipo = models.IntegerField()
-#     IdApiComp = models.IntegerField()
+#     IdApiEquipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
+#     IdApiComp = models.ForeignKey(Competiciones, on_delete=models.CASCADE))
 #     Formacion = models.CharField(max_length=200)
 #     Usadas = models.IntegerField()
 
 class Fixture(models.Model):
-    IdApiComp = models.IntegerField()
-    IdApiFixture = models.IntegerField()
+    IdApiComp = models.ForeignKey(Competiciones, on_delete=models.CASCADE)
+    IdApiFixture_id = models.IntegerField(primary_key=True)
     Arbitro = models.CharField(max_length=200)
     Fecha = models.DateField()
     Hora = models.TimeField()
-    IdApiEstadio = models.IntegerField()
-    IdEquipoLocal = models.IntegerField()
-    IdEquipoVisitante = models.IntegerField()
+    IdApiEstadio = models.ForeignKey(Estadio, on_delete=models.CASCADE)
+    IdEquipoLocal = models.ForeignKey(Equipo, on_delete=models.CASCADE, related_name="Local")
+    IdEquipoVisitante = models.ForeignKey(Equipo, on_delete=models.CASCADE, related_name="Visitante")
     Status = models.CharField(max_length=200)
 
 # class Fixture_stats(models.Model):
@@ -90,27 +90,27 @@ class Fixture(models.Model):
 #     TirosDesviados = models.IntegerField()
 
 class Jugador(models.Model):
-    IdApiJugador = models.IntegerField()
+    IdApiJugador_id = models.IntegerField(primary_key=True)
     Nombre = models.CharField(max_length=200)
     Edad = models.IntegerField()
     Nacionalidad = models.CharField(max_length=200)
     Altura = models.CharField(max_length=200)
     Peso = models.CharField(max_length=200)
     Image_URL = models.CharField(max_length=200)
-    IdApiEquipo = models.IntegerField()
+    IdApiEquipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
     Posicion = models.CharField(max_length=200)
     Numero = models.IntegerField()
 
 class Tecnico(models.Model):
-    IdApiTecnico = models.IntegerField()
+    IdApiTecnico_id = models.IntegerField(primary_key=True)
     Nombre = models.CharField(max_length=200)
     Edad = models.IntegerField()
     Nacionalidad = models.CharField(max_length=200)
     Image_URL = models.CharField(max_length=200)
-    IdApiEquipo = models.IntegerField()
+    IdApiEquipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
 
 class Bookmaker(models.Model):
-    Bookmaker = models.IntegerField()
+    Bookmaker_id = models.IntegerField(primary_key=True)
     Nombre = models.CharField(max_length=200)
 
 class Apuesta(models.Model):

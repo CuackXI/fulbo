@@ -1,75 +1,55 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/timballapp/static/main.css">
-    <title>Timball</title>
-</head>
-<body>  
-    <nav>
-        <ul>
-            <li>
-                <a href="/index.html">
-                    Incio
-                </a>
-            </li>
-            <li>
-                <a href="/html/about.html">
-                    Acerca de
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <section>
-        <h1>Timball</h1>
-        <p>Te damos la bienvenida.</p>
-        <p>Tené cuidado al momento de apostar. El juego en exceso es perjudicial para vos y tus seres queridos.</p>
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+<section>
+    <h1>Timball</h1>
+    <p>Te damos la bienvenida.</p>
+    <p>Tené cuidado al momento de apostar. El juego en exceso es perjudicial para vos y tus seres queridos.</p>
+
+    <!--
+    <div class="sidebar">
+        <h2>Secciones</h2>
+        <section>
+            <h3>Sección 1</h3>
+            <p>Contenido de la sección 1</p>
+        </section>
+        <section>
+            <h3>Sección 2</h3>
+            <p>Contenido de la sección 2</p>
+        </section>
+        <section>
+            <h3>Sección 3</h3>
+            <p>Contenido de la sección 3</p>
+        </section>
+        Aca añadimos todos los filtros como liga lo que sea.
+    </div>
+    -->
+    <!--la sidebar no la pondría por ahora ngl
         
+        
+        hacelo -->
 
-
-        <!--
-        <div class="sidebar">
-            <h2>Secciones</h2>
-            <section>
-                <h3>Sección 1</h3>
-                <p>Contenido de la sección 1</p>
-            </section>
-            <section>
-                <h3>Sección 2</h3>
-                <p>Contenido de la sección 2</p>
-            </section>
-            <section>
-                <h3>Sección 3</h3>
-                <p>Contenido de la sección 3</p>
-            </section>
-            Aca añadimos todos los filtros como liga lo que sea.
-        </div>
-        -->
-
-
-        <!--la sidebar no la pondría por ahora ngl
-            
-            
-            hacelo -->
-
-        <!--cada tarjeta de partido va en un tag de artículo-->
-        <h2>Partidos</h2>
-        {% for i in range(fixtures | count) %}
-
+    <!--cada tarjeta de partido va en un tag de artículo-->
+    <h2>Partidos</h2>
+    <div class="flex-container"></div>
+        {% for fixture in fixtures %}
         <article>
             <h3>Próximo</h3>
-            <table border="4px" class="centrar paddin-top">
+            <table border="4px" class="centrar paddin-top tablas">
+                <!-- <p>Arbitro: {{ fixture.Arbitro }}</p>
+                <p>Estadio: {{ fixture.IdApiEstadio.Nombre }}</p> 
+                <img src="{{ fixture.IdApiEstadio.Image_URL }}" alt="" width="90px" height="90px"> -->
+                <p>Estado del partido: {{ fixture.Status }}</p>
                 <tr>
-                    <td>{{ locales[i] }}</td>
+                    <td>{{ fixture.IdEquipoLocal.Nombre }}</td>
                     <td>vs</td>
-                    <td>{{ visitantes[i] }}</td>
+                    <td>{{ fixture.IdEquipoVisitante.Nombre }}</td>
                 
                 </tr>
                 <tr>
-                    <td><img src="" alt="" width="90px" height="90px"></td>
+                    <td><img src="{{ fixture.IdEquipoLocal.Image_URL }}" alt="" width="90px" height="90px"></td>
                     <td></td>
-                    <td><img src="" alt="" width="90px" height="90px"></td>
+                    <td><img src="{{ fixture.IdEquipoVisitante.Image_URL }}" alt="" width="90px" height="90px"></td>
                     
                 </tr>
             </table>
@@ -87,7 +67,7 @@
                 <tr>
                     <td>{{ fixture.Fecha }}</td>
                     <td>{{ fixture.Hora }}</td>
-                    <td>{{ fixture.IdApiComp }}</td>
+                    <td>{{ fixture.IdApiComp_id.Nombre }}</td>
                     <td>-%%-</td>
                     <td>-%%-</td>
                     <td>-%%-</td>
@@ -95,23 +75,23 @@
                 
             </table>
             <ul class="container-flex">
-                <li><button>Predicciones</button></li>
-                <li><button><a href="html/match.html">Ver más...</a></button></li>
-                <!--<li><button><a href="https://www.google.com.ar/maps/place/">Ubicación</a></button></li>
-                Ya tenemos una forma para poder ubicar el estadio en el que se va a 
-                jugar despues del link place/ poner la direccion del estadio usando Jinja--> 
+                <li><button>Apuestas con predicciones</button></li>
+                <li>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <button>
+                            Save
+                        </button>
+                    </form>
+                </li>
+                <li><button><a href="https://www.google.com.ar/maps/search/{{ fixture.IdApiEstadio.Direccion }}" target="_blank">Ubicación</a></button></li>
             </ul>
             
         </article>
         
         {% endfor %}
+    </div>
 
-    </section>
-
-    <footer>
-        <p>@INTELIGENCIA MURUCHi</p>
-        <p>Para apostar debes tener más de 18 años y saber sus consecuencias. Tené cuidado al momento de apostar. El juego en exceso es perjudicial para vos y tus seres queridos.</p>
-        <a href="html/about.html">Integrantes</a>
-    </footer>
-</body>
-</html>
+</section>
+{% endblock %}

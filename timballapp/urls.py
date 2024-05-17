@@ -5,7 +5,7 @@ from . import views
 urlpatterns = [
     path('', views.index, name="Home"),
     path('feed', views.fixtures, name="feed"),
-    path('fixture_detalle', views.fixture_detalle, name="fixture_detalle"),
+    path('fixture_detalle/<int:id>', views.fixture_detalle),
     path('post_paises', views.post_paises, name="post_paises"),
     path('post_equipos', views.post_equipos, name="post_equipos"),
     path('post_competiciones', views.post_competiciones, name="post_competiciones"),

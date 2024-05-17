@@ -9,20 +9,17 @@ def index(request):
     return render(request, 'index.html')
 
 def fixtures(request):
-    fixtures = Fixture.objects.filter(IdApiComp=128)
-    locales = []
-    visitantes = []
-    for i in range(len(fixtures)):
-        locales.append(get_object_or_404(Equipo, IdApiEquipo=fixtures[i].IdEquipoLocal))
-        visitantes.append(get_object_or_404(Equipo, IdApiEquipo=fixtures[i].IdEquipoVisitante))
+    fixtures = Fixture.objects.filter(IdApiComp_id=128)
     return render(request, 'fixtures/feed.html', {
         'fixtures': fixtures,
-        'locales': locales,
-        'visitantes': visitantes
+        'form': activateRequest()
     })
 
 def fixture_detalle(request, id):
-    return render(request, 'fixtures/fixture_detalle.html', {})
+    fixture = get_object_or_404(Fixture, IdApiFixture=id)
+    return render(request, 'fixtures/fixture_detalle.html', {
+        'fixture': fixture
+    })
 
 def post_paises(request):
     if request.method == 'GET':
@@ -168,14 +165,14 @@ def post_fixtures(request):
             datestr = datestr + str(dia)
 
             Fixture.objects.create(
-                IdApiComp=response['response'][i]['league']['id'],
-                IdApiFixture=response['response'][i]['fixture']['id'],
+                IdApiComp_id=response['response'][i]['league']['id'],
+                IdApiFixture_id=response['response'][i]['fixture']['id'],
                 Arbitro=response['response'][i]['fixture']['referee'],
                 Fecha=datestr,
                 Hora=timestr,
-                IdApiEstadio=response['response'][i]['fixture']['venue']['id'],
-                IdEquipoLocal=response['response'][i]['teams']['home']['id'],
-                IdEquipoVisitante=response['response'][i]['teams']['away']['id'],
+                IdApiEstadio_id=response['response'][i]['fixture']['venue']['id'],
+                IdEquipoLocal_id=response['response'][i]['teams']['home']['id'],
+                IdEquipoVisitante_id=response['response'][i]['teams']['away']['id'],
                 Status=response['response'][i]['fixture']['status']['long']
             )
         print("Se ejecutó el POST :)")
