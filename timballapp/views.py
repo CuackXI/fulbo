@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 import requests
 from .requests.clase_request import Request
 from .models import *
@@ -11,8 +11,7 @@ def index(request):
 def fixtures(request):
     fixtures = Fixture.objects.filter(IdApiComp_id=128)
     return render(request, 'fixtures/feed.html', {
-        'fixtures': fixtures,
-        'form': activateRequest()
+        'fixtures': fixtures
     })
 
 def fixture_detalle(request, id):
