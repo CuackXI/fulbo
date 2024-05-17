@@ -163,3 +163,60 @@ def post_fixtures(request):
             )
         print("Se ejecutó el POST :)")
         return render(request, 'index.html')
+    
+def post_estadios(request):
+    if request.method == 'GET':
+        return render(request, 'post_requests/post_estadios.html', {
+            'form': activateRequest()
+        })
+    else:
+        url = "https://api-football-v1.p.rapidapi.com/v3/teams"
+
+        querystring = {"league":"128","season":"2024"}
+
+        headers = {
+            "x-rapidapi-key": "36d0515859mshc128509052fcf97p1484c4jsn6f58a0e1bbb7",
+            "x-rapidapi-host": "api-football-v1.p.rapidapi.com",
+            "Content-Type": "application/json"
+        }
+
+        response = requests.get(url, headers=headers, params=querystring)
+
+        response = response.json()
+
+        for i in range(len(response['response'])):
+            Estadio.objects.create(
+                IdApiEstadio=response['response'][i]['venue']['id'],
+                Nombre=response['response'][i]['venue']['name'],
+                Direccion=response['response'][i]['venue']['address'],
+                Ciudad=response['response'][i]['venue']['city'],
+                Capacidad=response['response'][i]['venue']['capacity'],
+                Image_URL=response['response'][i]['venue']['image']
+            )
+        print("Se ejecutó el POST :)")
+        return render(request, 'index.html')
+    
+def post_bookmakers(request):
+    if request.method == 'GET':
+        return render(request, 'post_requests/post_bookmakers.html', {
+            'form': activateRequest()
+        })
+    else:
+        url = "https://api-football-v1.p.rapidapi.com/v3/odds/bookmakers"
+
+        headers = {
+            "X-RapidAPI-Key": "36d0515859mshc128509052fcf97p1484c4jsn6f58a0e1bbb7",
+            "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"
+        }
+
+        response = requests.get(url, headers=headers)
+
+        response = response.json()
+
+        for i in range(len(response['response'])):
+            Bookmaker.objects.create(
+                Bookmaker=response['response'][i]['id'],
+                Nombre=response['response'][i]['name']
+            )
+        print("Se ejecutó el POST :)")
+        return render(request, 'index.html')
