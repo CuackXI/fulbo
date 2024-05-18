@@ -3,7 +3,6 @@ import requests
 from .requests.clase_request import Request
 from .models import *
 from .forms import *
-from django.views.generic.detail import DetailView
 
 # Create your views here.
 def index(request):
@@ -18,9 +17,11 @@ def fixtures(request):
 def fixture_detalle(request, id):
     fixture = get_object_or_404(Fixture, IdApiFixture_id=id)
     apuestas = Apuesta.objects.filter(IdApiFixture=id)
+    apuestas_n = ApiApuestas.objects.filter()
     return render(request, 'fixtures/fixture_detalle.html', {
         'fixture': fixture,
-        'apuestas': apuestas
+        'apuestas': apuestas,
+        'apuestas_n': apuestas_n
     })
 
 def post_paises(request):

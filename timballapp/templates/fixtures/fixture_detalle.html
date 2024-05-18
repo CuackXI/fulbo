@@ -31,14 +31,39 @@
         <tr>
             <td>Apuestas</td>
         </tr>
-            {% for apuesta in apuestas %}
-            <tr>
-                <td>{{ apuesta.Nombre }}</td>
-                <td>{{ apuesta.Tipo }}</td>
-                <td>x {{ apuesta.Multiplicador }}</td>
-            </tr>
-            {% endfor %}
     </table>
+    <table border="4" class="centrar paddin-top">
+        <tr>
+            <td>
+                <p>
+                    Bookmaker: Betsson
+                </p>
+            </td>
+        </tr>
+    </table>
+    {% for apuesta_n in apuestas_n %}
+        <table border="4" class="centrar paddin-top">
+            <tr>
+                <td>
+                {{ apuesta_n.Nombre }}
+                </td>
+            <tr> 
+                <td>
+                    {% for apuesta in apuestas %}
+                        {% if apuesta.Nombre == apuesta_n.Nombre %}
+                        <table border="1">
+                            <tr>
+                                <td> {{ apuesta.Tipo }} </td>
+                                <td>x {{ apuesta.Multiplicador }}</td>
+                            </tr>
+                        </table>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>                            
+    {% endfor %}
+    
     <table border="4" class="centrar paddin-top">
         <tr>
             <td>Equipo1</td>
