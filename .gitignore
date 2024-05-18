@@ -1,4 +1,4 @@
-# created by virtualenv automatically
-../timball/__pycache__
-../timballapp/__pycache__
+venv
 db.sqlite3
+__pycache__
+staticfiles
