@@ -1,0 +1,7 @@
+<form method="POST" action="{% url 'post_apuestas_id' %}">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>
+        Save
+    </button>
+</form>

@@ -3,6 +3,7 @@ import requests
 from .requests.clase_request import Request
 from .models import *
 from .forms import *
+from django.views.generic.detail import DetailView
 
 # Create your views here.
 def index(request):
@@ -15,9 +16,11 @@ def fixtures(request):
     })
 
 def fixture_detalle(request, id):
-    fixture = get_object_or_404(Fixture, IdApiFixture=id)
+    fixture = get_object_or_404(Fixture, IdApiFixture_id=id)
+    apuestas = Apuesta.objects.filter(IdApiFixture=id)
     return render(request, 'fixtures/fixture_detalle.html', {
-        'fixture': fixture
+        'fixture': fixture,
+        'apuestas': apuestas
     })
 
 def post_paises(request):
@@ -270,3 +273,26 @@ def post_apuestas(request):
 
         print("Se ejecutó el POST :)")
         return render(request, 'index.html')
+    
+def post_apuestas_id(request):
+    if request.method == 'GET':
+        return render(request, 'post_requests/post_apuestas_id.html', {
+            'form': activateRequest()
+        })
+    else:
+        url = "https://api-football-v1.p.rapidapi.com/v3/odds/bets"
+
+        headers = {
+            "X-RapidAPI-Key": "36d0515859mshc128509052fcf97p1484c4jsn6f58a0e1bbb7",
+            "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"
+        }
+
+        response = requests.get(url, headers=headers)
+
+        response = response.json()
+
+        for i in range(len(response['response'])):
+            ApiApuestas.objects.create(
+                IdApiApuesta=response['response'][i]['id'],
+                Nombre=response['response'][i]['name']
+            )

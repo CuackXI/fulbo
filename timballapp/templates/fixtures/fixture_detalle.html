@@ -1,20 +1,19 @@
 {% extends 'layouts/base.html' %}
 
 {% block content %}
-
 <section>
     <h1>Partido próximo</h1>
     <table border="4px" class="centrar">
         <tr>
-            <td>equipo1</td>
+            <td>{{ fixture.IdEquipoLocal.Nombre }}</td>
             <td>vs</td>
-            <td>equipo 2</td>
+            <td>{{ fixture.IdEquipoVisitante.Nombre }}</td>
             
         </tr>
         <tr>
-            <td><img src="" alt="" width="90px" height="90px"></td>
+            <td><img src="{{ fixture.IdEquipoLocal.Image_URL }}" alt="" width="90px" height="90px"></td>
             <td></td>
-            <td><img src="" alt="" width="90px" height="90px"></td>
+            <td><img src="{{ fixture.IdEquipoVisitante.Image_URL }}" alt="" width="90px" height="90px"></td>
                 
         </tr>
     </table>
@@ -24,9 +23,21 @@
             <td>estadio</td>
         </tr>
         <tr>
-            <td><img src="" alt="" width="40px" height="40px"></td>
-            <td>direccion 123</td>
+            <td><img src="{{ fixture.IdApiComp.Image_URL }}" alt="" width="40px" height="40px"></td>
+            <td>{{ fixture.IdApiEstadio.Nombre }}</td>
         </tr>
+    </table>
+    <table border="4" class="centrar paddin-top">
+        <tr>
+            <td>Apuestas</td>
+        </tr>
+            {% for apuesta in apuestas %}
+            <tr>
+                <td>{{ apuesta.Nombre }}</td>
+                <td>{{ apuesta.Tipo }}</td>
+                <td>x {{ apuesta.Multiplicador }}</td>
+            </tr>
+            {% endfor %}
     </table>
     <table border="4" class="centrar paddin-top">
         <tr>

@@ -113,6 +113,10 @@ class Bookmaker(models.Model):
     Bookmaker_id = models.IntegerField(primary_key=True)
     Nombre = models.CharField(max_length=200)
 
+class ApiApuestas(models.Model):
+    IdApiApuesta = models.IntegerField(primary_key=True)
+    Nombre = models.CharField(max_length=200)
+
 class Apuesta(models.Model):
     IdApiFixture = models.IntegerField()
     IdApiBookmaker = models.IntegerField()
