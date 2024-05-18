@@ -72,7 +72,6 @@ ul li{
     background-color: brown ;
     width: 500px;
 }
-
 .content {
     flex-grow: 1;
     padding: 20px;
@@ -82,7 +81,6 @@ article {
     width: 550px;
     margin: 20px;
 }
-
 .flex-container{
     display: flex;
     flex-flow: row wrap;

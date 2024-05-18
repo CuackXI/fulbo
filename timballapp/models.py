@@ -138,11 +138,11 @@ class Apuesta(models.Model):
         for Valor in Valores_porcentaje:
             Porcentajes.append(round((Valor*100)/sumVal_P, 2))
 
-# class Apuesta_P(models.Model):
-#     IdApiFixture = models.IntegerField()
-#     IdApiBookmaker = models.IntegerField()
-#     IdApiApuesta = models.IntegerField()
-#     Nombre = models.CharField(max_length=200)
-#     Tipo = models.CharField(max_length=200)
-#     Multiplicador = models.IntegerField()
-#     Porcentaje = models.IntegerField()
+class Apuesta_P(models.Model):
+    IdApiFixture = models.IntegerField()
+    IdApiBookmaker = models.IntegerField()
+    IdApiApuesta = models.IntegerField()
+    Nombre = models.CharField(max_length=200)
+    Tipo = models.CharField(max_length=200)
+    Multiplicador = models.IntegerField()
+    Porcentaje = models.IntegerField()

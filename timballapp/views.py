@@ -17,12 +17,22 @@ def fixtures(request):
 def fixture_detalle(request, id):
     fixture = get_object_or_404(Fixture, IdApiFixture_id=id)
     apuestas = Apuesta.objects.filter(IdApiFixture=id)
-    apuestas_n = ApiApuestas.objects.filter()
+    query = "SELECT DISTINCT timballapp_apiapuestas.IdApiApuesta from timballapp_apiapuestas join timballapp_apuesta on timballapp_apiapuestas.IdApiApuesta = timballapp_apuesta.IdApiApuesta where timballapp_apiapuestas.IdApiApuesta = timballapp_apuesta.IdApiApuesta"
+    apuestas_n = ApiApuestas.objects.raw(query)
+
     return render(request, 'fixtures/fixture_detalle.html', {
         'fixture': fixture,
         'apuestas': apuestas,
         'apuestas_n': apuestas_n
     })
+
+def post_porcentajes(request):
+    if request.method == 'GET':
+        return render(request, 'post_requests/post_porcentajes.html', {
+            'form': activateRequest()
+        })
+    else:
+        pass
 
 def post_paises(request):
     if request.method == 'GET':
