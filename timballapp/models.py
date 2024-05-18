@@ -144,5 +144,4 @@ class Apuesta_P(models.Model):
     IdApiApuesta = models.IntegerField()
     Nombre = models.CharField(max_length=200)
     Tipo = models.CharField(max_length=200)
-    Multiplicador = models.IntegerField()
     Porcentaje = models.IntegerField()
