@@ -115,8 +115,8 @@ def post_fixtures(request):
 
         querystring = {"league":"128",
                     "season":"2024",
-                    "from": "2024-05-09", 
-                    "to": "2024-05-21"}
+                    "from": "2024-05-22", 
+                    "to": "2024-06-15"}
 
         headers = {
             "X-RapidAPI-Key": "36d0515859mshc128509052fcf97p1484c4jsn6f58a0e1bbb7",
