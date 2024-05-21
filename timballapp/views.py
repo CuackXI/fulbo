@@ -5,14 +5,15 @@ from .models import *
 from .forms import *
 
 # Create your views here.
-def index(request):
-    return render(request, 'index.html')
 
-def fixtures(request):
+def index(request):
     fixtures = Fixture.objects.filter(IdApiComp_id=128)
-    return render(request, 'fixtures/feed.html', {
+    return render(request, 'index.html', {
         'fixtures': fixtures
     })
+
+def about(request):
+    return render(request, 'about.html')
 
 def fixture_detalle(request, id):
     fixture = get_object_or_404(Fixture, IdApiFixture_id=id)
@@ -129,8 +130,8 @@ def post_fixtures(request):
 
         querystring = {"league":"128",
                     "season":"2024",
-                    "from": "2024-05-22", 
-                    "to": "2024-06-15"}
+                    "from": "2024-05-09", 
+                    "to": "2024-12-15"}
 
         headers = {
             "X-RapidAPI-Key": "36d0515859mshc128509052fcf97p1484c4jsn6f58a0e1bbb7",
@@ -148,6 +149,8 @@ def post_fixtures(request):
             datestr = ""
             timestr = ""
             hora = ""
+            año = ""
+            mes = ""
             dia = ""
             contador = 0
             for char in text:
@@ -157,25 +160,75 @@ def post_fixtures(request):
                     date = False
                 if char == ":":
                     time = True
-                if time == False and date == True and contador != 2:
-                    datestr += char
-                elif contador == 2 and date == True:
+                if time == False and date == True and contador == 0 and char != "-":
+                    año += char
+                elif contador == 1 and char != "-":
+                    mes += char
+                elif contador == 2 and date == True and char != "-":
                     dia += char
                 elif time == True and char!="T":
                     timestr += char
-                elif char!="T":
+                elif char!="T" and char != "-":
                     hora += char
                 if char == "-":
                     contador+=1
+
+            print(hora, timestr, dia, mes, año)
 
             hora = int(hora) - 3
 
             if int(hora) < 0:
                 hora = str(24 + int(hora))
-                dia = str(int(dia)-1)
+                if dia != "01":
+                    dia = str(int(dia)-1)
+                else:
+                    if mes == "01":
+                        dia = "31"
+                        mes = "12"
+                        año = str(int(año)-1)
+                    elif mes == "02":
+                        if año % 4 == 0:
+                            dia = "29"
+                            mes = "01"
+                        else:
+                            dia = "28"
+                            mes = "01"
+                    elif mes == "03":
+                        dia = "31"
+                        mes = "02"
+                    elif mes == "04":
+                        dia = "30"
+                        mes = "03"
+                    elif mes == "05":
+                        dia = "31"
+                        mes = "04"
+                    elif mes == "06":
+                        dia = "30"
+                        mes = "05"
+                    elif mes == "07":
+                        dia = "31"
+                        mes = "06"
+                    elif mes == "08":
+                        dia = "31"
+                        mes = "07"
+                    elif mes == "09":
+                        mes = "08"
+                        dia = "30"
+                    elif mes == "10":
+                        mes = "09"
+                        dia = "31"
+                    elif mes == "11":
+                        mes = "10"
+                        dia = "30"
+                    elif mes == "12":
+                        mes = "11"
+                        dia = "30"
 
             timestr = str(hora) + timestr
-            datestr = datestr + str(dia)
+            datestr = str(año) + "-" + str(mes) + "-" + str(dia)
+
+            print(timestr)
+            print(datestr)
 
             Fixture.objects.create(
                 IdApiComp_id=response['response'][i]['league']['id'],
