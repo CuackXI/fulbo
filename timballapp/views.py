@@ -10,7 +10,21 @@ from .forms import *
 def index(request):
     query = f'SELECT IdApiFixture_id from timballapp_fixture where timballapp_fixture.IdApiComp_id = 128 and Status != "Match Finished"'
     fixtures = Fixture.objects.raw(query)
+    apuestas_por_fixture = []
+    for fixture in fixtures:
+        query = f'SELECT id, Porcentaje from timballapp_apuesta where IdApiApuesta_id = 1 and IdApiFixture_id = {fixture.IdApiFixture_id}'
+        apuestas = Apuesta.objects.raw(query)
+        apuestas_por_fixture.append(apuestas)
+
     return render(request, 'index.html', {
+        'fixtures': fixtures,
+        'apuestas': apuestas_por_fixture
+    })
+
+def fixtures_jugados(request):
+    query = f'SELECT IdApiFixture_id from timballapp_fixture where timballapp_fixture.IdApiComp_id = 128 and Status = "Match Finished"'
+    fixtures = Fixture.objects.raw(query)
+    return render(request, 'fixtures/fixtures_jugados.html', {
         'fixtures': fixtures
     })
 
@@ -156,12 +170,16 @@ def post_fixtures(request):
             'form': activateRequest()
         })
     else:
+        query = f'DELETE FROM timballapp_fixture where IdApiFixture_id > 0'
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+
         url = "https://api-football-v1.p.rapidapi.com/v3/fixtures"
 
         querystring = {"league":"128",
                     "season":"2024",
                     "from": "2024-05-09", 
-                    "to": "2024-12-15"}
+                    "to": "2024-12-16"}
 
         headers = {
             "X-RapidAPI-Key": "36d0515859mshc128509052fcf97p1484c4jsn6f58a0e1bbb7",
@@ -385,13 +403,8 @@ def post_apuestas_id(request):
         response = response.json()
 
         for i in range(len(response['response'])):
-            if response['response'][i]['name'] == None:
-                text = ""
-            else:
-                text = response['response'][i]['name']
-            nombre = GoogleTranslator(source='english', target='spanish').translate(text)
-            print(nombre)
             # ApiApuestas.objects.create(
             #     IdApiApuesta=response['response'][i]['id'],
             #     Nombre=response['response'][i]['name']
             # )
+            pass
