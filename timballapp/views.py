@@ -11,7 +11,9 @@ def index(request):
     query = f'SELECT IdApiFixture_id from timballapp_fixture where timballapp_fixture.IdApiComp_id = 128 and Status != "Match Finished"'
     fixtures = Fixture.objects.raw(query)
     apuestas_por_fixture = []
-    for fixture in fixtures:
+    query = f'SELECT DISTINCT timballapp_fixture.IdApiFixture_id from timballapp_fixture join timballapp_apuesta on timballapp_fixture.IdApiFixture_id = timballapp_apuesta.IdApiFixture_id where timballapp_fixture.IdApiComp_id = 128 and Status != "Match Finished" group by timballapp_fixture.IdApiFixture_id'
+    fixtures_con_apuestas = Fixture.objects.raw(query)
+    for fixture in fixtures_con_apuestas:
         query = f'SELECT id, Porcentaje from timballapp_apuesta where IdApiApuesta_id = 1 and IdApiFixture_id = {fixture.IdApiFixture_id}'
         apuestas = Apuesta.objects.raw(query)
         apuestas_por_fixture.append(apuestas)

@@ -73,7 +73,7 @@
                     <td>{{ fixture.Hora }}</td>
                     <td><img width = "20px" height = "20px" src="{{ fixture.IdApiComp.Image_URL }}">{{ fixture.IdApiComp.Nombre }}</td>
                     {% for apuesta in apuestas %}
-                        {% for apuesta_esp in apuesta%}
+                        {% for apuesta_esp in apuesta %}
                             {% if apuesta_esp.IdApiFixture_id == fixture.IdApiFixture_id %}
                                 <td>{{ apuesta_esp.Porcentaje }}%</td>
                             {% endif %}
