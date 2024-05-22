@@ -8,7 +8,7 @@ from .forms import *
 # Create your views here.
 
 def index(request):
-    query = f'SELECT IdApiFixture_id from timballapp_fixture where timballapp_fixture.IdApiComp_id = 128 and Status != "Match Finished"'
+    query = f'SELECT IdApiFixture_id from timballapp_fixture where timballapp_fixture.IdApiComp_id = 128 and (Status != "Match Finished" and Status != "Technical Loss" and Status != "WalkOver")'
     fixtures = Fixture.objects.raw(query)
     apuestas_por_fixture = []
     query = f'SELECT DISTINCT timballapp_fixture.IdApiFixture_id from timballapp_fixture join timballapp_apuesta on timballapp_fixture.IdApiFixture_id = timballapp_apuesta.IdApiFixture_id where timballapp_fixture.IdApiComp_id = 128 and Status != "Match Finished" group by timballapp_fixture.IdApiFixture_id'
@@ -70,14 +70,6 @@ def post_porcentajes(request):
                     query = f'UPDATE timballapp_apuesta SET Porcentaje = {porcentajes[i]} where id = {apuestas[i].id}'
                     with connection.cursor() as cursor:
                         cursor.execute(query)
-                        
-                    # Apuesta_P.objects.create(
-                    #     IdApiBookmaker_id = id.IdApiBookmaker_id,
-                    #     IdApiApuesta_id = id.IdApiApuesta_id,
-                    #     Porcentaje = porcentajes[i],
-                    #     Tipo = tipos[i],
-                    #     IdApiFixture_id = fixture.IdApiFixture_id
-                    # )
 
         return redirect(post_porcentajes)
 

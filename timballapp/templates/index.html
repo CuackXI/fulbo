@@ -41,6 +41,12 @@
                 <img src="{{ fixture.IdApiEstadio.Image_URL }}" alt="" width="90px" height="90px"> -->
                 {% if fixture.Status == "Not Started" %}
                 <p>Estado del partido: No empezó</p>
+                {% elif fixture.Status == "Time to be defined" %}
+                <p>Estado del partido: Tiempo a definir</p>
+                {% elif fixture.Status == "Match Postponed" %}
+                <p>Estado del partido: Partido postpuesto</p>
+                {% elif fixture.Status == "Match Cancelled" or fixture.Status == "Match Abandoned" or fixture.Status == "Match Suspended" %}
+                <p>Estado del partido: Partido cancelado</p>
                 {% else %}
                 <p>Estado del partido: En juego</p>
                 {% endif %}
