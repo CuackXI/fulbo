@@ -1,3 +1,4 @@
+from deep_translator import GoogleTranslator
 import requests
 
 pages = [1]
@@ -19,12 +20,10 @@ for page in pages:
         for b in range(len(response['response'][i]['bookmakers'])):
             for y in response['response'][i]['bookmakers'][b]['bets']:
                 for x in y['values']:
-                    # Apuesta.objects.create(
-                    #     IdApiFixture=response['response'][i]['fixture']['id'],
-                    #     IdApiBookmaker=response['response'][i]['bookmakers'][b]['id'],
-                    #     IdApiFixture=y['id'],
-                    #     Nombre=y['name'],
-                    #     Tipo=x['value'],
-                    #     Multiplicador=x['odd']
-                    # )
-                    pass
+                    print(IdApiFixture=response['response'][i]['fixture']['id'])
+                    print(IdApiBookmaker=response['response'][i]['bookmakers'][b]['id'])
+                    print(IdApiFixture=y['id'])
+                    
+                    print(Nombre=y['name'])
+                    print(Tipo=x['value'])
+                    print(Multiplicador=x['odd'])

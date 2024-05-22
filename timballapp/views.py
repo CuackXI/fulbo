@@ -1,13 +1,16 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.db import connection
 import requests
 from .requests.clase_request import Request
 from .models import *
 from .forms import *
+from deep_translator import GoogleTranslator
 
 # Create your views here.
 
 def index(request):
-    fixtures = Fixture.objects.filter(IdApiComp_id=128)
+    query = f'SELECT IdApiFixture_id from timballapp_fixture where timballapp_fixture.IdApiComp_id = 128 and Status != "Match Finished"'
+    fixtures = Fixture.objects.raw(query)
     return render(request, 'index.html', {
         'fixtures': fixtures
     })
@@ -17,8 +20,8 @@ def about(request):
 
 def fixture_detalle(request, id):
     fixture = get_object_or_404(Fixture, IdApiFixture_id=id)
-    apuestas = Apuesta.objects.filter(IdApiFixture=id)
-    query = "SELECT DISTINCT timballapp_apiapuestas.IdApiApuesta from timballapp_apiapuestas join timballapp_apuesta on timballapp_apiapuestas.IdApiApuesta = timballapp_apuesta.IdApiApuesta where timballapp_apiapuestas.IdApiApuesta = timballapp_apuesta.IdApiApuesta"
+    apuestas = Apuesta.objects.filter(IdApiFixture_id=id)
+    query = "SELECT DISTINCT timballapp_apiapuestas.IdApiApuesta from timballapp_apiapuestas join timballapp_apuesta on timballapp_apiapuestas.IdApiApuesta = timballapp_apuesta.IdApiApuesta_id where timballapp_apiapuestas.IdApiApuesta = timballapp_apuesta.IdApiApuesta_id"
     apuestas_n = ApiApuestas.objects.raw(query)
 
     return render(request, 'fixtures/fixture_detalle.html', {
@@ -311,7 +314,7 @@ def post_apuestas(request):
         for page in pages:
             url = "https://api-football-v1.p.rapidapi.com/v3/odds"
 
-            querystring = {"league":"128","season":"2024","bookmaker":"26", "page":page}
+            querystring = {"league":"128","season":"2024", "bookmaker": 26, "page":page}
 
             headers = {
                 "X-RapidAPI-Key": "36d0515859mshc128509052fcf97p1484c4jsn6f58a0e1bbb7",
@@ -327,10 +330,9 @@ def post_apuestas(request):
                     for y in response['response'][i]['bookmakers'][b]['bets']:
                         for x in y['values']:
                             Apuesta.objects.create(
-                                IdApiFixture=response['response'][i]['fixture']['id'],
-                                IdApiBookmaker=response['response'][i]['bookmakers'][b]['id'],
-                                IdApiApuesta=y['id'],
-                                Nombre=y['name'],
+                                IdApiFixture_id=response['response'][i]['fixture']['id'],
+                                IdApiBookmaker_id=response['response'][i]['bookmakers'][b]['id'],
+                                IdApiApuesta_id=y['id'],
                                 Tipo=x['value'],
                                 Multiplicador=x['odd']
                             )
@@ -356,7 +358,13 @@ def post_apuestas_id(request):
         response = response.json()
 
         for i in range(len(response['response'])):
-            ApiApuestas.objects.create(
-                IdApiApuesta=response['response'][i]['id'],
-                Nombre=response['response'][i]['name']
-            )
+            if response['response'][i]['name'] == None:
+                text = ""
+            else:
+                text = response['response'][i]['name']
+            nombre = GoogleTranslator(source='english', target='spanish').translate(text)
+            print(nombre)
+            # ApiApuestas.objects.create(
+            #     IdApiApuesta=response['response'][i]['id'],
+            #     Nombre=response['response'][i]['name']
+            # )

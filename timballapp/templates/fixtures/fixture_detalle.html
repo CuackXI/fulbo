@@ -51,7 +51,7 @@
             <tr> 
                 <td>
                     {% for apuesta in apuestas %}
-                        {% if apuesta.Nombre == apuesta_n.Nombre %}
+                        {% if apuesta.IdApiApuesta.Nombre == apuesta_n.Nombre %}
                         <table border="1">
                             <tr>
                                 <td> {{ apuesta.Tipo }} </td>

@@ -118,10 +118,9 @@ class ApiApuestas(models.Model):
     Nombre = models.CharField(max_length=200)
 
 class Apuesta(models.Model):
-    IdApiFixture = models.IntegerField()
-    IdApiBookmaker = models.IntegerField()
-    IdApiApuesta = models.IntegerField()
-    Nombre = models.CharField(max_length=200)
+    IdApiFixture = models.ForeignKey(Fixture, on_delete=models.CASCADE)
+    IdApiBookmaker = models.ForeignKey(Bookmaker, on_delete=models.CASCADE)
+    IdApiApuesta = models.ForeignKey(ApiApuestas, on_delete=models.CASCADE)
     Tipo = models.CharField(max_length=200)
     Multiplicador = models.DecimalField(max_digits=10, decimal_places=2)
 
@@ -141,7 +140,5 @@ class Apuesta(models.Model):
 class Apuesta_P(models.Model):
     IdApiFixture = models.IntegerField()
     IdApiBookmaker = models.IntegerField()
-    IdApiApuesta = models.IntegerField()
-    Nombre = models.CharField(max_length=200)
-    Tipo = models.CharField(max_length=200)
+    IdApiApuesta = models.ForeignKey(ApiApuestas, on_delete=models.CASCADE)
     Porcentaje = models.IntegerField()
