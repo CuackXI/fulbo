@@ -6,6 +6,8 @@ urlpatterns = [
     path('', views.index, name="Home"),
     path('about', views.about, name="About"),
     path('fixture/<int:id>/', views.fixture_detalle),
+
+    # Estas no son urls del usuario hay que ver como hacer esto sin urls
     path('post_paises', views.post_paises, name="post_paises"),
     path('post_equipos', views.post_equipos, name="post_equipos"),
     path('post_competiciones', views.post_competiciones, name="post_competiciones"),
@@ -13,5 +15,6 @@ urlpatterns = [
     path('post_estadios', views.post_estadios, name="post_estadios"),
     path('post_bookmakers', views.post_bookmakers, name="post_bookmakers"),
     path('post_apuestas', views.post_apuestas, name="post_apuestas"),
-    path('post_apuestas_id', views.post_apuestas_id, name="post_apuestas_id")
+    path('post_apuestas_id', views.post_apuestas_id, name="post_apuestas_id"),
+    path('post_porcentajes', views.post_porcentajes, name="post_porcentajes")
 ]

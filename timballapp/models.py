@@ -123,11 +123,14 @@ class Apuesta(models.Model):
     IdApiApuesta = models.ForeignKey(ApiApuestas, on_delete=models.CASCADE)
     Tipo = models.CharField(max_length=200)
     Multiplicador = models.DecimalField(max_digits=10, decimal_places=2)
+    Porcentaje = models.DecimalField(max_digits=10, decimal_places=2)
 
-    def MultiplicadorAPorcentaje(Tipos, Multiplicadores):
+    def MultiplicadorAPorcentaje(Multiplicadores):
         sumaMul = 0
+        sumVal_P = 0
         Valores_porcentaje = []
         Porcentajes = []
+        Apuestas_p = []
         for Multiplicador in Multiplicadores:
             sumaMul += Multiplicador
         for Multiplicador in Multiplicadores:
@@ -137,8 +140,4 @@ class Apuesta(models.Model):
         for Valor in Valores_porcentaje:
             Porcentajes.append(round((Valor*100)/sumVal_P, 2))
 
-class Apuesta_P(models.Model):
-    IdApiFixture = models.IntegerField()
-    IdApiBookmaker = models.IntegerField()
-    IdApiApuesta = models.ForeignKey(ApiApuestas, on_delete=models.CASCADE)
-    Porcentaje = models.IntegerField()
+        return(Porcentajes)

@@ -4,7 +4,6 @@ import requests
 from .requests.clase_request import Request
 from .models import *
 from .forms import *
-from deep_translator import GoogleTranslator
 
 # Create your views here.
 
@@ -23,6 +22,7 @@ def fixture_detalle(request, id):
     apuestas = Apuesta.objects.filter(IdApiFixture_id=id)
     query = "SELECT DISTINCT timballapp_apiapuestas.IdApiApuesta from timballapp_apiapuestas join timballapp_apuesta on timballapp_apiapuestas.IdApiApuesta = timballapp_apuesta.IdApiApuesta_id where timballapp_apiapuestas.IdApiApuesta = timballapp_apuesta.IdApiApuesta_id"
     apuestas_n = ApiApuestas.objects.raw(query)
+    # Apuestas_n son los nombres de las apuestas usadas por el bookmaker
 
     return render(request, 'fixtures/fixture_detalle.html', {
         'fixture': fixture,
@@ -36,7 +36,34 @@ def post_porcentajes(request):
             'form': activateRequest()
         })
     else:
-        pass
+        query = "SELECT DISTINCT id, IdApiFixture_id from timballapp_apuesta group by IdApiFixture_id"
+        fixtures = Apuesta.objects.raw(query)
+        for fixture in fixtures:         
+            query = f'SELECT DISTINCT id, IdApiApuesta_id from timballapp_apuesta where IdApiFixture_id = {fixture.IdApiFixture_id} group by IdApiApuesta_id'
+            ids = Apuesta.objects.raw(query)
+            for id in ids:
+                query = f'SELECT id, Multiplicador, tipo from timballapp_apuesta where IdApiFixture_id = {fixture.IdApiFixture_id} and IdApiApuesta_id = {id.IdApiApuesta_id}'
+                apuestas = Apuesta.objects.raw(query)
+                tipos = []
+                multiplicadores = []
+                for apuesta in apuestas:
+                    tipos.append(apuesta.Tipo)
+                    multiplicadores.append(apuesta.Multiplicador)
+                porcentajes = Apuesta.MultiplicadorAPorcentaje(multiplicadores)
+                for i in range(len(porcentajes)):
+                    query = f'UPDATE timballapp_apuesta SET Porcentaje = {porcentajes[i]} where id = {apuestas[i].id}'
+                    with connection.cursor() as cursor:
+                        cursor.execute(query)
+                        
+                    # Apuesta_P.objects.create(
+                    #     IdApiBookmaker_id = id.IdApiBookmaker_id,
+                    #     IdApiApuesta_id = id.IdApiApuesta_id,
+                    #     Porcentaje = porcentajes[i],
+                    #     Tipo = tipos[i],
+                    #     IdApiFixture_id = fixture.IdApiFixture_id
+                    # )
+
+        return redirect(post_porcentajes)
 
 def post_paises(request):
     if request.method == 'GET':
