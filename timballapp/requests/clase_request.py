@@ -1,18 +1,17 @@
+import requests
+
 class Request():
-    def __init__(self, url, querystring, headers, response):
-        url = self.url
-        querystring = self.querystring
-        headers = self.headers
-        response = self.response
+    def __init__(self, url, querystring, headers):
+        self.url = url
+        self.querystring = querystring
+        self.headers = headers  
 
-    def crear_equipos(self, url, querystring, headers, response):
-        pass
+    def request_response(self, url, querystring, headers):
+        if querystring != None:
+            response = requests.get(url, headers=headers)
+        else:
+            response = requests.get(url, headers=headers, params=querystring)
 
-    def crear_estadios(self, url, querystring, headers, response):
-        pass
+        response = response.json()
 
-    def crear_paises(self, url, querystring, headers, response):
-        pass
-
-    def crear_Estadisticas_Equipo(self, url, querystring, headers, response):
-        pass
+        return response

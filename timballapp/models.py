@@ -1,8 +1,7 @@
 from django.db import models
 
 # Create your models here.
-# Todo lo que no les guste diganlo o modifiquenlo si quieren, para que se guarde tienen que poner
-# python manage.py makemigrations y despues python manage.py migrate para que se guarde en la base de datos
+
 class Pais(models.Model):
     Nombre = models.CharField(max_length=200)
     Image_URL = models.CharField(max_length=200)
