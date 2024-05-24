@@ -1,10 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db import connection
 import requests
-from .servicios.fixtures_jugados import Fixtures_Jugados
+from .servicios import *
 from .servicios.obtener_porcentajes import Obtener_Porcentajes
 from .servicios.actualizar_porcentajes import Actualizar_Porcentajes
 from .servicios.obtener_apuestas import Obtener_Apuestas
+from .servicios.Obtener_Fixtures_Proximos_Por_Competencia import Obtener_Fixtures_Proximos_Por_Competencia
+from .servicios.Apuestas_Match_Winner_Por_Fixture import Apuestas_Match_Winner_Por_Fixture
+from .servicios.apuestas_por_fixture import Apuestas_Por_Fixture
+from .servicios.Fixture_por_ID import Fixture_por_ID
+from .servicios.nombres_de_apuestas_de_fixture import nombres_de_apuestas_de_fixture
 from .requests.clase_request import Request
 from .models import *
 from .forms import *
@@ -12,36 +17,26 @@ from .forms import *
 # Create your views here.
 
 def index(request):
-    query = f'SELECT IdApiFixture_id from timballapp_fixture where timballapp_fixture.IdApiComp_id = 128 and (Status != "Match Finished" and Status != "Technical Loss" and Status != "WalkOver")'
-    fixtures = Fixture.objects.raw(query)
-    apuestas_por_fixture = []
-    query = f'SELECT DISTINCT timballapp_fixture.IdApiFixture_id from timballapp_fixture join timballapp_apuesta on timballapp_fixture.IdApiFixture_id = timballapp_apuesta.IdApiFixture_id where timballapp_fixture.IdApiComp_id = 128 and Status != "Match Finished" group by timballapp_fixture.IdApiFixture_id'
-    fixtures_con_apuestas = Fixture.objects.raw(query)
-    for fixture in fixtures_con_apuestas:
-        apuestas = Apuesta.objects.filter(IdApiApuesta = 1, IdApiFixture_id = fixture.IdApiFixture_id)
-        apuestas_por_fixture.append(apuestas)
+    servicio = Obtener_Fixtures_Proximos_Por_Competencia()
+    fixtures = servicio.Obtener_Fixtures_Proximos_Por_Competencia(128)
+
+    servicio = Apuestas_Match_Winner_Por_Fixture()
+    apuestas_por_fixture = servicio.Apuestas_Match_Winner_Por_Fixture(128, fixtures)
 
     return render(request, 'index.html', {
         'fixtures': fixtures,
         'apuestas': apuestas_por_fixture
     })
 
-def fixtures_jugados(request):
-    servicio = Fixtures_Jugados()
-    fixtures = servicio.obtener_por_competencia_y_status(128, "Match Finished")
-    return render(request, 'fixtures/fixtures_jugados.html', {
-        'fixtures': fixtures
-    })
-
-def about(request):
-    return render(request, 'about.html')
-
 def fixture_detalle(request, id):
-    fixture = get_object_or_404(Fixture, IdApiFixture_id=id)
-    apuestas = Apuesta.objects.filter(IdApiFixture_id=id)
-    query = "SELECT DISTINCT timballapp_apiapuestas.IdApiApuesta from timballapp_apiapuestas join timballapp_apuesta on timballapp_apiapuestas.IdApiApuesta = timballapp_apuesta.IdApiApuesta_id where timballapp_apiapuestas.IdApiApuesta = timballapp_apuesta.IdApiApuesta_id"
-    apuestas_n = ApiApuestas.objects.raw(query)
-    # Apuestas_n son los nombres de las apuestas usadas por el bookmaker
+    servicio = Fixture_por_ID()
+    fixture = servicio.Fixture_por_ID(id)
+
+    servicio = Apuestas_Por_Fixture()
+    apuestas = servicio.Apuestas_Por_Fixture(id)
+
+    servicio = nombres_de_apuestas_de_fixture()
+    apuestas_n = servicio.nombres_de_apuestas_de_fixture(fixture)
 
     return render(request, 'fixtures/fixture_detalle.html', {
         'fixture': fixture,
@@ -49,7 +44,8 @@ def fixture_detalle(request, id):
         'apuestas_n': apuestas_n
     })
 
-
+def about(request):
+    return render(request, 'about.html')
 
 
 
