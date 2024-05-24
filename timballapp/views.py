@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db import connection
 import requests
-from .servicios import *
 from .servicios.obtener_porcentajes import Obtener_Porcentajes
 from .servicios.actualizar_porcentajes import Actualizar_Porcentajes
 from .servicios.obtener_apuestas import Obtener_Apuestas
