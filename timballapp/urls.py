@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.index, name="Home"),
     path('about', views.about, name="About"),
     path('fixture/<int:id>/', views.fixture_detalle),
+    path('fixture_predicts/<int:id>/', views.fixture_predicts),
 
     # Estas no son urls del usuario hay que ver como hacer esto sin urls
     path('post_paises', views.post_paises, name="post_paises"),

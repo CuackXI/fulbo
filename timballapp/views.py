@@ -9,6 +9,7 @@ from .servicios.Apuestas_Match_Winner_Por_Fixture import Apuestas_Match_Winner_P
 from .servicios.apuestas_por_fixture import Apuestas_Por_Fixture
 from .servicios.Fixture_por_ID import Fixture_por_ID
 from .servicios.nombres_de_apuestas_de_fixture import nombres_de_apuestas_de_fixture
+from .servicios.Predicts_Por_Fixture import Predicts_Por_Fixture
 from .requests.clase_request import Request
 from .models import *
 from .forms import *
@@ -40,6 +41,22 @@ def fixture_detalle(request, id):
     return render(request, 'fixtures/fixture_detalle.html', {
         'fixture': fixture,
         'apuestas': apuestas,
+        'apuestas_n': apuestas_n
+    })
+
+def fixture_predicts(request, id):
+    servicio = Fixture_por_ID()
+    fixture = servicio.Fixture_por_ID(id)
+
+    servicio = Predicts_Por_Fixture()
+    predicts = servicio.Predicts_Por_Fixture(id)
+
+    servicio = nombres_de_apuestas_de_fixture()
+    apuestas_n = servicio.nombres_de_apuestas_de_fixture(fixture)
+
+    return render(request, 'fixtures/fixture_predicts.html', {
+        'fixture': fixture,
+        'predicts': predicts,
         'apuestas_n': apuestas_n
     })
 
