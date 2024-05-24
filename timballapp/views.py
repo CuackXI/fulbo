@@ -1,6 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db import connection
 import requests
+from .servicios.fixtures_jugados import Fixtures_Jugados
+from .servicios.obtener_porcentajes import Obtener_Porcentajes
+from .servicios.actualizar_porcentajes import Actualizar_Porcentajes
+from .servicios.obtener_apuestas import Obtener_Apuestas
 from .requests.clase_request import Request
 from .models import *
 from .forms import *
@@ -14,8 +18,7 @@ def index(request):
     query = f'SELECT DISTINCT timballapp_fixture.IdApiFixture_id from timballapp_fixture join timballapp_apuesta on timballapp_fixture.IdApiFixture_id = timballapp_apuesta.IdApiFixture_id where timballapp_fixture.IdApiComp_id = 128 and Status != "Match Finished" group by timballapp_fixture.IdApiFixture_id'
     fixtures_con_apuestas = Fixture.objects.raw(query)
     for fixture in fixtures_con_apuestas:
-        query = f'SELECT id, Porcentaje from timballapp_apuesta where IdApiApuesta_id = 1 and IdApiFixture_id = {fixture.IdApiFixture_id}'
-        apuestas = Apuesta.objects.raw(query)
+        apuestas = Apuesta.objects.filter(IdApiApuesta = 1, IdApiFixture_id = fixture.IdApiFixture_id)
         apuestas_por_fixture.append(apuestas)
 
     return render(request, 'index.html', {
@@ -24,8 +27,8 @@ def index(request):
     })
 
 def fixtures_jugados(request):
-    query = f'SELECT IdApiFixture_id from timballapp_fixture where timballapp_fixture.IdApiComp_id = 128 and Status = "Match Finished"'
-    fixtures = Fixture.objects.raw(query)
+    servicio = Fixtures_Jugados()
+    fixtures = servicio.obtener_por_competencia_y_status(128, "Match Finished")
     return render(request, 'fixtures/fixtures_jugados.html', {
         'fixtures': fixtures
     })
@@ -218,27 +221,16 @@ def post_porcentajes(request):
             'form': activateRequest()
         })
     else:
-        query = "SELECT DISTINCT id, IdApiFixture_id from timballapp_apuesta group by IdApiFixture_id"
-        fixtures = Apuesta.objects.raw(query)
-        for fixture in fixtures:         
-            query = f'SELECT DISTINCT id, IdApiApuesta_id from timballapp_apuesta where IdApiFixture_id = {fixture.IdApiFixture_id} group by IdApiApuesta_id'
-            ids = Apuesta.objects.raw(query)
-            for id in ids:
-                query = f'SELECT id, Multiplicador, tipo from timballapp_apuesta where IdApiFixture_id = {fixture.IdApiFixture_id} and IdApiApuesta_id = {id.IdApiApuesta_id}'
-                apuestas = Apuesta.objects.raw(query)
-                tipos = []
-                multiplicadores = []
-                for apuesta in apuestas:
-                    tipos.append(apuesta.Tipo)
-                    multiplicadores.append(apuesta.Multiplicador)
-                porcentajes = Apuesta.MultiplicadorAPorcentaje(multiplicadores)
-                for i in range(len(porcentajes)):
-                    query = f'UPDATE timballapp_apuesta SET Porcentaje = {porcentajes[i]} where id = {apuestas[i].id}'
-                    with connection.cursor() as cursor:
-                        cursor.execute(query)
+        servicio = Obtener_Apuestas()
+        apuestas = servicio.Obtener_Apuestas()
+
+        servicio = Obtener_Porcentajes()
+        porcentajes = servicio.obtener_porcentajes_a_partir_de_apuestas(apuestas)
+
+        servicio = Actualizar_Porcentajes()
+        servicio.Actualizar_Porcentajes(porcentajes, apuestas)
 
         return redirect('Home')
-    
 
 
 
@@ -423,6 +415,5 @@ def response_to_competiciones(response):
     #     Nombre=response['response'][i]['league']['name'],
     #     Image_URL=response['response'][i]['league']['logo'],
     #     Temporada=2024,
-    #     Pais=response['response'][i]['country']['name']
-    #     )
+    #     Pais=response['response'][i]['country']['name'])
     pass

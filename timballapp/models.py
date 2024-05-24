@@ -129,7 +129,6 @@ class Apuesta(models.Model):
         sumVal_P = 0
         Valores_porcentaje = []
         Porcentajes = []
-        Apuestas_p = []
         for Multiplicador in Multiplicadores:
             sumaMul += Multiplicador
         for Multiplicador in Multiplicadores:
