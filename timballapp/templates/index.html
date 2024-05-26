@@ -90,7 +90,11 @@
             <ul class="container-flex">
                 <li><button><a href="fixture_predicts/{{ fixture.IdApiFixture_id }}">Predicciones</a></button></li>
                 <li><button><a href="fixture/{{ fixture.IdApiFixture_id }}">Ver mas</a></button></li>
-                <li><button><a href="https://www.google.com.ar/maps/search/{{ fixture.IdApiEstadio.Direccion }}" target="_blank">Ubicación</a></button></li>
+                <!-- <iframe
+                width="300"
+                height="200"
+                src="{{fixture.IdApiEstadio.Direccion}}">
+                </iframe> -->
             </ul>
             
         </article>
