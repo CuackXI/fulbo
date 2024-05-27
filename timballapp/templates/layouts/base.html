@@ -1,34 +1,36 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../static/main.css">
-    <title>Timball</title>
+    <title>TIMBALL</title>
 </head>
-<body>  
+<body>
     <nav>
         <ul>
             <li>
-                <a href="{%url 'Home' %}">
-                    Inicio
-                </a>
+                <a href="{%url 'Home' %}" class="titulo">TIMBALL</a>
             </li>
             <li>
-                <a href="{%url 'About' %}">
-                    Acerca de
-                </a>
+                <a href="#">Iniciar sesión</a>
+            </li>
+            <li>
+                <a href="{%url 'About' %}">Acerca de</a>
             </li>
         </ul>
     </nav>
-    <main>
+    <section>
+        <div class="main">
         {% block content %}
         {% endblock %}
-    </main>
+        </div>
+    </section>
     <footer>
         <p>@INTELIGENCIA MURUCHi</p>
         <p>Para apostar debes tener más de 18 años y saber sus consecuencias. Tené cuidado al momento de apostar. El juego en exceso es perjudicial para vos y tus seres queridos.</p>
-        <a href="">Integrantes</a>
     </footer>
+
+    <script type="text/javascript" src="../../js/scroll.js"></script>
 </body>
+</html>

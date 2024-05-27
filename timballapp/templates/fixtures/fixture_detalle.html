@@ -1,202 +1,194 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 
+<div class="bgDeco"></div>
 {% block content %}
-<section>
-    <h1>Partido próximo</h1>
-    <table border="4px" class="centrar">
+    <h1>
+        Partido próximo
+    </h1>
+    <table class="tabEquipo">
         <tr>
             <td>{{ fixture.IdEquipoLocal.Nombre }}</td>
-            <td>vs</td>
+            <td>vs.</td>
             <td>{{ fixture.IdEquipoVisitante.Nombre }}</td>
             
         </tr>
         <tr>
-            <td><img src="{{ fixture.IdEquipoLocal.Image_URL }}" alt="" width="90px" height="90px"></td>
-            <td></td>
-            <td><img src="{{ fixture.IdEquipoVisitante.Image_URL }}" alt="" width="90px" height="90px"></td>
-                
+            <td><img src="{{ fixture.IdEquipoLocal.Image_URL }}" alt="{{ fixture.IdEquipoLocal.Nombre }}" width="200px" height="200px"></td>
+            <td><img src="{{ fixture.IdEquipoVisitante.Image_URL }}" alt="{{ fixture.IdEquipoVisitante.Nombre }}" width="200px" height="200px"></td>
         </tr>
     </table>
-    <table border="4px" class="centrar paddin-top">
+    <table class="tabEstad">
         <tr>
-            <td>liga</td>
-            <td>estadio</td>
+            <td>Estado</td>
+            <td>Fecha</td>
+            <td>Hora</td>
+            <td>Liga</td>
+            <td>Estadio</td>
         </tr>
         <tr>
-            <td><img src="{{ fixture.IdApiComp.Image_URL }}" alt="" width="40px" height="40px"></td>
+            {% if fixture.Status == "Not Started" %}
+            <td>No empezó</td>
+            {% elif fixture.Status == "Time to be defined" %}
+            <td>Tiempo a definir</td>
+            {% elif fixture.Status == "Match Postponed" %}
+            <td>Partido postpuesto</td>
+            {% elif fixture.Status == "Match Cancelled" or fixture.Status == "Match Abandoned" or fixture.Status == "Match Suspended" %}
+            <td>Partido cancelado</td>
+            {% else %}
+            <td>En juego</td>
+            {% endif %}
+            <td>{{ fixture.Fecha }}</td>
+            <td>{{ fixture.Hora }}</td>
+            <td><img width = "20px" height = "20px" src="{{ fixture.IdApiComp.Image_URL }}">{{ fixture.IdApiComp.Nombre }}</td>
             <td>{{ fixture.IdApiEstadio.Nombre }}</td>
         </tr>
     </table>
-    <table border="4" class="centrar paddin-top">
-        <tr>
-            <td>Apuestas</td>
-        </tr>
-    </table>
-    <table border="4" class="centrar paddin-top">
-        <tr>
-            <td>
-                <p>
-                    Bookmaker: Betsson
-                </p>
-            </td>
-        </tr>
-    </table>
-    {% for apuesta_n in apuestas_n %}
-        <table border="4" class="centrar paddin-top">
-            <tr>
-                <td>
-                {{ apuesta_n.Nombre }}
-                </td>
-            <tr> 
-                <td>
-                    {% for apuesta in apuestas %}
-                        {% if apuesta.IdApiApuesta.Nombre == apuesta_n.Nombre %}
-                        <table border="1">
-                            <tr>
-                                <td> {{ apuesta.Tipo }} </td>
-                                <td>x {{ apuesta.Multiplicador }}</td>
-                                <td>{{ apuesta.Porcentaje }}%</td>
-                            </tr>
-                        </table>
-                        {% endif %}
-                    {% endfor %}
-                </td>
-            </tr>
-        </table>                            
-    {% endfor %}
-    
-    <table border="4" class="centrar paddin-top">
-        <tr>
-            <td>Equipo1</td>
-        </tr>
-        <tr>
-            <td>
-            <table border="4" class="centrar ">
-                <tr>
-                    <td><img src="" alt="" width="20px" height="20px"></td>
-                    <td>Nombre</td>
-                    <td>Edad</td>
-                    <td>Nacionalidad</td>
-                    <td>Posicion</td>
-                    <td>Goles</td>
-                    <td>Asisencias</td>
-                    <td>Partidos Jugados</td>
-                </tr>
-                <tr>
-                    <td><img src="" alt="" width="20px" height="20px"></td>
-                    <td>Julio</td>
-                    <td>20</td>
-                    <td>Argentina</td>
-                    <td>Defensor</td>
-                    <td>3</td>
-                    <td>20</td>
-                    <td>80</td>
-                </tr>
-                <tr>
-                    <td><img src="" alt="" width="20px" height="20px"></td>
-                    <td>Croco</td>
-                    <td>20</td>
-                    <td>Argentina</td>
-                    <td>Defensor</td>
-                    <td>3</td>
-                    <td>20</td>
-                    <td>80</td>
-                </tr>
-                <tr>
-                    <td><img src="" alt="" width="20px" height="20px"></td>
-                    <td>Saul</td>
-                    <td>20</td>
-                    <td>Argentina</td>
-                    <td>Defensor</td>
-                    <td>3</td>
-                    <td>20</td>
-                    <td>80</td>
-                </tr>
-                <tr>
-                    <td><img src="" alt="" width="20px" height="20px"></td>
-                    <td>Andres</td>
-                    <td>20</td>
-                    <td>Argentina</td>
-                    <td>Defensor</td>
-                    <td>3</td>
-                    <td>20</td>
-                    <td>80</td>
-                </tr>
-                <tr>
-                    <td><img src="" alt="" width="20px" height="20px"></td>
-                    <td>Julio</td>
-                    <td>20</td>
-                    <td>Argentina</td>
-                    <td>Defensor</td>
-                    <td>3</td>
-                    <td>20</td>
-                    <td>80</td>
-                </tr>
-                <tr>
-                    <td><img src="" alt="" width="20px" height="20px"></td>
-                    <td>Negri</td>
-                    <td>20</td>
-                    <td>Argentina</td>
-                    <td>Defensor</td>
-                    <td>3</td>
-                    <td>20</td>
-                    <td>80</td>
-                </tr>
-                <tr>
-                    <td><img src="" alt="" width="20px" height="20px"></td>
-                    <td>Malvasio</td>
-                    <td>20</td>
-                    <td>Argentina</td>
-                    <td>Defensor</td>
-                    <td>3</td>
-                    <td>20</td>
-                    <td>80</td>
-                </tr>
 
-            </table>
-            </td>
+    <table class="tabEstad">
+        <tr>
+            <td>Betsson</td>
         </tr>
     </table>
-    <table border="4" class="centrar paddin-top">
-        <tr>
-            <td>Club</td>
-        </tr>
-        <tr>
-            <td>
-            <table border="4" class="centrar">
-                <tr>
-                    <td><img src="" alt="" width="20px" height="20px"></td>
-                    <td>Nombre</td>
-                    <td>Fundacion</td>
-                    <td>Tecnico</td>
-                    <td>Formacion</td>
-                    <td>Derrotas</td>
-                    <td>Victorias</td>
-                    <td>Empates</td>
-                </tr>
-                <tr>
-                    <td><img src="" alt="" width="20px" height="20px"></td>
-                    <td>Estudiantes de Moro</td>
-                    <td>2007</td>
-                    <td>Morochi</td>
-                    <td>4-2-2-1</td>
-                    <td>90</td>
-                    <td>1</td>
-                    <td>2</td>
-                </tr>
-            </table>
-            </td>
-        </tr>
-    </table>
-</section>
-<h2>Estadisticas Equipo 1</h2>
-<h2>Estadisticas Equipo 2</h2>
-<ul class="container-flex">
-    <li><button>Predicciones</button></li>
-    <!--<li><button><a href="https://www.google.com.ar/maps/place/">Ubicación</a></button></li>
-    Ya tenemos una forma para poder ubicar el estadio en el que se va a 
-    jugar despues del link place/ poner la direccion del estadio usando Jinja--> 
-</ul>
 
+    <div class="apuestas">
+        {% for apuesta_n in apuestas_n %}
+            <table class="tabEstad">
+                <tr class="desplegable">
+                    <td>
+                    {{ apuesta_n.Nombre }}
+                    </td>
+                <tr class="ocultar_apuestas"> 
+                    <td>
+                        {% for apuesta in apuestas %}
+                            {% if apuesta.IdApiApuesta.Nombre == apuesta_n.Nombre %}
+                            <table class="tabEstad">
+                                <tr>
+                                    <td> {{ apuesta.Tipo }} </td>
+                                    <td>x {{ apuesta.Multiplicador }}</td>
+                                    <td>{{ apuesta.Porcentaje }}%</td>
+                                </tr>
+                            </table>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+            </table>                            
+        {% endfor %}
+    </div>
+
+    <!-- <h2>Equipo 1</h2>
+    <table class="tabEstad">
+        <tr>
+            <td><img src="" alt="" width="20px" height="20px"></td>
+            <td>Nombre</td>
+            <td>Edad</td>
+            <td>Nacionalidad</td>
+            <td>Posicion</td>
+            <td>Goles</td>
+            <td>Asisencias</td>
+            <td>Partidos Jugados</td>
+        </tr>
+        <tr>
+            <td><img src="" alt="" width="20px" height="20px"></td>
+            <td>Julio</td>
+            <td>20</td>
+            <td>Argentina</td>
+            <td>Defensor</td>
+            <td>3</td>
+            <td>20</td>
+            <td>80</td>
+        </tr>
+        <tr>
+            <td><img src="" alt="" width="20px" height="20px"></td>
+            <td>Croco</td>
+            <td>20</td>
+            <td>Argentina</td>
+            <td>Defensor</td>
+            <td>3</td>
+            <td>20</td>
+            <td>80</td>
+        </tr>
+        <tr>
+            <td><img src="" alt="" width="20px" height="20px"></td>
+            <td>Saul</td>
+            <td>20</td>
+            <td>Argentina</td>
+            <td>Defensor</td>
+            <td>3</td>
+            <td>20</td>
+            <td>80</td>
+        </tr>
+        <tr>
+            <td><img src="" alt="" width="20px" height="20px"></td>
+            <td>Andres</td>
+            <td>20</td>
+            <td>Argentina</td>
+            <td>Defensor</td>
+            <td>3</td>
+            <td>20</td>
+            <td>80</td>
+        </tr>
+        <tr>
+            <td><img src="" alt="" width="20px" height="20px"></td>
+            <td>Julio</td>
+            <td>20</td>
+            <td>Argentina</td>
+            <td>Defensor</td>
+            <td>3</td>
+            <td>20</td>
+            <td>80</td>
+        </tr>
+        <tr>
+            <td><img src="" alt="" width="20px" height="20px"></td>
+            <td>Negri</td>
+            <td>20</td>
+            <td>Argentina</td>
+            <td>Defensor</td>
+            <td>3</td>
+            <td>20</td>
+            <td>80</td>
+        </tr>
+        <tr>
+            <td><img src="" alt="" width="20px" height="20px"></td>
+            <td>Malvasio</td>
+            <td>20</td>
+            <td>Argentina</td>
+            <td>Defensor</td>
+            <td>3</td>
+            <td>20</td>
+            <td>80</td>
+        </tr>
+
+    </table>
+
+    <h3>Información de club</h3>
+    <table class="tabEstad">
+        <tr>
+            <td><img src="" alt="" width="20px" height="20px"></td>
+            <td>Nombre</td>
+            <td>Fundacion</td>
+            <td>Tecnico</td>
+            <td>Formacion</td>
+            <td>Derrotas</td>
+            <td>Victorias</td>
+            <td>Empates</td>
+        </tr>
+        <tr>
+            <td><img src="" alt="" width="20px" height="20px"></td>
+            <td>Estudiantes de Moro</td>
+            <td>2007</td>
+            <td>Morochi</td>
+            <td>4-2-2-1</td>
+            <td>90</td>
+            <td>1</td>
+            <td>2</td>
+        </tr>
+    </table>
+    <ul class="filaBotones">
+        <li><a>Predicciones</a></li>
+        <li><button><a href="https://www.google.com.ar/maps/place/">Ubicación</a></button></li>
+        Ya tenemos una forma para poder ubicar el estadio en el que se va a 
+        jugar despues del link place/ poner la direccion del estadio usando Jinja
+    </ul>-->
 {% endblock %}
