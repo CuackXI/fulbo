@@ -3,104 +3,59 @@
 
 {% block content %}
 <section>
-    <h1>Timball</h1>
-    <p>Te damos la bienvenida.</p>
-    <p>Tené cuidado al momento de apostar. El juego en exceso es perjudicial para vos y tus seres queridos.</p>
-
-    <!-- nigga
-    <div class="sidebar">
-        <h2>Secciones</h2>
-        <section>
-            <h3>Sección 1</h3>
-            <p>Contenido de la sección 1</p>
-        </section>
-        <section>
-            <h3>Sección 2</h3>
-            <p>Contenido de la sección 2</p>
-        </section>
-        <section>
-            <h3>Sección 3</h3>
-            <p>Contenido de la sección 3</p>
-        </section>
-        Aca añadimos todos los filtros como liga lo que sea.
+    <div class="bienvenida">
+        <h1>
+            TIMBALL
+        </h1>
+        <p>ESTADÍSTICAS DE FUTBOL</p>
     </div>
-    -->
-    <!--la sidebar no la pondría por ahora ngl
-        
-        hacelo -->
 
-    <!--cada tarjeta de partido va en un tag de artículo-->
-    <h2>Partidos próximos</h2>
-    <div class="flex-container"></div>
+    <p class="aviso">Tené cuidado al momento de apostar. El juego en exceso es perjudicial para vos y tus seres queridos.</p>
+    <h2 id="pagInicioPartidos">Partidos</h2>
+    <div class="artCont artPartido">
         {% for fixture in fixtures %}
-        <article>
-            <h3>Próximo</h3>
-            <table border="4px" class="centrar paddin-top tablas">
-                <!-- <p>Arbitro: {{ fixture.Arbitro }}</p>
-                <p>Estadio: {{ fixture.IdApiEstadio.Nombre }}</p> 
-                <img src="{{ fixture.IdApiEstadio.Image_URL }}" alt="" width="90px" height="90px"> -->
-                {% if fixture.Status == "Not Started" %}
-                <p>Estado del partido: No empezó</p>
-                {% elif fixture.Status == "Time to be defined" %}
-                <p>Estado del partido: Tiempo a definir</p>
-                {% elif fixture.Status == "Match Postponed" %}
-                <p>Estado del partido: Partido postpuesto</p>
-                {% elif fixture.Status == "Match Cancelled" or fixture.Status == "Match Abandoned" or fixture.Status == "Match Suspended" %}
-                <p>Estado del partido: Partido cancelado</p>
-                {% else %}
-                <p>Estado del partido: En juego</p>
-                {% endif %}
-                <tr>
-                    <td>{{ fixture.IdEquipoLocal.Nombre }}</td>
-                    <td>vs</td>
-                    <td>{{ fixture.IdEquipoVisitante.Nombre }}</td>
-                
-                </tr>
-                <tr>
-                    <td><img src="{{ fixture.IdEquipoLocal.Image_URL }}" alt="" width="90px" height="90px"></td>
-                    <td></td>
-                    <td><img src="{{ fixture.IdEquipoVisitante.Image_URL }}" alt="" width="90px" height="90px"></td>
-                    
-                </tr>
-            </table>
-            <table border="4px" class="centrar paddin-top">
-                <tr>
-                    <td>Fecha</td>
-                    <td>Hora</td>
-                    <td>Liga</td>
-                    <td>{{ fixture.IdEquipoLocal.Nombre }}</td>
-                    <td>Empate</td>
-                    <td>{{ fixture.IdEquipoVisitante.Nombre }}</td>
-                    
-                    <!-- Este resultado va a ser si la prediccion acerto o no con un ✔ --> 
-                </tr>
-                <tr>
-                    <td>{{ fixture.Fecha }}</td>
-                    <td>{{ fixture.Hora }}</td>
-                    <td><img width = "20px" height = "20px" src="{{ fixture.IdApiComp.Image_URL }}">{{ fixture.IdApiComp.Nombre }}</td>
-                    {% for apuesta in apuestas %}
-                        {% for apuesta_esp in apuesta %}
-                            {% if apuesta_esp.IdApiFixture_id == fixture.IdApiFixture_id %}
-                                <td>{{ apuesta_esp.Porcentaje }}%</td>
-                            {% endif %}
+            <article>
+                <h3 class="fecha">{{ fixture.Fecha }} - {{ fixture.Hora }}</h3>
+                <p>Horario Argentina</p>
+
+                <table class="tabEquipo">
+                    <tr>
+                        <td>{{ fixture.IdEquipoLocal.Nombre }}</td>
+                        <td>vs.</td>
+                        <td>{{ fixture.IdEquipoVisitante.Nombre }}</td>
+                        
+                    </tr>
+                    <tr>
+                        <td><img src="{{ fixture.IdEquipoLocal.Image_URL }}" alt="" width="200px" height="200px"></td>
+                        <td><img src="{{ fixture.IdEquipoVisitante.Image_URL }}" alt="" width="200px" height="200px"></td>
+                    </tr>
+                </table>
+                <table class="tabEstad">
+                    <tr class="tabCabezal">
+                        <td>Competencia</td>
+                        <td>{{ fixture.IdEquipoLocal.Nombre }}</td>
+                        <td>Empate</td>
+                        <td>{{ fixture.IdEquipoVisitante.Nombre }}</td>
+                        
+                        <!-- Este resultado va a ser si la prediccion acerto o no con un ✔ --> 
+                    </tr>
+                    <tr>
+                        <td><img width = "20px" height = "20px" src="{{ fixture.IdApiComp.Image_URL }}">{{ fixture.IdApiComp.Nombre }}</td>
+                        {% for apuesta in apuestas %}
+                            {% for apuesta_esp in apuesta %}
+                                {% if apuesta_esp.IdApiFixture_id == fixture.IdApiFixture_id %}
+                                    <td>{{ apuesta_esp.Porcentaje }}%</td>
+                                {% endif %}
+                            {% endfor %}
                         {% endfor %}
-                    {% endfor %}
-                </tr>
-            </table>
-            <ul class="container-flex">
-                <li><button><a href="fixture_predicts/{{ fixture.IdApiFixture_id }}">Predicciones</a></button></li>
-                <li><button><a href="fixture/{{ fixture.IdApiFixture_id }}">Ver mas</a></button></li>
-                <!-- <iframe
-                width="300"
-                height="200"
-                src="{{fixture.IdApiEstadio.Direccion}}">
-                </iframe> -->
-            </ul>
-            
-        </article>
-        
+                    </tr>
+                </table>
+                <ul class="filaBotones">
+                    <li><a href="fixture_predicts/{{ fixture.IdApiFixture_id }}">Predicciones</a></li>
+                    <li><a href="fixture/{{ fixture.IdApiFixture_id }}">Ver mas</a></li>
+                </ul>
+            </article>
         {% endfor %}
     </div>
-
 </section>
 {% endblock %}

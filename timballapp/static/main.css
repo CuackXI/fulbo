@@ -324,7 +324,6 @@ article {
 
 .artCont {
     margin-top: 20px;
-
     display: flex;
     justify-content: center;
     text-align: center;
@@ -408,16 +407,17 @@ table tr.tabCabezal td {
     font-weight: 500;
 }
 
-ul.filaBotones  {
+ul.filaBotones{
     list-style-type: none;
     padding: 0px;
     margin: 0px;
     display: flex;
     justify-content: center;
+    align-content: end;
     margin-bottom: 20px;
 }
 
-ul.filaBotones a {
+ul.filaBotones li{
     text-decoration: none;
     color: black;
     padding: 10px;
@@ -427,7 +427,7 @@ ul.filaBotones a {
     border-radius: 10px;
 }
 
-ul.filaBotones a:hover {
+ul.filaBotones li button:hover {
     background-color: rgb(255, 255, 255);
     box-shadow: 0px 0px 30px 0px rgba(255, 255, 255, 0.445);
 }
@@ -453,4 +453,8 @@ footer {
 
 .desplegable{
     text-align: center;
+}
+
+.fecha{
+    color: red;
 }
