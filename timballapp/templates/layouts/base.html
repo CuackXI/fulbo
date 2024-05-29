@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/main.css">
+    <link rel="stylesheet" href="../../static/css/main.css">
     <title>TIMBALL</title>
 </head>
 <body>
@@ -13,18 +13,19 @@
                 <a href="{%url 'Home' %}" class="titulo">TIMBALL</a>
             </li>
             <li>
-                <a href="#">Iniciar sesión</a>
+                <a href="{%url 'About' %}">Acerca de</a>
             </li>
             <li>
-                <a href="{%url 'About' %}">Acerca de</a>
+                <a href="{%url 'Signup' %}">Iniciar Sesion</a>
+            </li>
+            <li>
+                <a href="{%url 'Login' %}">Registrarse</a>
             </li>
         </ul>
     </nav>
     <section>
-        <div class="main">
         {% block content %}
         {% endblock %}
-        </div>
     </section>
     <footer>
         <p>@INTELIGENCIA MURUCHi</p>

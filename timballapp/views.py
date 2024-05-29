@@ -62,7 +62,10 @@ def fixture_predicts(request, id):
 
 def about(request):
     return render(request, 'about.html')
-
+def login(request):
+    return render(request,'usuario/iniciarsesion.html')
+def signup(request):
+    return render(request,'usuario/registrarse.html')
 
 
 

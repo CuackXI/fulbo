@@ -1,8 +1,10 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 
-<div class="bgDeco"></div>
+
 {% block content %}
+<!-- <div class="bgDeco"></div> -->
+<div class="main CpagPartido">
     <h1>
         Partido próximo
     </h1>
@@ -56,21 +58,69 @@
             <table class="tabEstad">
                 <tr class="desplegable">
                     <td>
-                    {{ apuesta_n.Nombre }}
+                    {% if apuesta_n.Nombre == "Match Winner" %}
+                        Resultado
+                    {% elif apuesta_n.Nombre == "Home/Away" %}
+                        Local/Visitante
+                    {% elif apuesta_n.Nombre == "Second Half Winner" %}
+                        Resultado segunda mitad
+                    {% elif apuesta_n.Nombre == "Goals Over/Under" %}
+                        Cantidad de goles
+                    {% elif apuesta_n.Nombre == "Goals Over/Under First Half" %}
+                        Cantidad de goles - Primera mitad
+                    {% elif apuesta_n.Nombre == "Goals Over/Under - Second Half" %}
+                        Cantidad de goles - Segunda mitad
+                    {% elif apuesta_n.Nombre == "HT/FT Double" %}
+                        Combinada resultados por tiempo (PT/ST)
+                    {% elif apuesta_n.Nombre == "Both Teams Score" %}
+                        Ambos equipos meten gol
+                    {% elif apuesta_n.Nombre == "Win to Nil - Home" %}
+                        Local gana sin conceder
+                    {% elif apuesta_n.Nombre == "Win to Nil - Away" %}
+                        Visitante gana sin conceder
+                    {% elif apuesta_n.Nombre == "Exact Score" %}
+                        Resultado exacto
+                    {% elif apuesta_n.Nombre == "Both Teams To Score in Both Halves" %}
+                        Ambos equipos meten gol en ambos tiempos
+                    {% elif apuesta_n.Nombre == "Total Goals By Ranges (1st Half)" %}
+                        Goles totales en la primera mitad
+                    {% elif apuesta_n.Nombre == "Halftime Result/Both Teams Score" %}
+                        Resultado primer tiempo/Ambos equipos meten gol
+                    {% elif apuesta_n.Nombre == "Halftime Result/Total Goals" %}
+                        Resultado primer tiempo/Goles totales
+                    {% else %}
+                        {{apuesta_n.Nombre}}
+                    {% endif %}
                     </td>
-                <tr class="ocultar_apuestas"> 
-                    <td>
+                </tr>
+                <tr class="ocultar_apuestas "> 
+                    <td class="detalles_flex">
+                        <details>
                         {% for apuesta in apuestas %}
                             {% if apuesta.IdApiApuesta.Nombre == apuesta_n.Nombre %}
                             <table class="tabEstad">
                                 <tr>
-                                    <td> {{ apuesta.Tipo }} </td>
-                                    <td>x {{ apuesta.Multiplicador }}</td>
-                                    <td>{{ apuesta.Porcentaje }}%</td>
+                                    <summary>
+                                        {% if apuesta.Tipo == "Home" %}
+                                        <td> {{fixture.IdEquipoLocal.Nombre}} </td>
+                                        {% elif apuesta.Tipo == "Draw" %}
+                                        <td> Empate </td>
+                                        {% elif apuesta.Tipo == "Away" %}
+                                        <td> {{fixture.IdEquipoVisitante.Nombre}} </td>
+                                        {% elif apuesta.Tipo == "Yes" %}
+                                        <td> Si </td>
+                                        {% else %}
+                                        <td> {{ apuesta.Tipo }} </td>
+                                        {% endif %}
+                                        <td>x {{ apuesta.Multiplicador }}</td>
+                                        <td>{{ apuesta.Porcentaje }}%</td>
+                                    </summary>
                                 </tr>
                             </table>
                             {% endif %}
                         {% endfor %}
+                        </details>
+                        <!-- <p>Ver más</p> -->
                     </td>
                 </tr>
             </table>                            
@@ -191,4 +241,8 @@
         Ya tenemos una forma para poder ubicar el estadio en el que se va a 
         jugar despues del link place/ poner la direccion del estadio usando Jinja
     </ul>-->
-{% endblock %}
+    <div class="centrar">
+        <iframe src="{{ fixture.IdApiEstadio.Direccion }}" width = "900px" height = "600px" frameborder="0"></iframe>
+    </div>
+    </div>
+    {% endblock %}
