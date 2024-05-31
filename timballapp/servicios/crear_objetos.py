@@ -16,14 +16,13 @@ class crear_objetos():
             for b in range(len(response['response'][i]['bookmakers'])):
                 for y in response['response'][i]['bookmakers'][b]['bets']:
                     for x in y['values']:
-                        # Apuesta.objects.create(
-                        #     IdApiFixture_id=response['response'][i]['fixture']['id'],
-                        #     IdApiBookmaker_id=response['response'][i]['bookmakers'][b]['id'],
-                        #     IdApiApuesta_id=y['id'],
-                        #     Tipo=x['value'],
-                        #     Multiplicador=x['odd']
-                        # )
-                        pass
+                        Apuesta.objects.create(
+                            IdApiFixture_id=response['response'][i]['fixture']['id'],
+                            IdApiBookmaker_id=response['response'][i]['bookmakers'][b]['id'],
+                            IdApiApuesta_id=y['id'],
+                            Tipo=x['value'],
+                            Multiplicador=x['odd']
+                        )
 
     def response_to_bookmaker(self, response):
         for i in range(len(response['response'])):
@@ -77,8 +76,6 @@ class crear_objetos():
                 if char == "-":
                     contador+=1
 
-            print(hora, timestr, dia, mes, año)
-
             hora = int(hora) - 3
 
             if int(hora) < 0:
@@ -130,21 +127,23 @@ class crear_objetos():
 
             timestr = str(hora) + timestr
             datestr = str(año) + "-" + str(mes) + "-" + str(dia)
+            
+            # try:
+            #     print("update")
 
-            print(timestr)
-            print(datestr)
-
-            # Fixture.objects.create(
-            #     IdApiComp_id=response['response'][i]['league']['id'],
-            #     IdApiFixture_id=response['response'][i]['fixture']['id'],
-            #     Arbitro=response['response'][i]['fixture']['referee'],
-            #     Fecha=datestr,
-            #     Hora=timestr,
-            #     IdApiEstadio_id=response['response'][i]['fixture']['venue']['id'],
-            #     IdEquipoLocal_id=response['response'][i]['teams']['home']['id'],
-            #     IdEquipoVisitante_id=response['response'][i]['teams']['away']['id'],
-            #     Status=response['response'][i]['fixture']['status']['long']
-            # )
+            Fixture.objects.filter(IdApiFixture_id=response['response'][i]['fixture']['id']).update(Arbitro=response['response'][i]['fixture']['referee'],Fecha=datestr,Hora=timestr,IdApiEstadio_id=response['response'][i]['fixture']['venue']['id'],Status=response['response'][i]['fixture']['status']['long'])
+            # except:
+            #     print("create")
+            #     Fixture.objects.create(
+            #         IdApiComp_id=response['response'][i]['league']['id'],
+            #         IdApiFixture_id=response['response'][i]['fixture']['id'],
+            #         Arbitro=response['response'][i]['fixture']['referee'],
+            #         Fecha=datestr,
+            #         Hora=timestr,
+            #         IdApiEstadio_id=response['response'][i]['fixture']['venue']['id'],
+            #         IdEquipoLocal_id=response['response'][i]['teams']['home']['id'],
+            #         IdEquipoVisitante_id=response['response'][i]['teams']['away']['id'],
+            #         Status=response['response'][i]['fixture']['status']['long'])
 
     def response_to_equipos(self, response, competencia):
         # for i in range(len(response['response'])):

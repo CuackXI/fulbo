@@ -11,6 +11,7 @@ from .servicios.Fixture_por_ID import Fixture_por_ID
 from .servicios.nombres_de_apuestas_de_fixture import nombres_de_apuestas_de_fixture
 from .servicios.Predicts_Por_Fixture import Predicts_Por_Fixture
 from .servicios.crear_objetos import crear_objetos
+from .servicios.get_fixtures import get_all_fixtures
 from .requests.clase_request import Request
 from .models import *
 from .forms import *
@@ -148,21 +149,19 @@ def post_fixtures(request):
             'form': activateRequest()
         })
     else:
-        query = f'DELETE FROM timballapp_fixture where IdApiFixture_id > 0 and Status != "Match Finished"'
-        with connection.cursor() as cursor:
-            cursor.execute(query)
-
         request_fixtures = Request(url = "https://api-football-v1.p.rapidapi.com/v3/fixtures", 
                     querystring = {
                     "league":"128",
                     "season":"2024",
-                    "from": "2024-05-09", 
+                    "from": "2024-05-23", 
                     "to": "2024-12-16"},
                     headers = {
                     "X-RapidAPI-Key": "36d0515859mshc128509052fcf97p1484c4jsn6f58a0e1bbb7",
                     "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"})
 
         fixtures = request_fixtures.request_response(request_fixtures.url, request_fixtures.querystring, request_fixtures.headers)
+
+        print(fixtures)
 
         servicio = crear_objetos()
         servicio.response_to_fixtures(fixtures)
@@ -175,7 +174,9 @@ def post_estadios(request):
             'form': activateRequest()
         })
     else:
-        request_estadios = Request(url = "https://api-football-v1.p.rapidapi.com/v3/teams", querystring = {"league":"128","season":"2024"},headers = {
+        request_estadios = Request(url = "https://api-football-v1.p.rapidapi.com/v3/teams", 
+            querystring = {"league":"128","season":"2024"},
+            headers = {
             "x-rapidapi-key": "36d0515859mshc128509052fcf97p1484c4jsn6f58a0e1bbb7",
             "x-rapidapi-host": "api-football-v1.p.rapidapi.com",
             "Content-Type": "application/json"

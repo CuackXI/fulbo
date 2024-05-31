@@ -16,6 +16,17 @@
             {% for fixture in fixtures %}
                 <article>
                     <h3 class="fecha">{{ fixture.Fecha }} - {{ fixture.Hora }}</h3>
+                    {% if fixture.Status == "Not Started" %}
+                    <p>No empezó</p>
+                    {% elif fixture.Status == "Time to be defined" %}
+                    <p>Tiempo a definir</p>
+                    {% elif fixture.Status == "Match Postponed" %}
+                    <p>Partido postpuesto</p>
+                    {% elif fixture.Status == "Match Cancelled" or fixture.Status == "Match Abandoned" or fixture.Status == "Match Suspended" %}
+                    <p>Partido cancelado</p>
+                    {% else %}
+                    <p>En juego</p>
+                    {% endif %}
 
                     <table class="tabEquipo">
                         <tr>

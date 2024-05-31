@@ -7,10 +7,7 @@ class Request():
         self.headers = headers  
 
     def request_response(self, url, querystring, headers):
-        if querystring != None:
-            response = requests.get(url, headers=headers)
-        else:
-            response = requests.get(url, headers=headers, params=querystring)
+        response = requests.get(url, headers=headers, params=querystring)
 
         response = response.json()
 

@@ -4,24 +4,10 @@ body {font-family: "Josefin Sans", sans-serif;}
 
 
 /* Testing */
-/* html {
+html {
     height: 100%;
-} */
-.links{
-    text-decoration: none;
-    color: black;
 }
-.centrar{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center; 
-}
-.detalles_flex{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 .space-beetwen{
     margin: 10px;
 }
