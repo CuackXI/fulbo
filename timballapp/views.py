@@ -1,6 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.db import connection
-import requests
+from django.shortcuts import render, redirect
 from .servicios.obtener_porcentajes import Obtener_Porcentajes
 from .servicios.actualizar_porcentajes import Actualizar_Porcentajes
 from .servicios.obtener_apuestas import Obtener_Apuestas
@@ -15,7 +13,6 @@ from .servicios.get_fixtures import get_all_fixtures
 from .requests.clase_request import Request
 from .models import *
 from .forms import *
-from .requests import clase_request
 
 # Create your views here.
 
