@@ -4,7 +4,7 @@
 {% block content %}
 <section>
     <h1>Partido próximo</h1>
-    <table border="4px" class="centrar">
+    <table class="centrar tabEstad">
         <tr>
             <td>{{ fixture.IdEquipoLocal.Nombre }}</td>
             <td>vs</td>
@@ -18,32 +18,13 @@
                 
         </tr>
     </table>
-    <table border="4px" class="centrar paddin-top">
+    <table class="centrar paddin-top tabEstad">
         <tr>
-            <td>liga</td>
-            <td>estadio</td>
-        </tr>
-        <tr>
-            <td><img src="{{ fixture.IdApiComp.Image_URL }}" alt="" width="40px" height="40px"></td>
-            <td>{{ fixture.IdApiEstadio.Nombre }}</td>
-        </tr>
-    </table>
-    <table border="4" class="centrar paddin-top">
-        <tr>
-            <td>Apuestas</td>
-        </tr>
-    </table>
-    <table border="4" class="centrar paddin-top">
-        <tr>
-            <td>
-                <p>
-                    Bookmaker: Betsson
-                </p>
-            </td>
+            <td>Predicciones</td>
         </tr>
     </table>
     {% for apuesta_n in apuestas_n %}
-        <table border="4" class="centrar paddin-top">
+        <table class="centrar paddin-top tabEstad">
             <tr>
                 <td>
                 {{ apuesta_n.Nombre }}
@@ -55,7 +36,6 @@
                             <table border="1">
                                 <tr>
                                     <td> {{ predict.Tipo }} </td>
-                                    <td>x {{ predict.Multiplicador }}</td>
                                     <td>{{ predict.Porcentaje }}%</td>
                                 </tr>
                             </table>

@@ -464,3 +464,7 @@ footer {
 .fecha{
     font-size: 2rem;
 }
+
+.links{
+    text-decoration: none;
+}

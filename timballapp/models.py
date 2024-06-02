@@ -88,26 +88,6 @@ class Fixture(models.Model):
 #     TirosArco = models.IntegerField()
 #     TirosDesviados = models.IntegerField()
 
-class Jugador(models.Model):
-    IdApiJugador_id = models.IntegerField(primary_key=True)
-    Nombre = models.CharField(max_length=200)
-    Edad = models.IntegerField()
-    Nacionalidad = models.CharField(max_length=200)
-    Altura = models.CharField(max_length=200)
-    Peso = models.CharField(max_length=200)
-    Image_URL = models.CharField(max_length=200)
-    IdApiEquipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
-    Posicion = models.CharField(max_length=200)
-    Numero = models.IntegerField()
-
-class Tecnico(models.Model):
-    IdApiTecnico_id = models.IntegerField(primary_key=True)
-    Nombre = models.CharField(max_length=200)
-    Edad = models.IntegerField()
-    Nacionalidad = models.CharField(max_length=200)
-    Image_URL = models.CharField(max_length=200)
-    IdApiEquipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
-
 class Bookmaker(models.Model):
     Bookmaker_id = models.IntegerField(primary_key=True)
     Nombre = models.CharField(max_length=200)
@@ -139,3 +119,23 @@ class Apuesta(models.Model):
             Porcentajes.append(round((Valor*100)/sumVal_P, 2))
 
         return(Porcentajes)
+
+class Jugador(models.Model):
+    IdApiJugador_id = models.IntegerField(primary_key=True)
+    Nombre = models.CharField(max_length=200)
+    Edad = models.IntegerField()
+    Nacionalidad = models.CharField(max_length=200)
+    Altura = models.CharField(max_length=200)
+    Peso = models.CharField(max_length=200)
+    Image_URL = models.CharField(max_length=200)
+    IdApiEquipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
+    Posicion = models.CharField(max_length=200)
+    Numero = models.IntegerField()
+
+class Tecnico(models.Model):
+    IdApiTecnico_id = models.IntegerField(primary_key=True)
+    Nombre = models.CharField(max_length=200)
+    Edad = models.IntegerField()
+    Nacionalidad = models.CharField(max_length=200)
+    Image_URL = models.CharField(max_length=200)
+    IdApiEquipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
