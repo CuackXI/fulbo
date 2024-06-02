@@ -1,5 +1,11 @@
 from ..models import *
 
+# 
+# 
+# NOTA: ESTOS SERVICIOS SON SOLO DE ADMINISTRACIÓN Y MUY PROBABLEMENTE CAMBIE LA MANERA EN LA QUE HAGO EL MANAGMENT EN EL FUTURO
+# 
+# 
+
 class crear_objetos():
     def response_to_paises(self, response):
         for i in range(len(response['response'])):
