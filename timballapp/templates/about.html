@@ -2,36 +2,40 @@
 {% load static %}
 
 {% block content %}
-<h1>Acerca de TIMBALL</h1>
-<p>Timball es una plataforma de estadísticas y predicciones sobre partidos de futbol de la Liga Profesional Argentina. Podrás ver datos de los jugadores y entrenadores de los equipos a enfrentarse y sacar conclusiones del resultado.</p>
-<h2>INTELIGENCIA MURUCHi</h2>
+<section>
+    <div class="main">
+        <h1>Acerca de TIMBALL</h1>
+        <p>Timball es una plataforma de estadísticas y predicciones sobre partidos de futbol de la Liga Profesional Argentina. Podrás ver datos de los jugadores y entrenadores de los equipos a enfrentarse y sacar conclusiones del resultado.</p>
+        <h2>INTELIGENCIA MURUCHi</h2>
 
-<div class="artCont artMedio">
-    <article>
-        <img src="https://lh3.googleusercontent.com/a/ACg8ocI1t5ZpdWWZDy2xgkpV8OWFSJ3VSMpBUD2mpK1PYFRIl8iXe4MJ=s288-c-no" alt="" height="225px" width="225px">
-        <h3>Santino Nicolas Andreatta</h3>
-        <p>Backend</p>
-    </article>
-    <article>
-        <img src="https://lh3.googleusercontent.com/a-/ALV-UjVEZey-auZ4EI15l6P9qIz4D9wsF5LTcqhuPkDWKdAsK_BN6qEY=s500-c" alt="" height="225px" width="225px">
-        <h3>Joaquin Berzunces</h3>
-        <p>Backend</p>
-    </article>
-    <article>
-        <img src="https://lh3.googleusercontent.com/a-/ALV-UjUDDmSzYvVKoYn0TlYUn_hR0eKqvR0_SMEmH_bl4XviH8PtNml6=s500-c" alt="" height="225px" width="225px">
-        <h3>Nahuel Gaston Gonzalez Aran</h3>
-        <p>Backend</p>
-    </article>
-    <article>
-        <img src="https://lh3.googleusercontent.com/a-/ALV-UjUE1K1AXrizFT_sTqhJMYbJ71zOh_kqH4ShD3K7XKqQOa4H3004=s320-c" alt="" height="225px" width="225px">
-        <h3>Sebastian Daniel Marcos</h3>
-        <p>Diseño frontend</p>
-    </article>
-    <article>
-        <img src="https://lh3.googleusercontent.com/a-/ALV-UjX3mDJsAOuU7sMpAlIbDRkAgolTTwCBrblx90ZeeaSxTN6DzM5-=s320-c" alt="" height="225px" width="225px">
-        <h3>Tomas Valentin Muruchi</h3>
-        <p>Diseño frontend</p>
-    </article>
-</div>
+        <div class="artCont artMedio">
+            <article>
+                <img src="https://lh3.googleusercontent.com/a/ACg8ocI1t5ZpdWWZDy2xgkpV8OWFSJ3VSMpBUD2mpK1PYFRIl8iXe4MJ=s288-c-no" alt="" height="225px" width="225px">
+                <h3>Santino Nicolas Andreatta</h3>
+                <p>Backend</p>
+            </article>
+            <article>
+                <img src="https://lh3.googleusercontent.com/a-/ALV-UjVEZey-auZ4EI15l6P9qIz4D9wsF5LTcqhuPkDWKdAsK_BN6qEY=s500-c" alt="" height="225px" width="225px">
+                <h3>Joaquin Berzunces</h3>
+                <p>Backend</p>
+            </article>
+            <article>
+                <img src="https://lh3.googleusercontent.com/a-/ALV-UjUDDmSzYvVKoYn0TlYUn_hR0eKqvR0_SMEmH_bl4XviH8PtNml6=s500-c" alt="" height="225px" width="225px">
+                <h3>Nahuel Gaston Gonzalez Aran</h3>
+                <p>Backend</p>
+            </article>
+            <article>
+                <img src="{% static 'img/developers/sebastianmarcos.jpg' %}" alt="" height="225px" width="225px">
+                <h3>Sebastian Daniel Marcos</h3>
+                <p>Diseño frontend</p>
+            </article>
+            <article>
+                <img src="{% static 'img/developers/tomasmuruchi.jpg' %}" alt="" height="225px" width="225px">
+                <h3>Tomas Valentin Muruchi</h3>
+                <p>Diseño frontend</p>
+            </article>
+        </div>
+    </div>
+</section>
 
 {% endblock %}
