@@ -4,7 +4,7 @@
 {% block content %}
 <section>
     <h1>Partido próximo</h1>
-    <table class="centrar tabEstad">
+    <table class="tabEquipo">
         <tr>
             <td>{{ fixture.IdEquipoLocal.Nombre }}</td>
             <td>vs</td>
@@ -12,19 +12,20 @@
             
         </tr>
         <tr>
-            <td><img src="{{ fixture.IdEquipoLocal.Image_URL }}" alt="" width="90px" height="90px"></td>
+            <td><img src="{{ fixture.IdEquipoLocal.Image_URL }}" alt="" width="200px" height="200px""></td>
             <td></td>
-            <td><img src="{{ fixture.IdEquipoVisitante.Image_URL }}" alt="" width="90px" height="90px"></td>
+            <td><img src="{{ fixture.IdEquipoVisitante.Image_URL }}" alt="" width="200px" height="200px"></td>
                 
         </tr>
     </table>
-    <table class="centrar paddin-top tabEstad">
+    <table class="tabEstad">
         <tr>
             <td>Predicciones</td>
         </tr>
     </table>
-    {% for apuesta_n in apuestas_n %}
-        <table class="centrar paddin-top tabEstad">
+    <div class="apuestas">
+        {% for apuesta_n in apuestas_n %}
+        <table class="tabEstad">
             <tr>
                 <td>
                 {{ apuesta_n.Nombre }}
@@ -33,7 +34,7 @@
                 <td>
                     {% for predict in predicts %}
                         {% if predict.IdApiApuesta_id == apuesta_n.IdApiApuesta %}
-                            <table border="1">
+                            <table classs="tabEstad">
                                 <tr>
                                     <td> {{ predict.Tipo }} </td>
                                     <td>{{ predict.Porcentaje }}%</td>
@@ -44,7 +45,8 @@
                 </td>
             </tr>
         </table>                            
-    {% endfor %}
+        {% endfor %}
+    </div>
 </section>
 <h2>Estadisticas Equipo 1</h2>
 <h2>Estadisticas Equipo 2</h2>

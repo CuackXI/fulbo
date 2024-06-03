@@ -468,3 +468,9 @@ footer {
 .links{
     text-decoration: none;
 }
+
+.centrar{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
