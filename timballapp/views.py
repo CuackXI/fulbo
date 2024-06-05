@@ -90,23 +90,29 @@ def equipo_especifico(request, id):
 def feed_busqueda(request, query):
     servicio = busqueda_equipos_coincidencia()
     equipos = servicio.busqueda_equipos_coincidencia(query)
-    equipo = equipos[0]
-
-    servicio = fixtures_por_equipo()
-    fixtures = servicio.fixtures_por_equipo(equipo.IdApiEquipo_id)
-
-    servicio = Apuestas_Match_Winner_Por_Fixture()
-    apuestas_por_fixture = servicio.Apuestas_Match_Winner_Por_Fixture(128, fixtures)
-
-    print(equipo.Nombre)
-    print(fixtures)
-
-    return render(request, 'index.html', {
+    print(equipos)
+    if equipos.exists():
+        equipo = equipos[0]
+        servicio = fixtures_por_equipo()
+        fixtures = servicio.fixtures_por_equipo(equipo.IdApiEquipo_id)
+        servicio = Apuestas_Match_Winner_Por_Fixture()
+        apuestas_por_fixture = servicio.Apuestas_Match_Winner_Por_Fixture(128, fixtures)
+        return render(request, 'index.html', {
         'fixtures': fixtures,
         'apuestas': apuestas_por_fixture,
         'equipo': equipo
-    })
-
+        })
+    else:
+        equipo = 440
+        servicio = Obtener_Fixtures_Proximos_Por_Competencia()
+        fixtures = servicio.Obtener_Fixtures_Proximos_Por_Competencia(128)
+        servicio = Apuestas_Match_Winner_Por_Fixture()
+        apuestas_por_fixture = servicio.Apuestas_Match_Winner_Por_Fixture(128, fixtures)
+        return render(request, 'index.html', {
+        'fixtures': fixtures,
+        'apuestas': apuestas_por_fixture
+        })
+    
 def about(request):
     return render(request, 'about.html')
 def login(request):

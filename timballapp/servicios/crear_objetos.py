@@ -22,13 +22,16 @@ class crear_objetos():
             for b in range(len(response['response'][i]['bookmakers'])):
                 for y in response['response'][i]['bookmakers'][b]['bets']:
                     for x in y['values']:
-                        Apuesta.objects.create(
-                            IdApiFixture_id=response['response'][i]['fixture']['id'],
-                            IdApiBookmaker_id=response['response'][i]['bookmakers'][b]['id'],
-                            IdApiApuesta_id=y['id'],
-                            Tipo=x['value'],
-                            Multiplicador=x['odd']
-                        )
+                        try:
+                            Apuesta.objects.get(IdApiFixture_id=response['response'][i]['fixture']['id'], IdApiApuesta_id=y['id'], Tipo=x['value'])
+                        except:
+                            Apuesta.objects.create(
+                                IdApiFixture_id=response['response'][i]['fixture']['id'],
+                                IdApiBookmaker_id=response['response'][i]['bookmakers'][b]['id'],
+                                IdApiApuesta_id=y['id'],
+                                Tipo=x['value'],
+                                Multiplicador=x['odd']
+                            )
 
     def response_to_bookmaker(self, response):
         for i in range(len(response['response'])):
