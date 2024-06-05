@@ -10,6 +10,10 @@ from .servicios.nombres_de_apuestas_de_fixture import nombres_de_apuestas_de_fix
 from .servicios.Predicts_Por_Fixture import Predicts_Por_Fixture
 from .servicios.crear_objetos import crear_objetos
 from .servicios.get_fixtures import get_all_fixtures
+from .servicios.jugadores_por_equipo import jugadores_por_equipo
+from .servicios.equipo_por_id import equipo_por_id
+from .servicios.fixtures_por_equipo import fixtures_por_equipo
+from .servicios.busqueda_equipos_coincidencia import busqueda_equipos_coincidencia
 from .requests.clase_request import Request
 from .models import *
 from .forms import *
@@ -17,16 +21,22 @@ from .forms import *
 # Create your views here.
 
 def index(request):
-    servicio = Obtener_Fixtures_Proximos_Por_Competencia()
-    fixtures = servicio.Obtener_Fixtures_Proximos_Por_Competencia(128)
+    if request.method == 'GET':
+        servicio = Obtener_Fixtures_Proximos_Por_Competencia()
+        fixtures = servicio.Obtener_Fixtures_Proximos_Por_Competencia(128)
 
-    servicio = Apuestas_Match_Winner_Por_Fixture()
-    apuestas_por_fixture = servicio.Apuestas_Match_Winner_Por_Fixture(128, fixtures)
+        servicio = Apuestas_Match_Winner_Por_Fixture()
+        apuestas_por_fixture = servicio.Apuestas_Match_Winner_Por_Fixture(128, fixtures)
 
-    return render(request, 'index.html', {
-        'fixtures': fixtures,
-        'apuestas': apuestas_por_fixture
-    })
+        return render(request, 'index.html', {
+            'fixtures': fixtures,
+            'apuestas': apuestas_por_fixture,
+            'form': barraBusqueda()
+        })
+    else:
+        query = request.POST['query']
+
+        return redirect(f'busqueda/{query}')
 
 def fixture_detalle(request, id):
     servicio = Fixture_por_ID()
@@ -58,6 +68,43 @@ def fixture_predicts(request, id):
         'fixture': fixture,
         'predicts': predicts,
         'apuestas_n': apuestas_n
+    })
+
+def equipo_especifico(request, id):
+
+    servicio = equipo_por_id()
+    equipo = servicio.equipo_por_id(id)
+
+    servicio = jugadores_por_equipo()
+    jugadores = servicio.jugadores_por_equipo(equipo.IdApiEquipo_id)
+
+    servicio = fixtures_por_equipo()
+    fixtures = servicio.fixtures_por_equipo(id)
+
+    return render(request, 'equipos/equipo.html', {
+        'equipo': equipo,
+        'jugadores': jugadores,
+        'fixtures': fixtures
+    })
+
+def feed_busqueda(request, query):
+    servicio = busqueda_equipos_coincidencia()
+    equipos = servicio.busqueda_equipos_coincidencia(query)
+    equipo = equipos[0]
+
+    servicio = fixtures_por_equipo()
+    fixtures = servicio.fixtures_por_equipo(equipo.IdApiEquipo_id)
+
+    servicio = Apuestas_Match_Winner_Por_Fixture()
+    apuestas_por_fixture = servicio.Apuestas_Match_Winner_Por_Fixture(128, fixtures)
+
+    print(equipo.Nombre)
+    print(fixtures)
+
+    return render(request, 'index.html', {
+        'fixtures': fixtures,
+        'apuestas': apuestas_por_fixture,
+        'equipo': equipo
     })
 
 def about(request):

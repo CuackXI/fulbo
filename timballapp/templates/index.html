@@ -11,7 +11,13 @@
     </div>
     <div class="main CpagPartido">
         <p class="aviso">Tené cuidado al momento de apostar. El juego en exceso es perjudicial para vos y tus seres queridos.</p>
+        
+        {% if equipo.Nombre == none %}
         <h2 id="pagInicioPartidos">Partidos</h2>
+        {% else %}
+        <h2 id="pagInicioPartidos">Partidos de {{ equipo.Nombre }}</h2>
+        {% endif %}
+
         <div class="artCont artPartido">
             {% for fixture in fixtures %}
                 <article>

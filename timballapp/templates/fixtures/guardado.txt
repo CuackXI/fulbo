@@ -1,0 +1,114 @@
+    <!-- <h2>Equipo 1</h2>
+    <table class="tabEstad">
+        <tr>
+            <td><img src="" alt="" width="20px" height="20px"></td>
+            <td>Nombre</td>
+            <td>Edad</td>
+            <td>Nacionalidad</td>
+            <td>Posicion</td>
+            <td>Goles</td>
+            <td>Asisencias</td>
+            <td>Partidos Jugados</td>
+        </tr>
+        <tr>
+            <td><img src="" alt="" width="20px" height="20px"></td>
+            <td>Julio</td>
+            <td>20</td>
+            <td>Argentina</td>
+            <td>Defensor</td>
+            <td>3</td>
+            <td>20</td>
+            <td>80</td>
+        </tr>
+        <tr>
+            <td><img src="" alt="" width="20px" height="20px"></td>
+            <td>Croco</td>
+            <td>20</td>
+            <td>Argentina</td>
+            <td>Defensor</td>
+            <td>3</td>
+            <td>20</td>
+            <td>80</td>
+        </tr>
+        <tr>
+            <td><img src="" alt="" width="20px" height="20px"></td>
+            <td>Saul</td>
+            <td>20</td>
+            <td>Argentina</td>
+            <td>Defensor</td>
+            <td>3</td>
+            <td>20</td>
+            <td>80</td>
+        </tr>
+        <tr>
+            <td><img src="" alt="" width="20px" height="20px"></td>
+            <td>Andres</td>
+            <td>20</td>
+            <td>Argentina</td>
+            <td>Defensor</td>
+            <td>3</td>
+            <td>20</td>
+            <td>80</td>
+        </tr>
+        <tr>
+            <td><img src="" alt="" width="20px" height="20px"></td>
+            <td>Julio</td>
+            <td>20</td>
+            <td>Argentina</td>
+            <td>Defensor</td>
+            <td>3</td>
+            <td>20</td>
+            <td>80</td>
+        </tr>
+        <tr>
+            <td><img src="" alt="" width="20px" height="20px"></td>
+            <td>Negri</td>
+            <td>20</td>
+            <td>Argentina</td>
+            <td>Defensor</td>
+            <td>3</td>
+            <td>20</td>
+            <td>80</td>
+        </tr>
+        <tr>
+            <td><img src="" alt="" width="20px" height="20px"></td>
+            <td>Malvasio</td>
+            <td>20</td>
+            <td>Argentina</td>
+            <td>Defensor</td>
+            <td>3</td>
+            <td>20</td>
+            <td>80</td>
+        </tr>
+
+    </table>
+
+    <h3>Información de club</h3>
+    <table class="tabEstad">
+        <tr>
+            <td><img src="" alt="" width="20px" height="20px"></td>
+            <td>Nombre</td>
+            <td>Fundacion</td>
+            <td>Tecnico</td>
+            <td>Formacion</td>
+            <td>Derrotas</td>
+            <td>Victorias</td>
+            <td>Empates</td>
+        </tr>
+        <tr>
+            <td><img src="" alt="" width="20px" height="20px"></td>
+            <td>Estudiantes de Moro</td>
+            <td>2007</td>
+            <td>Morochi</td>
+            <td>4-2-2-1</td>
+            <td>90</td>
+            <td>1</td>
+            <td>2</td>
+        </tr>
+    </table>
+    <ul class="filaBotones">
+        <li><a>Predicciones</a></li>
+        <li><button><a href="https://www.google.com.ar/maps/place/">Ubicación</a></button></li>
+        Ya tenemos una forma para poder ubicar el estadio en el que se va a 
+        jugar despues del link place/ poner la direccion del estadio usando Jinja
+    </ul>-->

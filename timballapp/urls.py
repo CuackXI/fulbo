@@ -9,6 +9,8 @@ urlpatterns = [
     path('IniciarSesion', views.login, name="Login"),
     path('fixture/<int:id>/', views.fixture_detalle),
     path('fixture_predicts/<int:id>/', views.fixture_predicts),
+    path('equipo/<int:id>/', views.equipo_especifico,),
+    path('busqueda/<str:query>/', views.feed_busqueda),
 
     # Estas no son urls del usuario hay que ver como hacer esto sin urls
     path('post_paises', views.post_paises, name="post_paises"),

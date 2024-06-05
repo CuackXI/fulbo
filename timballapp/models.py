@@ -13,15 +13,6 @@ class Competiciones(models.Model):
     Image_URL = models.CharField(max_length=200)
     Temporada = models.IntegerField()
 
-class Equipo(models.Model):
-    IdApiEquipo_id = models.IntegerField(primary_key=True)
-    IdApiComp = models.ForeignKey(Competiciones, on_delete=models.CASCADE)
-    Nombre = models.CharField(max_length=200)
-    IdApiEstadio = models.IntegerField()
-    Pais = models.CharField(max_length=200)
-    Image_URL = models.CharField(max_length=200)
-    Fundacion = models.IntegerField()
-
 class Estadio(models.Model):
     IdApiEstadio_id = models.IntegerField(primary_key=True)
     Nombre = models.CharField(max_length=200)
@@ -29,6 +20,15 @@ class Estadio(models.Model):
     Direccion = models.CharField(max_length=200)
     Capacidad = models.IntegerField()
     Image_URL = models.CharField(max_length=200)
+
+class Equipo(models.Model):
+    IdApiEquipo_id = models.IntegerField(primary_key=True)
+    IdApiComp = models.ForeignKey(Competiciones, on_delete=models.CASCADE)
+    Nombre = models.CharField(max_length=200)
+    IdApiEstadio = models.ForeignKey(Estadio, on_delete=models.CASCADE)
+    Pais = models.CharField(max_length=200)
+    Image_URL = models.CharField(max_length=200)
+    Fundacion = models.IntegerField()
 
 # class Estadisticas_Equipo(models.Model):
 #     IdApiEquipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)

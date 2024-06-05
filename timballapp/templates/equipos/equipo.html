@@ -1,0 +1,126 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<table class="tabEstad">
+    <tr>
+        <td>
+            Equipo
+        </td>
+    </tr>
+    <tr>
+        <td>Nombre</td>
+        <td>Escudo</td>
+        <td>Fundación</td>
+        <td>País</td>
+    </tr>
+    <tr>
+        <td>{{ equipo.Nombre }}</td>
+        <td><img src="{{ equipo.Image_URL }}" alt="Equipo" width = "200px" height = "200px"></td>
+        <td>{{ equipo.Fundacion }}</td>
+        <td>{{ equipo.Pais }}</td>
+    </tr>
+</table>
+
+<table class="tabEstad">
+    <tr>
+        <td>
+            <p>
+                Estadio
+            </p>
+        </td>
+    </tr>
+
+    <tr>
+        <td>Nombre</td>
+        <td>Imagen</td>
+    </tr>
+
+    <tr>
+        <td>{{ equipo.IdApiEstadio.Nombre }}</td>
+        <td><img src="{{ equipo.IdApiEstadio.Image_URL }}" alt="Estadio" width="200px" height="200px"></td>
+    </tr>
+</table>
+
+<table class="tabEstad">
+    <tr>
+        <td>
+            <p>
+                Jugadores
+            </p>
+        </td>
+    </tr>
+    {% for jugador in jugadores %}
+        <tr>
+            <td>{{ jugador.Nombre }}</td>
+            <td><img src="{{ jugador.Image_URL }}" alt="{{ jugador.Nombre }}" width="50px" height="50px"></td>
+            <td>{{ jugador.Posicion }}</td>
+            <td>{{ jugador.Numero }}</td>
+            <td>{{ jugador.Edad }} años</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<div class="artCont artPartido">
+    {% for fixture in fixtures %}
+        <article>
+            <h3 class="fecha">{{ fixture.Fecha }} - {{ fixture.Hora }}</h3>
+            {% if fixture.Status == "Not Started" %}
+            <p>No empezó</p>
+            {% elif fixture.Status == "Time to be defined" %}
+            <p>Tiempo a definir</p>
+            {% elif fixture.Status == "Match Postponed" %}
+            <p>Partido postpuesto</p>
+            {% elif fixture.Status == "Match Cancelled" or fixture.Status == "Match Abandoned" or fixture.Status == "Match Suspended" %}
+            <p>Partido cancelado</p>
+            {% else %}
+            <p>En juego</p>
+            {% endif %}
+
+            <table class="tabEquipo">
+                <tr>
+                    <td>{{ fixture.IdEquipoLocal.Nombre }}</td>
+                    <td>vs.</td>
+                    <td>{{ fixture.IdEquipoVisitante.Nombre }}</td>
+                    
+                </tr>
+                <tr>
+                    <td><img src="{{ fixture.IdEquipoLocal.Image_URL }}" alt="" width="200px" height="200px"></td>
+                    <td><img src="{{ fixture.IdEquipoVisitante.Image_URL }}" alt="" width="200px" height="200px"></td>
+                </tr>
+            </table>
+            <table class="tabEstad">
+                <tr class="tabCabezal">
+                    <td>Competencia</td>
+                    <td>{{ fixture.IdEquipoLocal.Nombre }}</td>
+                    <td>Empate</td>
+                    <td>{{ fixture.IdEquipoVisitante.Nombre }}</td>
+                    
+                    <!-- Este resultado va a ser si la prediccion acerto o no con un ✔ --> 
+                </tr>
+                <tr>
+                    <td><img width = "20px" height = "20px" src="{{ fixture.IdApiComp.Image_URL }}">{{ fixture.IdApiComp.Nombre }}</td>
+                    {% for apuesta in apuestas %}
+                        {% for apuesta_esp in apuesta %}
+                            {% if apuesta_esp.IdApiFixture_id == fixture.IdApiFixture_id %}
+                                <td>{{ apuesta_esp.Porcentaje }}%</td>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </tr>
+            </table>
+            <ul class="filaBotones">
+                <li><a href="fixture_predicts/{{ fixture.IdApiFixture_id }}" class="links">Predicciones</a></li>
+                <li><a href="fixture/{{ fixture.IdApiFixture_id }}" class="links">Ver menos</a></li>
+            </ul>
+        </article>
+    {% endfor %}
+
+    <div class="centrar">
+        <iframe src="{{ equipo.IdApiEstadio.Direccion }}" width = "1000px" height = "750px" frameborder="0"></iframe>
+    </div>
+</div>
+
+{% endblock %}
