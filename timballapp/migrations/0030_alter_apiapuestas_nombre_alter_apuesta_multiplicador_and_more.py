@@ -127,13 +127,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='fixture',
             name='Fecha',
-            field=models.DateField(default=1),
+            field=models.DateField(),
             preserve_default=False,
         ),
         migrations.AlterField(
             model_name='fixture',
             name='Hora',
-            field=models.TimeField(default=1),
+            field=models.TimeField(),
             preserve_default=False,
         ),
         migrations.AlterField(
