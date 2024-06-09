@@ -4,4 +4,4 @@ class activateRequest(forms.Form):
     name = forms.CharField(label="Introducí texto para confirmar la request que diga la url", max_length=200, widget=forms.TextInput(attrs={'class': 'input'}))
 
 class barraBusqueda(forms.Form):
-    query = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'input'}))
+    query = forms.CharField(label="Partidos por equipo", max_length=200, widget=forms.TextInput(attrs={'class': 'input'}))

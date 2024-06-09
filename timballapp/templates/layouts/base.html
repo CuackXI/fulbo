@@ -22,7 +22,7 @@
                 <a href="{%url 'Signup' %}">Registrarse</a>
             </li>
             <li>
-                <form method="POST" action="{% url 'Home' %}">
+                <form class="busqueda" method="POST" action="{% url 'Home' %}">
                     {% csrf_token %}
                     {{form.as_p}}
                     <button>

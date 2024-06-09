@@ -2,7 +2,7 @@ from ..models import *
 
 # 
 # 
-# NOTA: ESTOS SERVICIOS SON SOLO DE ADMINISTRACIÓN Y MUY PROBABLEMENTE CAMBIE LA MANERA EN LA QUE HAGO EL MANAGMENT EN EL FUTURO
+# NOTA: ESTOS SERVICIOS SON SOLO DE ADMINISTRACIÓN, por eso estos son modificados constantemente segun nuestras necesidades
 # 
 # 
 
@@ -30,7 +30,8 @@ class crear_objetos():
                                 IdApiBookmaker_id=response['response'][i]['bookmakers'][b]['id'],
                                 IdApiApuesta_id=y['id'],
                                 Tipo=x['value'],
-                                Multiplicador=x['odd']
+                                Multiplicador=x['odd'],
+                                Porcentaje = -1
                             )
 
     def response_to_bookmaker(self, response):
