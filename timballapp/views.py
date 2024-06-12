@@ -144,9 +144,9 @@ def post_paises(request):
             'form': activateRequest()
         })
     else:
-        request_paises = Request(url="https://api-football-v1.p.rapidapi.com/v3/countries", querystring=None, headers={"x-rapidapi-key": "36d0515859mshc128509052fcf97p1484c4jsn6f58a0e1bbb7", "x-rapidapi-host": "api-football-v1.p.rapidapi.com", "Content-Type": "application/json"})
+        request_paises = Request(url="https://api-football-v1.p.rapidapi.com/v3/countries", querystring=None)
 
-        paises = request_paises.request_response(request_paises.url, request_paises.querystring, request_paises.headers)
+        paises = request_paises.hacer_request()
 
         servicio = crear_objetos()
         servicio.response_to_paises(paises)
@@ -160,13 +160,9 @@ def post_equipos(request):
         })
     else:
         competencia = 128
-        request_equipos = Request(url = "https://api-football-v1.p.rapidapi.com/v3/teams", querystring = {"league":str(competencia),"season":"2024"},         headers = {
-            "x-rapidapi-key": "36d0515859mshc128509052fcf97p1484c4jsn6f58a0e1bbb7",
-            "x-rapidapi-host": "api-football-v1.p.rapidapi.com",
-            "Content-Type": "application/json"
-        })
+        request_equipos = Request(url = "https://api-football-v1.p.rapidapi.com/v3/teams", querystring = {"league":str(competencia),"season":"2024"})
 
-        equipos = request_equipos.request_response(request_equipos.url, request_equipos.querystring, request_equipos.headers)
+        equipos = request_equipos.hacer_request()
 
         servicio = crear_objetos()
         servicio.response_to_equipos(equipos, competencia)
@@ -179,14 +175,9 @@ def post_competiciones(request):
             'form': activateRequest()
         })
     else:
-        request_competiciones = Request(url = "https://api-football-v1.p.rapidapi.com/v3/leagues", querystring = {"country":"Argentina"},         
-        headers = {
-            "x-rapidapi-key": "36d0515859mshc128509052fcf97p1484c4jsn6f58a0e1bbb7",
-            "x-rapidapi-host": "api-football-v1.p.rapidapi.com",
-            "Content-Type": "application/json"
-        })
+        request_competiciones = Request(url = "https://api-football-v1.p.rapidapi.com/v3/leagues", querystring = {"country":"Argentina"})
 
-        competiciones = request_competiciones.request_response(request_competiciones.url, request_competiciones.querystring, request_competiciones.headers)
+        competiciones = request_competiciones.hacer_request()
 
         servicio = crear_objetos()
         servicio.response_to_competiciones(competiciones)
@@ -204,12 +195,9 @@ def post_fixtures(request):
                     "league":"128",
                     "season":"2024",
                     "from": "2024-05-23", 
-                    "to": "2024-12-16"},
-                    headers = {
-                    "X-RapidAPI-Key": "36d0515859mshc128509052fcf97p1484c4jsn6f58a0e1bbb7",
-                    "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"})
+                    "to": "2024-12-16"},)
 
-        fixtures = request_fixtures.request_response(request_fixtures.url, request_fixtures.querystring, request_fixtures.headers)
+        fixtures = request_fixtures.hacer_request()
 
         print(fixtures)
 
@@ -225,14 +213,9 @@ def post_estadios(request):
         })
     else:
         request_estadios = Request(url = "https://api-football-v1.p.rapidapi.com/v3/teams", 
-            querystring = {"league":"128","season":"2024"},
-            headers = {
-            "x-rapidapi-key": "36d0515859mshc128509052fcf97p1484c4jsn6f58a0e1bbb7",
-            "x-rapidapi-host": "api-football-v1.p.rapidapi.com",
-            "Content-Type": "application/json"
-        })
+            querystring = {"league":"128","season":"2024"})
 
-        estadios = request_estadios.request_response(request_estadios.url, request_estadios.querystring, request_estadios.headers)
+        estadios = request_estadios.hacer_request()
 
         servicio = crear_objetos()
         servicio.response_to_estadios(estadios)
@@ -245,12 +228,9 @@ def post_bookmakers(request):
             'form': activateRequest()
         })
     else:
-        request_bookmakers = Request(url = "https://api-football-v1.p.rapidapi.com/v3/odds/bookmakers", querystring=None, headers = {
-            "X-RapidAPI-Key": "36d0515859mshc128509052fcf97p1484c4jsn6f58a0e1bbb7",
-            "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"
-        })
+        request_bookmakers = Request(url = "https://api-football-v1.p.rapidapi.com/v3/odds/bookmakers", querystring=None)
 
-        bookmakers = request_bookmakers.request_response(request_bookmakers.url, request_bookmakers.querystring, request_bookmakers.headers)
+        bookmakers = request_bookmakers.hacer_request()
 
         request_bookmakers(bookmakers)
         return redirect('Home')
@@ -263,9 +243,9 @@ def post_apuestas(request):
     else:
         pages = [1,2,3]
         for page in pages:
-            request_apuestas = Request(url = "https://api-football-v1.p.rapidapi.com/v3/odds", querystring = {"league":"128","season":"2024", "bookmaker": 26, "page":page}, headers = {"X-RapidAPI-Key": "36d0515859mshc128509052fcf97p1484c4jsn6f58a0e1bbb7", "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"})
+            request_apuestas = Request(url = "https://api-football-v1.p.rapidapi.com/v3/odds", querystring = {"league":"128","season":"2024", "bookmaker": 26, "page":page})
 
-            apuestas = request_apuestas.request_response(request_apuestas.url, request_apuestas.querystring, request_apuestas.headers)
+            apuestas = request_apuestas.hacer_request()
 
             servicio = crear_objetos()
             servicio.response_to_apuestas(apuestas)
@@ -278,12 +258,9 @@ def post_apuestas_id(request):
             'form': activateRequest()
         })
     else:
-        request_apuestas = Request(url = "https://api-football-v1.p.rapidapi.com/v3/odds/bets", querystring = None, headers = {
-            "X-RapidAPI-Key": "36d0515859mshc128509052fcf97p1484c4jsn6f58a0e1bbb7",
-            "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"
-        })
+        request_apuestas = Request(url = "https://api-football-v1.p.rapidapi.com/v3/odds/bets", querystring = None)
 
-        apuestas_id = request_apuestas.request_response(request_apuestas.url, request_apuestas.querystring, request_apuestas.headers)
+        apuestas_id = request_apuestas.hacer_request()
 
         servicio = crear_objetos()
         servicio.response_to_apuestas_id(apuestas_id)
