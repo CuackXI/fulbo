@@ -22,13 +22,13 @@
                 <a href="{%url 'Signup' %}">Registrarse</a>
             </li>
             <li>
-                <form class="busqueda" method="POST" action="{% url 'Home' %}">
-                    {% csrf_token %}
-                    {{form.as_p}}
-                    <button>
-                        Search
-                    </button>
-                </form>
+                <div class="container-search">
+                    <form method="POST" action="{% url 'Home' %}">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <button class = "boton">Buscar</button>
+                    </form>
+                </div>
             </li>
         </ul>
     </nav>

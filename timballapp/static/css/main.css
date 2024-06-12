@@ -473,3 +473,30 @@ footer {
     justify-content: center;
     align-items: center;
 }
+
+.container-search{
+    position: relative;
+    left: 550px;
+    bottom: 1px;
+}
+.boton{
+    background-color: #31834e;
+    font-family: Josefin Sans;
+    color: white;
+    width: 100px;
+    padding: 5px;
+    border-color: rgb(158, 158, 158);
+    border-radius: 20px;
+
+}
+
+.buscador{
+    width: 200px; 
+    padding: 5px;
+    font-size: 16px;
+    border: none; /* Eliminar bordes */
+    outline: none; /* Eliminar el borde de enfoque predeterminado */
+    border-radius: 40px;
+    border-color: rgb(158, 158, 158);
+    font-family: Josefin Sans;
+}
