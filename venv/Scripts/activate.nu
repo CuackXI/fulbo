@@ -32,7 +32,7 @@ export-env {
       }
     }
 
-    let virtual_env = 'C:\Users\Usuario\Desktop\fulbo\fulbo\venv'
+    let virtual_env = 'D:\Users\Documentos\GitHub\fulbo\venv'
     let bin = 'Scripts'
 
     let is_windows = ($nu.os-info.family) == 'windows'
