@@ -3,16 +3,8 @@
 
 {% block content %}
 <section>
-    <div class="bienvenida">
-        <h1>
-            TIMBALL
-        </h1>
-        <p>ESTADÍSTICAS DE FUTBOL</p>
-    </div>
     <div class="main CpagPartido">
-        <p class="aviso">Tené cuidado al momento de apostar. El juego en exceso es perjudicial para vos y tus seres queridos.</p>
-        
-        <h2 id="pagInicioPartidos">Partidos</h2>
+        <h2 id="pagInicioPartidos">Resulatdos para partidos de {{ equipo.Nombre }}</h2>
 
         <div class="artCont artPartido">
             {% for fixture in fixtures %}

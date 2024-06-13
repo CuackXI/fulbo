@@ -97,7 +97,7 @@ def feed_busqueda(request, query):
         fixtures = servicio.fixtures_por_equipo(equipo.IdApiEquipo_id)
         servicio = Apuestas_Match_Winner_Por_Fixture()
         apuestas_por_fixture = servicio.Apuestas_Match_Winner_Por_Fixture(128, fixtures)
-        return render(request, 'index.html', {
+        return render(request, 'search.html', {
         'fixtures': fixtures,
         'apuestas': apuestas_por_fixture,
         'equipo': equipo
