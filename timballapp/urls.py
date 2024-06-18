@@ -12,7 +12,7 @@ urlpatterns = [
     path('equipo/<int:id>/', views.equipo_especifico,),
     path('busqueda/<str:query>/', views.feed_busqueda),
 
-    # Estas no son urls del usuario hay que ver como hacer esto sin urls
+    # Estas no son urls de uso común hay que ver como hacer esto sin urls
     path('post_paises', views.post_paises, name="post_paises"),
     path('post_equipos', views.post_equipos, name="post_equipos"),
     path('post_competiciones', views.post_competiciones, name="post_competiciones"),
