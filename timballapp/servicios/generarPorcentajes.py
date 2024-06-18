@@ -1,7 +1,7 @@
 from ..models import *
 
-class Obtener_Porcentajes():
-    def obtener_porcentajes_a_partir_de_apuestas(self, apuestas):
+class generarPorcentajes():
+    def generarPorcentajes(self, apuestas):
         id = 0
         multiplicadores = []
         porcentajes = []

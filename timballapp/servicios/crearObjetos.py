@@ -6,13 +6,12 @@ from ..models import *
 # 
 # 
 
-class crear_objetos():
-    def response_to_paises(self, response):
+class crearObjetos():
+    def crear_paises(self, response):
         for i in range(len(response['response'])):
-            # Pais.objects.create(Nombre=response['response'][i]['name'], Image_URL=response['response'][i]['flag'])
-            print(response['response'][i]['name'])
+            Pais.objects.create(Nombre=response['response'][i]['name'], Image_URL=response['response'][i]['flag'])
 
-    def response_to_apuestas_id(self, response):
+    def crear_apuestas_id(self, response):
         for i in range(len(response['response'])):
             print(response['response'][i]['id'])
             print(response['response'][i]['name'])
@@ -36,23 +35,21 @@ class crear_objetos():
 
     def response_to_bookmaker(self, response):
         for i in range(len(response['response'])):
-            # Bookmaker.objects.create(
-            #     Bookmaker=response['response'][i]['id'],
-            #     Nombre=response['response'][i]['name']
-            # )
-            pass
+            Bookmaker.objects.create(
+                Bookmaker=response['response'][i]['id'],
+                Nombre=response['response'][i]['name']
+            )
 
     def response_to_estadios(self, response):
         for i in range(len(response['response'])):
-            pass
-            # Estadio.objects.create(
-            #     IdApiEstadio=response['response'][i]['venue']['id'],
-            #     Nombre=response['response'][i]['venue']['name'],
-            #     Direccion=response['response'][i]['venue']['address'],
-            #     Ciudad=response['response'][i]['venue']['city'],
-            #     Capacidad=response['response'][i]['venue']['capacity'],
-            #     Image_URL=response['response'][i]['venue']['image']
-            # )
+            Estadio.objects.create(
+                IdApiEstadio=response['response'][i]['venue']['id'],
+                Nombre=response['response'][i]['venue']['name'],
+                Direccion=response['response'][i]['venue']['address'],
+                Ciudad=response['response'][i]['venue']['city'],
+                Capacidad=response['response'][i]['venue']['capacity'],
+                Image_URL=response['response'][i]['venue']['image']
+            )
 
     def response_to_fixtures(self, response):
         for i in range(len(response['response'])):
@@ -138,42 +135,40 @@ class crear_objetos():
             timestr = str(hora) + timestr
             datestr = str(año) + "-" + str(mes) + "-" + str(dia)
             
-            # try:
-            #     print("update")
-
-            Fixture.objects.filter(IdApiFixture_id=response['response'][i]['fixture']['id']).update(Arbitro=response['response'][i]['fixture']['referee'],Fecha=datestr,Hora=timestr,IdApiEstadio_id=response['response'][i]['fixture']['venue']['id'],Status=response['response'][i]['fixture']['status']['long'])
-            # except:
-            #     print("create")
-            #     Fixture.objects.create(
-            #         IdApiComp_id=response['response'][i]['league']['id'],
-            #         IdApiFixture_id=response['response'][i]['fixture']['id'],
-            #         Arbitro=response['response'][i]['fixture']['referee'],
-            #         Fecha=datestr,
-            #         Hora=timestr,
-            #         IdApiEstadio_id=response['response'][i]['fixture']['venue']['id'],
-            #         IdEquipoLocal_id=response['response'][i]['teams']['home']['id'],
-            #         IdEquipoVisitante_id=response['response'][i]['teams']['away']['id'],
-            #         Status=response['response'][i]['fixture']['status']['long'])
+            try:
+                Fixture.objects.get(IdApiFixture_id=response['response'][i]['fixture']['id'])
+                Fixture.objects.filter(IdApiFixture_id=response['response'][i]['fixture']['id']).update(Arbitro=response['response'][i]['fixture']['referee'],Fecha=datestr,Hora=timestr,IdApiEstadio_id=response['response'][i]['fixture']['venue']['id'],Status=response['response'][i]['fixture']['status']['long'])
+            except:
+                print("create")
+                Fixture.objects.create(
+                    IdApiComp_id=response['response'][i]['league']['id'],
+                    IdApiFixture_id=response['response'][i]['fixture']['id'],
+                    Arbitro=response['response'][i]['fixture']['referee'],
+                    Fecha=datestr,
+                    Hora=timestr,
+                    IdApiEstadio_id=response['response'][i]['fixture']['venue']['id'],
+                    IdEquipoLocal_id=response['response'][i]['teams']['home']['id'],
+                    IdEquipoVisitante_id=response['response'][i]['teams']['away']['id'],
+                    Status=response['response'][i]['fixture']['status']['long'])
 
     def response_to_equipos(self, response, competencia):
-        # for i in range(len(response['response'])):
-        #     Equipo.objects.create(
-        #         IdApiEquipo=response['response'][i]['team']['id'],
-        #         IdApiComp=competencia,
-        #         Nombre=response['response'][i]['team']['name'],
-        #         IdApiEstadio=response['response'][i]['venue']['id'],
-        #         Pais=response['response'][i]['team']['country'],
-        #         Image_URL=response['response'][i]['team']['logo'],
-        #         Fundacion=response['response'][i]['team']['founded']
-        #     )
+        for i in range(len(response['response'])):
+            Equipo.objects.create(
+                IdApiEquipo=response['response'][i]['team']['id'],
+                IdApiComp=competencia,
+                Nombre=response['response'][i]['team']['name'],
+                IdApiEstadio=response['response'][i]['venue']['id'],
+                Pais=response['response'][i]['team']['country'],
+                Image_URL=response['response'][i]['team']['logo'],
+                Fundacion=response['response'][i]['team']['founded']
+            )
         pass
 
     def response_to_competiciones(self, response):
-        # for i in range(len(response['response'])):
-        #     Competiciones.objects.create(
-        #     IdApiComp=response['response'][i]['league']['id'],
-        #     Nombre=response['response'][i]['league']['name'],
-        #     Image_URL=response['response'][i]['league']['logo'],
-        #     Temporada=2024,
-        #     Pais=response['response'][i]['country']['name'])
-        pass
+        for i in range(len(response['response'])):
+            Competiciones.objects.create(
+            IdApiComp=response['response'][i]['league']['id'],
+            Nombre=response['response'][i]['league']['name'],
+            Image_URL=response['response'][i]['league']['logo'],
+            Temporada=2024,
+            Pais=response['response'][i]['country']['name'])

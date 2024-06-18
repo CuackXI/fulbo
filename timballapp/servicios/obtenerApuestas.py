@@ -1,5 +1,5 @@
 from ..models import *
 
-class Obtener_Apuestas():
-    def Obtener_Apuestas(self):
+class obtenerApuestas():
+    def obtenerApuestas(self):
         return Apuesta.objects.all()
