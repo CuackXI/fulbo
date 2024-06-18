@@ -9,11 +9,10 @@ class Request():
     @property
     def headers(self):
         return self.__headers
-    
-    
 
     def hacer_request(self):
         response = requests.get(self.url, headers=self.headers, params=self.querystring)
+
         response = response.json()
 
         return response
