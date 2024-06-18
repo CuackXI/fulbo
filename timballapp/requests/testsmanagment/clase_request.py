@@ -44,10 +44,12 @@ class Request():
     def requestEquipos(self, competencia = None):
         if competencia != None:
             self.url = "https://api-football-v1.p.rapidapi.com/v3/teams"
-            
+
             self.querystring['league'] = str(competencia)
             self.querystring['season'] = "2024"
 
             response = requests.get(self.url, headers=self.headers, params=self.querystring)
             response = response.json()
             return response
+        else:
+            return("Ingresa una competencia para hacer el request")
