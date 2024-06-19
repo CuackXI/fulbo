@@ -1,6 +1,6 @@
 import requests
 
-class ApiFutbolServicio():
+class apiFutbolServicio():
     def __init__(self):
         self.__url = ""
         self.__querystring = {}

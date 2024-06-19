@@ -150,7 +150,7 @@ def post_equipos(request):
         })
     else:
         competencia = 128
-        servicio = ApiFutbolServicio()
+        servicio = apiFutbolServicio()
         equipos = servicio.EquiposEstadios(competencia = competencia)
 
         servicio = equiposServicio()
@@ -164,7 +164,7 @@ def post_competiciones(request):
             'form': activateRequest()
         })
     else:
-        servicio = ApiFutbolServicio()
+        servicio = apiFutbolServicio()
         competiciones = servicio.Competiciones(pais = "Argentina")
 
         servicio = competicionesServicio()
@@ -178,7 +178,7 @@ def post_fixtures(request):
             'form': activateRequest()
         })
     else:
-        servicio = ApiFutbolServicio()
+        servicio = apiFutbolServicio()
         fixtures = servicio.Fixtures(liga = "128", inicio = "2024-05-23", fin = "2024-12-16")
 
         servicio = fixturesServicio()
@@ -192,7 +192,7 @@ def post_estadios(request):
             'form': activateRequest()
         })
     else:
-        servicio = ApiFutbolServicio()
+        servicio = apiFutbolServicio()
         estadios = servicio.EquiposEstadios(128)
 
         servicio = estadiosServicio()
@@ -206,7 +206,7 @@ def post_bookmakers(request):
             'form': activateRequest()
         })
     else:
-        servicio = ApiFutbolServicio()
+        servicio = apiFutbolServicio()
         bookmakers = servicio.Bookmakers()
 
         servicio = apuestasServicio()
@@ -223,7 +223,7 @@ def post_apuestas(request):
         # Se necesita hacer la request por páginas ya que asi se maximiza la cantidad de datos obtenidos por request
         pages = [1,2,3]
         for page in pages:
-            servicio = ApiFutbolServicio()
+            servicio = apiFutbolServicio()
             apuestas = servicio.Apuestas(128, page)
 
             servicio = apuestasServicio()
@@ -237,7 +237,7 @@ def post_apuestas_id(request):
             'form': activateRequest()
         })
     else:
-        servicio = ApiFutbolServicio()
+        servicio = apiFutbolServicio()
         apuestas_id = servicio.tipoApuestas()
 
         servicio = apuestasServicio()
