@@ -1,0 +1,8 @@
+equipo:
+-equipoPorID
+-realizarBusqueda (filtro de equipos)
+
+jugadores:
+-jugadoresPorEquipo
+
+el resto de crearObjetos :v

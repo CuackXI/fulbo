@@ -1,18 +1,12 @@
 from django.shortcuts import render, redirect
-from .servicios.generarPorcentajes import generarPorcentajes
-from .servicios.actualizarPorcentaje import actualizarPorcentaje
-from .servicios.obtenerApuestas import obtenerApuestas
-from .servicios.fixturesPorCompetencia import fixturesPorCompetencia
-from .servicios.predictsResultado import predictsResultado
-from .servicios.apuestasPorFixture import apuestasPorFixture
-from .servicios.fixturePorID import fixturePorID
-from .servicios.nombres_de_apuestas_de_fixture import nombres_de_apuestas_de_fixture
-from .servicios.predictsPorFixture import predictsPorFixture
-from .servicios.crearObjetos import crearObjetos
-from .servicios.jugadoresPorEquipo import jugadoresPorEquipo
-from .servicios.equipoPorID import equipoPorID
-from .servicios.fixturesPorEquipo import fixturesPorEquipo
-from .servicios.realizarBusqueda import realizarBusqueda
+from .servicios.apuestasServicio import *
+from .servicios.prediccionesServicio import *
+from .servicios.fixturesServicio import *
+from .servicios.equiposServicio import * 
+from .servicios.jugadoresServicio import *
+from .servicios.paisesServicio import *
+from .servicios.estadiosServicio import * 
+from .servicios.competicionesServicio import *
 from .requests.clase_request import Request
 from .models import *
 from .forms import *
@@ -21,10 +15,10 @@ from .forms import *
 
 def index(request):
     if request.method == 'GET':
-        servicio = fixturesPorCompetencia()
+        servicio = fixturesServicio()
         fixtures = servicio.fixturesPorCompetencia(128)
 
-        servicio = predictsResultado()
+        servicio = prediccionesServicio()
         apuestas_por_fixture = servicio.predictsResultado(fixtures)
 
         return render(request, 'index.html', {
@@ -39,14 +33,14 @@ def index(request):
 
 def fixture_detalle(request, id):
     try:
-        servicio = fixturePorID()
+        servicio = fixturesServicio()
         fixture = servicio.fixturePorID(id)
 
-        servicio = apuestasPorFixture()
+        servicio = apuestasServicio()
         apuestas = servicio.apuestasPorFixture(id)
 
-        servicio = nombres_de_apuestas_de_fixture()
-        apuestas_n = servicio.nombres_de_apuestas_de_fixture(fixture)
+        servicio = apuestasServicio()
+        apuestas_n = servicio.tiposApuestaPorFixture(fixture)
 
         return render(request, 'fixtures/fixture_detalle.html', {
             'fixture': fixture,
@@ -60,14 +54,14 @@ def fixture_detalle(request, id):
 
 def fixture_predicts(request, id):
     try:
-        servicio = fixturePorID()
+        servicio = fixturesServicio()
         fixture = servicio.fixturePorID(id)
 
-        servicio = predictsPorFixture()
+        servicio = prediccionesServicio()
         predicts = servicio.predictsPorFixture(id)
 
-        servicio = nombres_de_apuestas_de_fixture()
-        apuestas_n = servicio.nombres_de_apuestas_de_fixture(fixture)
+        servicio = apuestasServicio()
+        apuestas_n = servicio.tiposApuestaPorFixture(fixture)
 
         return render(request, 'fixtures/fixture_predicts.html', {
             'fixture': fixture,
@@ -81,13 +75,13 @@ def fixture_predicts(request, id):
 
 def equipo_especifico(request, id):
     try:
-        servicio = equipoPorID()
+        servicio = equiposServicio()
         equipo = servicio.equipoPorID(id)
 
-        servicio = jugadoresPorEquipo()
+        servicio = jugadoresServicio()
         jugadores = servicio.jugadoresPorEquipo(equipo.IdApiEquipo_id)
 
-        servicio = fixturesPorEquipo()
+        servicio = fixturesServicio()
         fixtures = servicio.fixturesPorEquipo(id)
 
         return render(request, 'equipos/equipo.html', {
@@ -96,20 +90,18 @@ def equipo_especifico(request, id):
             'fixtures': fixtures
         })
     except:
-        # placeholder
         return redirect(index)
-        # aca iría una página de error
 
 def feed_busqueda(request, query):
     try:
-        servicio = realizarBusqueda()
+        servicio = equiposServicio()
         equipos = servicio.realizarBusqueda(query)
         equipo = equipos[0]
 
-        servicio = fixturesPorEquipo()
+        servicio = fixturesServicio()
         fixtures = servicio.fixturesPorEquipo(equipo.IdApiEquipo_id)
 
-        servicio = predictsResultado()
+        servicio = prediccionesServicio()
         apuestas_por_fixture = servicio.predictsResultado(fixtures)
         
         return render(request, 'search.html', {
@@ -151,8 +143,8 @@ def post_paises(request):
 
         paises = request_paises.hacer_request()
 
-        servicio = crearObjetos()
-        servicio.crear_paises(paises)
+        servicio = paisesServicio()
+        servicio.crearPaises(paises)
 
         return redirect('Home')
     
@@ -167,8 +159,8 @@ def post_equipos(request):
 
         equipos = request_equipos.hacer_request()
 
-        servicio = crearObjetos()
-        servicio.response_to_equipos(equipos, competencia)
+        servicio = equiposServicio()
+        servicio.crearEquipos(equipos, competencia)
 
         return redirect('Home')
     
@@ -182,8 +174,8 @@ def post_competiciones(request):
 
         competiciones = request_competiciones.hacer_request()
 
-        servicio = crearObjetos()
-        servicio.response_to_competiciones(competiciones)
+        servicio = competicionesServicio()
+        servicio.crearCompeticiones(competiciones)
 
         return redirect('Home')
     
@@ -204,8 +196,8 @@ def post_fixtures(request):
 
         print(fixtures)
 
-        servicio = crearObjetos()
-        servicio.response_to_fixtures(fixtures)
+        servicio = fixturesServicio()
+        servicio.actualizarFixtures(fixtures)
 
         return redirect('Home')
     
@@ -215,13 +207,12 @@ def post_estadios(request):
             'form': activateRequest()
         })
     else:
-        request_estadios = Request(url = "https://api-football-v1.p.rapidapi.com/v3/teams", 
-            querystring = {"league":"128","season":"2024"})
+        request_estadios = Request(url = "https://api-football-v1.p.rapidapi.com/v3/teams", querystring = {"league":"128","season":"2024"})
 
         estadios = request_estadios.hacer_request()
 
-        servicio = crearObjetos()
-        servicio.response_to_estadios(estadios)
+        servicio = estadiosServicio()
+        servicio.crearEstadios(estadios)
 
         return redirect('Home')
     
@@ -235,7 +226,9 @@ def post_bookmakers(request):
 
         bookmakers = request_bookmakers.hacer_request()
 
-        request_bookmakers(bookmakers)
+        servicio = apuestasServicio()
+        servicio.crearBookmakers(bookmakers)
+
         return redirect('Home')
     
 def post_apuestas(request):
@@ -250,8 +243,8 @@ def post_apuestas(request):
 
             apuestas = request_apuestas.hacer_request()
 
-            servicio = crearObjetos()
-            servicio.response_to_apuestas(apuestas)
+            servicio = apuestasServicio()
+            servicio.actualizarApuestas(apuestas)
 
         return redirect('Home')
     
@@ -265,8 +258,8 @@ def post_apuestas_id(request):
 
         apuestas_id = request_apuestas.hacer_request()
 
-        servicio = crearObjetos()
-        servicio.crear_apuestas_id(apuestas_id)
+        servicio = apuestasServicio()
+        servicio.crearTiposApuesta(apuestas_id)
 
         return redirect('Home')
     
@@ -276,13 +269,13 @@ def post_porcentajes(request):
             'form': activateRequest()
         })
     else:
-        servicio = obtenerApuestas()
+        servicio = apuestasServicio()
         apuestas = servicio.obtenerApuestas()
 
-        servicio = generarPorcentajes()
+        servicio = apuestasServicio()
         porcentajes = servicio.generarPorcentajes(apuestas)
 
-        servicio = actualizarPorcentaje()
+        servicio = apuestasServicio()
         servicio.actualizarPorcentaje(porcentajes, apuestas)
 
         return redirect('Home')

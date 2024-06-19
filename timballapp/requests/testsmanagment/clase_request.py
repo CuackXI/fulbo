@@ -53,7 +53,3 @@ class ApiFutbolServicio():
             return response['response']
         else:
             return "Ingresa una competencia para hacer el request"
-        
-servicio = ApiFutbolServicio()
-
-print(servicio.Equipos(competencia=128))
