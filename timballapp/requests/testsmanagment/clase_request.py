@@ -56,4 +56,4 @@ class ApiFutbolServicio():
         
 servicio = ApiFutbolServicio()
 
-print(servicio.requestEquipos(competencia=128))
+print(servicio.Equipos(competencia=128))
