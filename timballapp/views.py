@@ -7,6 +7,8 @@ from .servicios.jugadoresServicio import *
 from .servicios.paisesServicio import *
 from .servicios.estadiosServicio import * 
 from .servicios.competicionesServicio import *
+from .servicios.apiFutbolServicio import *
+
 from .requests.clase_request import Request
 from .models import *
 from .forms import *
@@ -135,9 +137,8 @@ def post_paises(request):
             'form': activateRequest()
         })
     else:
-        request_paises = Request(url="https://api-football-v1.p.rapidapi.com/v3/countries", querystring=None)
-
-        paises = request_paises.hacer_request()
+        servicio = ApiFutbolServicio()
+        paises = servicio.Paises()
 
         servicio = paisesServicio()
         servicio.crearPaises(paises)
@@ -151,9 +152,8 @@ def post_equipos(request):
         })
     else:
         competencia = 128
-        request_equipos = Request(url = "https://api-football-v1.p.rapidapi.com/v3/teams", querystring = {"league":str(competencia),"season":"2024"})
-
-        equipos = request_equipos.hacer_request()
+        servicio = ApiFutbolServicio()
+        equipos = servicio.EquiposEstadios(competencia = competencia)
 
         servicio = equiposServicio()
         servicio.crearEquipos(equipos, competencia)
@@ -166,9 +166,8 @@ def post_competiciones(request):
             'form': activateRequest()
         })
     else:
-        request_competiciones = Request(url = "https://api-football-v1.p.rapidapi.com/v3/leagues", querystring = {"country":"Argentina"})
-
-        competiciones = request_competiciones.hacer_request()
+        servicio = ApiFutbolServicio()
+        competiciones = servicio.Competiciones(pais = "Argentina")
 
         servicio = competicionesServicio()
         servicio.crearCompeticiones(competiciones)
@@ -181,16 +180,8 @@ def post_fixtures(request):
             'form': activateRequest()
         })
     else:
-        request_fixtures = Request(url = "https://api-football-v1.p.rapidapi.com/v3/fixtures", 
-                    querystring = {
-                    "league":"128",
-                    "season":"2024",
-                    "from": "2024-05-23", 
-                    "to": "2024-12-16"},)
-
-        fixtures = request_fixtures.hacer_request()
-
-        print(fixtures)
+        servicio = ApiFutbolServicio()
+        fixtures = servicio.Fixtures(liga = "128", inicio = "2024-05-23", fin = "2024-12-16")
 
         servicio = fixturesServicio()
         servicio.actualizarFixtures(fixtures)
@@ -203,9 +194,8 @@ def post_estadios(request):
             'form': activateRequest()
         })
     else:
-        request_estadios = Request(url = "https://api-football-v1.p.rapidapi.com/v3/teams", querystring = {"league":"128","season":"2024"})
-
-        estadios = request_estadios.hacer_request()
+        servicio = ApiFutbolServicio()
+        estadios = servicio.EquiposEstadios(128)
 
         servicio = estadiosServicio()
         servicio.crearEstadios(estadios)
@@ -218,9 +208,8 @@ def post_bookmakers(request):
             'form': activateRequest()
         })
     else:
-        request_bookmakers = Request(url = "https://api-football-v1.p.rapidapi.com/v3/odds/bookmakers", querystring=None)
-
-        bookmakers = request_bookmakers.hacer_request()
+        servicio = ApiFutbolServicio()
+        bookmakers = servicio.Bookmakers()
 
         servicio = apuestasServicio()
         servicio.crearBookmakers(bookmakers)
@@ -233,11 +222,11 @@ def post_apuestas(request):
             'form': activateRequest()
         })
     else:
+        # Se necesita hacer la request por páginas ya que asi se maximiza la cantidad de datos obtenidos por request
         pages = [1,2,3]
         for page in pages:
-            request_apuestas = Request(url = "https://api-football-v1.p.rapidapi.com/v3/odds", querystring = {"league":"128","season":"2024", "bookmaker": 26, "page":page})
-
-            apuestas = request_apuestas.hacer_request()
+            servicio = ApiFutbolServicio()
+            apuestas = servicio.Apuestas(128, page)
 
             servicio = apuestasServicio()
             servicio.actualizarApuestas(apuestas)
@@ -250,9 +239,8 @@ def post_apuestas_id(request):
             'form': activateRequest()
         })
     else:
-        request_apuestas = Request(url = "https://api-football-v1.p.rapidapi.com/v3/odds/bets", querystring = None)
-
-        apuestas_id = request_apuestas.hacer_request()
+        servicio = ApiFutbolServicio()
+        apuestas_id = servicio.tipoApuestas()
 
         servicio = apuestasServicio()
         servicio.crearTiposApuesta(apuestas_id)
