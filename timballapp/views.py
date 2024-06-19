@@ -8,8 +8,6 @@ from .servicios.paisesServicio import *
 from .servicios.estadiosServicio import * 
 from .servicios.competicionesServicio import *
 from .servicios.apiFutbolServicio import *
-
-from .requests.clase_request import Request
 from .models import *
 from .forms import *
 
