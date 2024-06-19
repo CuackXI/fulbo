@@ -135,7 +135,7 @@ def post_paises(request):
             'form': activateRequest()
         })
     else:
-        servicio = ApiFutbolServicio()
+        servicio = apiFutbolServicio()
         paises = servicio.Paises()
 
         servicio = paisesServicio()
