@@ -48,9 +48,7 @@ def fixture_detalle(request, id):
             'apuestas_n': apuestas_n
         })
     except:
-        # placeholder
         return redirect(index)
-        # aca iría una página de error
 
 def fixture_predicts(request, id):
     try:
@@ -69,10 +67,8 @@ def fixture_predicts(request, id):
             'apuestas_n': apuestas_n
         })
     except:
-        # placeholder
         return redirect(index)
-        # aca iría una página de error
-
+    
 def equipo_especifico(request, id):
     try:
         servicio = equiposServicio()
