@@ -1,6 +1,6 @@
 import requests
 
-class Request():
+class ApiFutbolServicio():
     def __init__(self):
         self.__url = ""
         self.__querystring = {}
@@ -34,14 +34,14 @@ class Request():
         if type(querystring) == dict:
             self.__querystring = querystring
 
-    def requestPaises(self):
+    def Paises(self):
         self.url = "https://api-football-v1.p.rapidapi.com/v3/countries"
         self.querystring = None
         response = requests.get(self.url, headers=self.headers, params=self.querystring)
         response = response.json()
-        return response
+        return response['response']
     
-    def requestEquipos(self, competencia = None):
+    def Equipos(self, competencia = None):
         if competencia != None:
             self.url = "https://api-football-v1.p.rapidapi.com/v3/teams"
 
@@ -50,6 +50,10 @@ class Request():
 
             response = requests.get(self.url, headers=self.headers, params=self.querystring)
             response = response.json()
-            return response
+            return response['response']
         else:
-            return("Ingresa una competencia para hacer el request")
+            return "Ingresa una competencia para hacer el request"
+        
+servicio = ApiFutbolServicio()
+
+print(servicio.requestEquipos(competencia=128))
