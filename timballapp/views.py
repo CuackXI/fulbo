@@ -223,8 +223,9 @@ def post_apuestas(request):
         # Se necesita hacer la request por páginas ya que asi se maximiza la cantidad de datos obtenidos por request
         pages = [1,2,3]
         for page in pages:
+            competicion = 128
             servicio = apiFutbolServicio()
-            apuestas = servicio.Apuestas(128, page)
+            apuestas = servicio.Apuestas(competicion, page)
 
             servicio = apuestasServicio()
             servicio.actualizarApuestas(apuestas)
