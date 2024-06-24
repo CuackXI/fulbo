@@ -92,6 +92,13 @@ class apiFutbolServicio():
 
         return self.Respuesta
     
+    def Jugadores(self, equipo):
+        self.url = "https://api-football-v1.p.rapidapi.com/v3/players/squads"
+
+        self.querystring['team'] = equipo
+
+        return self.Respuesta
+    
     def tipoApuestas(self):
                 
         self.url = "https://api-football-v1.p.rapidapi.com/v3/odds/bets"

@@ -222,9 +222,10 @@ def post_apuestas(request):
     else:
         # Se necesita hacer la request por páginas ya que asi se maximiza la cantidad de datos obtenidos por request
         pages = [1,2,3]
+
+        servicio = apiFutbolServicio()
         for page in pages:
             competicion = 128
-            servicio = apiFutbolServicio()
             apuestas = servicio.Apuestas(competicion, page)
 
             servicio = apuestasServicio()
@@ -260,5 +261,23 @@ def post_porcentajes(request):
 
         servicio = apuestasServicio()
         servicio.actualizarPorcentaje(porcentajes, apuestas)
+
+        return redirect('Home')
+    
+def post_jugadores(request):
+    if request.method == 'GET':
+        return render(request, 'post_requests/post_jugadores.html', {
+            'form': activateRequest()
+        })
+    else:
+        servicio = equiposServicio()
+        equipos = servicio.obtenerEquiposPorCompetencia(128)
+
+        servicio = apiFutbolServicio()
+        for equipo in equipos:
+            jugadores = servicio.Jugadores(equipo.IdApiEquipo_id)
+            
+            servicio_jugadores = jugadoresServicio()
+            servicio_jugadores.crearJugadores(jugadores)
 
         return redirect('Home')

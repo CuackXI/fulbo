@@ -21,5 +21,6 @@ urlpatterns = [
     path('post_bookmakers', views.post_bookmakers, name="post_bookmakers"),
     path('post_apuestas', views.post_apuestas, name="post_apuestas"),
     path('post_apuestas_id', views.post_apuestas_id, name="post_apuestas_id"),
-    path('post_porcentajes', views.post_porcentajes, name="post_porcentajes")
+    path('post_porcentajes', views.post_porcentajes, name="post_porcentajes"),
+    path('post_jugadores', views.post_jugadores, name="post_jugadores")
 ]

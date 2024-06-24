@@ -9,6 +9,9 @@ class equiposServicio():
     def realizarBusqueda(self, query):
         return Equipo.objects.filter(Q(Nombre__icontains=query))
     
+    def obtenerEquiposPorCompetencia(self, competencia):
+        return Equipo.objects.filter(IdApiComp = competencia)
+    
     def crearEquipos(self, response, competencia):
         for i in range(len(response['response'])):
             Equipo.objects.create(
