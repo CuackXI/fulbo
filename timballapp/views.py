@@ -117,12 +117,6 @@ def login(request):
 def signup(request):
     return render(request,'usuario/registrarse.html')
 
-
-
-
-
-
-
 # 
 # 
 # VIEWS PARA POSTS
