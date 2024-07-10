@@ -4,7 +4,6 @@ from .servicios.prediccionesServicio import *
 from .servicios.fixturesServicio import *
 from .servicios.equiposServicio import * 
 from .servicios.jugadoresServicio import *
-from .servicios.paisesServicio import *
 from .servicios.estadiosServicio import * 
 from .servicios.competicionesServicio import *
 from .servicios.apiFutbolServicio import *
@@ -122,20 +121,6 @@ def signup(request):
 # VIEWS PARA POSTS
 # 
 # 
-
-def post_paises(request):
-    if request.method == 'GET':
-        return render(request, 'post_requests/post_paises.html', {
-            'form': activateRequest()
-        })
-    else:
-        servicio = apiFutbolServicio()
-        paises = servicio.Paises()
-
-        servicio = paisesServicio()
-        servicio.crearPaises(paises)
-
-        return redirect('Home')
     
 def post_equipos(request):
     if request.method == 'GET':

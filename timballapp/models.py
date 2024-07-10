@@ -2,10 +2,6 @@ from django.db import models
 
 # Create your models here.
 
-class Pais(models.Model):
-    Nombre = models.CharField(max_length=200)
-    Image_URL = models.CharField(max_length=200)
-
 class Competiciones(models.Model):
     IdApiComp_id = models.IntegerField(primary_key=True)
     Pais = models.CharField(max_length=200)
