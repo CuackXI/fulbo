@@ -29,7 +29,8 @@ class apiFutbolServicio():
         return self.__querystring
     
     def __set_querystring(self, key, parametro):
-        self.__querystring[key] = parametro
+        if type(key) == str and parametro != None:
+            self.__querystring[key] = parametro
 
     # Respuesta
 
