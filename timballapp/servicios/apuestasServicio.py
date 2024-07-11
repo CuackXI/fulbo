@@ -16,16 +16,17 @@ class apuestasServicio():
             print(response['response'][i]['name'])
 
     def actualizarApuestas(self, response):
-        for i in range(len(response['response'])):
-            for b in range(len(response['response'][i]['bookmakers'])):
-                for y in response['response'][i]['bookmakers'][b]['bets']:
+        for i in range(len(response)):
+            for b in range(len(response[i]['bookmakers'])):
+                for y in response[i]['bookmakers'][b]['bets']:
                     for x in y['values']:
+                        print("hola")
                         try:
-                            Apuesta.objects.get(IdApiFixture_id=response['response'][i]['fixture']['id'], IdApiApuesta_id=y['id'], Tipo=x['value'])
+                            Apuesta.objects.get(IdApiFixture_id=response[i]['fixture']['id'], IdApiApuesta_id=y['id'], Tipo=x['value'])
                         except:
                             Apuesta.objects.create(
-                                IdApiFixture_id=response['response'][i]['fixture']['id'],
-                                IdApiBookmaker_id=response['response'][i]['bookmakers'][b]['id'],
+                                IdApiFixture_id=response[i]['fixture']['id'],
+                                IdApiBookmaker_id=response[i]['bookmakers'][b]['id'],
                                 IdApiApuesta_id=y['id'],
                                 Tipo=x['value'],
                                 Multiplicador=x['odd'],

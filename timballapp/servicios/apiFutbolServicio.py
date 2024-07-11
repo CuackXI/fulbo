@@ -29,8 +29,7 @@ class apiFutbolServicio():
         return self.__querystring
     
     def __set_querystring(self, key, parametro):
-        if type(key) == str and parametro != None:
-            self.__querystring[key] = parametro
+        self.__querystring[key] = parametro
 
     # Respuesta
 
@@ -101,3 +100,6 @@ class apiFutbolServicio():
         self.__set_url("https://api-football-v1.p.rapidapi.com/v3/odds/bets")
 
         return self.Respuesta
+    
+request = apiFutbolServicio()
+print(request.Apuestas(128, 1))
