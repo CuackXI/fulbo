@@ -100,3 +100,6 @@ class apiFutbolServicio():
         self.__set_url("https://api-football-v1.p.rapidapi.com/v3/odds/bets")
 
         return self.Respuesta
+    
+request = apiFutbolServicio()
+print(request.Jugadores(200))
