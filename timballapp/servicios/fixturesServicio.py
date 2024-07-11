@@ -26,7 +26,6 @@ class fixturesServicio():
                 Fixture.objects.get(IdApiFixture_id=response['response'][i]['fixture']['id'])
                 Fixture.objects.filter(IdApiFixture_id=response['response'][i]['fixture']['id']).update(Arbitro=response['response'][i]['fixture']['referee'],Fecha=datestr,Hora=timestr,IdApiEstadio_id=response['response'][i]['fixture']['venue']['id'],Status=response['response'][i]['fixture']['status']['long'])
             except:
-                print("create")
                 Fixture.objects.create(
                     IdApiComp_id=response['response'][i]['league']['id'],
                     IdApiFixture_id=response['response'][i]['fixture']['id'],
