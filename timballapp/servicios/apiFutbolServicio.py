@@ -18,8 +18,7 @@ class apiFutbolServicio():
     def url(self):
         return self.__url
     
-    @url.setter
-    def url(self, url):
+    def __set_url(self, url):
         if type(url) == str:
             self.__url = url
 
@@ -29,10 +28,8 @@ class apiFutbolServicio():
     def querystring(self):
         return self.__querystring
     
-    @querystring.setter
-    def querystring(self, querystring):
-        if type(querystring) == dict:
-            self.__querystring = querystring
+    def __set_querystring(self, key, parametro):
+        self.__querystring[key] = parametro
 
     # Respuesta
 
@@ -45,62 +42,61 @@ class apiFutbolServicio():
     # Requests
 
     def Paises(self):
-        self.url = "https://api-football-v1.p.rapidapi.com/v3/countries"
-        self.querystring = None
+        self.__set_url("https://api-football-v1.p.rapidapi.com/v3/countries")
 
         return self.Respuesta
     
     def EquiposEstadios(self, competencia):
-        self.url = "https://api-football-v1.p.rapidapi.com/v3/teams"
+        self.__set_url("https://api-football-v1.p.rapidapi.com/v3/teams")
 
-        self.querystring['league'] = str(competencia)
-        self.querystring['season'] = "2024"
+        self.__set_querystring('league', str(competencia))
+        self.__set_querystring('season', "2024")
 
         return self.Respuesta
         
     def Competiciones(self, pais):
-        self.url = "https://api-football-v1.p.rapidapi.com/v3/leagues"
+        self.__set_url("https://api-football-v1.p.rapidapi.com/v3/leagues")
 
-        self.querystring['country'] = str(pais)
+        self.__set_querystring('country', str(pais))
 
         return self.Respuesta
 
     def Fixtures(self, liga, inicio = None, fin = None):
-        self.url = "https://api-football-v1.p.rapidapi.com/v3/fixtures"
+        self.__set_url("https://api-football-v1.p.rapidapi.com/v3/fixtures")
 
-        self.querystring['league'] = str(liga)
-        self.querystring['season'] = "2024"
+        self.__set_querystring('league', str(liga))
+        self.__set_querystring('season', "2024")
 
         if inicio != None and fin != None:
-            self.querystring['from'] = str(inicio)
-            self.querystring['to'] = str(fin)
+            self.__set_querystring('from', str(inicio))
+            self.__set_querystring('to', str(fin))
 
         return self.Respuesta
     
     def Bookmakers(self):
-        self.url = "https://api-football-v1.p.rapidapi.com/v3/odds/bookmakers"
+        self.__set_url("https://api-football-v1.p.rapidapi.com/v3/odds/bookmakers")
 
         return self.Respuesta
     
     def Apuestas(self, liga, page):
-        self.url = "https://api-football-v1.p.rapidapi.com/v3/odds"
+        self.__set_url("https://api-football-v1.p.rapidapi.com/v3/odds")
 
-        self.querystring['league'] = str(liga)
-        self.querystring['page'] = page
-        self.querystring['season'] = "2024"
-        self.querystring['bookmaker'] = 26
+        self.__set_querystring('league', str(liga))
+        self.__set_querystring('page', page)
+        self.__set_querystring('season', "2024")
+        self.__set_querystring('bookmaker', 26)
 
         return self.Respuesta
     
     def Jugadores(self, equipo):
-        self.url = "https://api-football-v1.p.rapidapi.com/v3/players/squads"
+        self.__set_url("https://api-football-v1.p.rapidapi.com/v3/players/squads")
 
-        self.querystring['team'] = equipo
+        self.__set_querystring('team', equipo)
 
         return self.Respuesta
     
     def tipoApuestas(self):
                 
-        self.url = "https://api-football-v1.p.rapidapi.com/v3/odds/bets"
+        self.__set_url("https://api-football-v1.p.rapidapi.com/v3/odds/bets")
 
         return self.Respuesta
