@@ -7,7 +7,7 @@ class fixturesServicio():
         return Fixture.objects.get(IdApiFixture_id=id)
     
     def fixturesPorCompetencia(self, competencia):
-        return Fixture.objects.filter(IdApiComp=competencia).exclude(Status__in=["Match Finished", "Technical Loss"]).order_by('Fecha', 'Hora')
+        return Fixture.objects.filter(IdApiComp=competencia).exclude(Status__in=["Match Finished", "Technical Loss", "Match Postponed"]).order_by('Fecha', 'Hora')
     
     def fixturesPorEquipo(self, id):
         return Fixture.objects.filter(Q(IdEquipoLocal_id = id) | Q(IdEquipoVisitante_id=id)).order_by('Fecha', 'Hora')
