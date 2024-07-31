@@ -10,7 +10,7 @@ urlpatterns = [
     path('fixture/<int:id>/', views.fixture_detalle),
     path('fixture_predicts/<int:id>/', views.fixture_predicts),
     path('equipo/<int:id>/', views.equipo_especifico,),
-    path('busqueda/<str:query>/', views.feed_busqueda),
+    path('busqueda/<str:query>/', views.feed_busqueda, name="Search"),
 
     # Estas no son urls de uso común hay que ver como hacer esto sin urls
     path('post_equipos', views.post_equipos, name="post_equipos"),
