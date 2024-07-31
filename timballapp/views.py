@@ -9,6 +9,7 @@ from .servicios.competicionesServicio import *
 from .servicios.apiFutbolServicio import *
 from .models import *
 from .forms import *
+from django.urls import reverse
 
 # Create your views here.
 
@@ -27,8 +28,8 @@ def index(request):
         })
     else:
         query = request.POST['query']
-
-        return redirect(f'busqueda/{query}')
+        url = reverse('Search', args=[query])
+        return redirect(url)
 
 def fixture_detalle(request, id):
     try:

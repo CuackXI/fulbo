@@ -55,8 +55,8 @@
                         </tr>
                     </table>
                     <ul class="filaBotones">
-                        <li><a href="fixture_predicts/{{ fixture.IdApiFixture_id }}" class="links">Predicciones</a></li>
-                        <li><a href="fixture/{{ fixture.IdApiFixture_id }}" class="links">Ver mas</a></li>
+                        <li><a href="{% url 'Predicts' id=fixture.IdApiFixture_id %}" class="links">Predicciones</a></li>
+                        <li><a href="{% url 'Detalle' id=fixture.IdApiFixture_id %}" class="links">Ver mas</a></li>
                     </ul>
                 </article>
             {% endfor %}

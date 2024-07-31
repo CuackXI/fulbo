@@ -7,8 +7,8 @@ urlpatterns = [
     path('about', views.about, name="About"),
     path('Registrarse', views.signup, name="Signup"),
     path('IniciarSesion', views.login, name="Login"),
-    path('fixture/<int:id>/', views.fixture_detalle),
-    path('fixture_predicts/<int:id>/', views.fixture_predicts),
+    path('fixture/<int:id>/', views.fixture_detalle, name="Detalle"),
+    path('fixture_predicts/<int:id>/', views.fixture_predicts, name="Predicts"),
     path('equipo/<int:id>/', views.equipo_especifico,),
     path('busqueda/<str:query>/', views.feed_busqueda, name="Search"),
 
