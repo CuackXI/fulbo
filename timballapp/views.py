@@ -72,12 +72,18 @@ def fixture_predicts(request, id):
 def feed_busqueda(request, query):
     try:
         exception = int(query)
-        servicio = equiposServicio()
-        equipo = servicio.equipoPorID(query)
+        try:
+            servicio = equiposServicio()
+            equipo = servicio.equipoPorID(query)
+        except:
+            return redirect('Home')
     except:
-        servicio = equiposServicio()
-        equipos = servicio.realizarBusqueda(query)
-        equipo = equipos[0]
+        try:
+            servicio = equiposServicio()
+            equipos = servicio.realizarBusqueda(query)
+            equipo = equipos[0]
+        except:
+            return redirect('Home')
 
     servicio = fixturesServicio()
     fixtures = servicio.fixturesPorEquipo(equipo.IdApiEquipo_id)
