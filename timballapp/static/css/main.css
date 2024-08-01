@@ -500,3 +500,7 @@ footer {
     border-color: rgb(158, 158, 158);
     font-family: Josefin Sans;
 }
+
+.equipoLink{
+    text-decoration: none;
+}

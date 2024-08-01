@@ -34,9 +34,9 @@
 
                     <table class="tabEquipo">
                         <tr>
-                            <td>{{ fixture.IdEquipoLocal.Nombre }}</td>
+                            <td><a class="equipoLink" href="{% url 'Search' query=fixture.IdEquipoLocal.IdApiEquipo_id %}">{{ fixture.IdEquipoLocal.Nombre }}</a></td>
                             <td>vs.</td>
-                            <td>{{ fixture.IdEquipoVisitante.Nombre }}</td>
+                            <td><a class="equipoLink" href="{% url 'Search' query=fixture.IdEquipoVisitante.IdApiEquipo_id %}">{{ fixture.IdEquipoVisitante.Nombre }}</a></td>
                             
                         </tr>
                         <tr>

@@ -68,46 +68,33 @@ def fixture_predicts(request, id):
         })
     except:
         return redirect(index)
-    
-def equipo_especifico(request, id):
-    try:
-        servicio = equiposServicio()
-        equipo = servicio.equipoPorID(id)
-
-        servicio = jugadoresServicio()
-        jugadores = servicio.jugadoresPorEquipo(equipo.IdApiEquipo_id)
-
-        servicio = fixturesServicio()
-        fixtures = servicio.fixturesPorEquipo(id)
-
-        return render(request, 'equipos/equipo.html', {
-            'equipo': equipo,
-            'jugadores': jugadores,
-            'fixtures': fixtures
-        })
-    except:
-        return redirect(index)
 
 def feed_busqueda(request, query):
     try:
+        exception = int(query)
+        servicio = equiposServicio()
+        equipo = servicio.equipoPorID(query)
+    except:
         servicio = equiposServicio()
         equipos = servicio.realizarBusqueda(query)
         equipo = equipos[0]
 
-        servicio = fixturesServicio()
-        fixtures = servicio.fixturesPorEquipo(equipo.IdApiEquipo_id)
+    servicio = fixturesServicio()
+    fixtures = servicio.fixturesPorEquipo(equipo.IdApiEquipo_id)
 
-        servicio = prediccionesServicio()
-        apuestas_por_fixture = servicio.predictsResultado(fixtures)
-        
-        return render(request, 'search.html', {
+    servicio = jugadoresServicio()
+    jugadores = servicio.jugadoresPorEquipo(equipo.IdApiEquipo_id)
+
+    servicio = prediccionesServicio()
+    apuestas_por_fixture = servicio.predictsResultado(fixtures)
+    
+    return render(request, 'equipos/equipo.html', {
         'fixtures': fixtures,
+        'jugadores': jugadores,
         'apuestas': apuestas_por_fixture,
         'equipo': equipo
-        })
-    except:
-        return redirect(index)
-    
+    })
+
 def about(request):
     return render(request, 'about.html')
 
