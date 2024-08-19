@@ -8,5 +8,4 @@ class prediccionesServicio():
     
     def predictsResultado(self, fixture):
         apuestas = Apuesta.objects.filter(IdApiApuesta = 1, IdApiFixture_id = fixture.IdApiFixture_id)
-        print(apuestas)
         return apuestas
