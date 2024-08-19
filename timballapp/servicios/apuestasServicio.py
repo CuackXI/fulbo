@@ -20,7 +20,6 @@ class apuestasServicio():
             for b in range(len(response[i]['bookmakers'])):
                 for y in response[i]['bookmakers'][b]['bets']:
                     for x in y['values']:
-                        print("hola")
                         try:
                             Apuesta.objects.get(IdApiFixture_id=response[i]['fixture']['id'], IdApiApuesta_id=y['id'], Tipo=x['value'])
                         except:
