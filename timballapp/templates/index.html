@@ -17,16 +17,16 @@
         <div class="artCont artPartido">
             {% for fixture in fixtures %}
                 <article>
-                    <h3 class="fecha">{{ fixture.Fecha }} - {{ fixture.Hora }}</h3>
-                    {% if fixture.Status == "Not Started" %}
+                    <h3 class="fecha">{{ fixture.fixture.Fecha }} - {{ fixture.fixture.Hora }}</h3>
+                    {% if fixture.fixture.Status == "Not Started" %}
                     <p>No empezó</p>
-                    {% elif fixture.Status == "Time to be defined" %}
+                    {% elif fixture.fixture.Status == "Time to be defined" %}
                     <p>Tiempo a definir</p>
-                    {% elif fixture.Status == "Match Postponed" %}
+                    {% elif fixture.fixture.Status == "Match Postponed" %}
                     <p>Partido postpuesto</p>
-                    {% elif fixture.Status == "Match Cancelled" or fixture.Status == "Match Abandoned" or fixture.Status == "Match Suspended" %}
+                    {% elif fixture.fixture.Status == "Match Cancelled" or fixture.fixture.Status == "Match Abandoned" or fixture.fixture.Status == "Match Suspended" %}
                     <p>Partido cancelado</p>
-                    {% elif fixture.Status == "Match Finished" %}
+                    {% elif fixture.fixture.Status == "Match Finished" %}
                     <p>Partido terminado</p>
                     {% else %}
                     <p>En juego</p>
@@ -34,37 +34,39 @@
 
                     <table class="tabEquipo">
                         <tr>
-                            <td><a class="equipoLink" href="{% url 'Search' query=fixture.IdEquipoLocal.IdApiEquipo_id %}">{{ fixture.IdEquipoLocal.Nombre }}</a></td>
+                            <td><a class="equipoLink" href="{% url 'Search' query=fixture.fixture.IdEquipoLocal.IdApiEquipo_id %}">{{ fixture.fixture.IdEquipoLocal.Nombre }}</a></td>
                             <td>vs.</td>
-                            <td><a class="equipoLink" href="{% url 'Search' query=fixture.IdEquipoVisitante.IdApiEquipo_id %}">{{ fixture.IdEquipoVisitante.Nombre }}</a></td>
+                            <td><a class="equipoLink" href="{% url 'Search' query=fixture.fixture.IdEquipoVisitante.IdApiEquipo_id %}">{{ fixture.fixture.IdEquipoVisitante.Nombre }}</a></td>
                             
                         </tr>
                         <tr>
-                            <td><img class="escudo" src="{{ fixture.IdEquipoLocal.Image_URL }}" alt="" width="200px" height="200px"></td>
-                            <td><img class="escudo" src="{{ fixture.IdEquipoVisitante.Image_URL }}" alt="" width="200px" height="200px"></td>
+                            <td><img class="escudo" src="{{ fixture.fixture.IdEquipoLocal.Image_URL }}" alt="" width="200px" height="200px"></td>
+                            <td><img class="escudo" src="{{ fixture.fixture.IdEquipoVisitante.Image_URL }}" alt="" width="200px" height="200px"></td>
                         </tr>
                     </table>
                     <table class="tabEstad">
                         <tr class="tabCabezal">
                             <td>Competencia</td>
-                            <td>{{ fixture.IdEquipoLocal.Nombre }}</td>
+                            <td>{{ fixture.fixture.IdEquipoLocal.Nombre }}</td>
                             <td>Empate</td>
-                            <td>{{ fixture.IdEquipoVisitante.Nombre }}</td>
+                            <td>{{ fixture.fixture.IdEquipoVisitante.Nombre }}</td>
                         </tr>
                         <tr>
-                            <td><img width = "20px" height = "20px" src="{{ fixture.IdApiComp.Image_URL }}">{{ fixture.IdApiComp.Nombre }}</td>
-                            {% for apuesta in apuestas %}
-                                {% for apuesta_esp in apuesta %}
-                                    {% if apuesta_esp.IdApiFixture_id == fixture.IdApiFixture_id %}
-                                        <td>{{ apuesta_esp.Porcentaje }}%</td>
-                                    {% endif %}
-                                {% endfor %}
-                            {% endfor %}
+                            <td><img width = "20px" height = "20px" src="{{ fixture.fixture.IdApiComp.Image_URL }}">{{ fixture.fixture.IdApiComp.Nombre }}</td>
+                            {% if fixture.aplocal != "--"  %}
+                            <td>{{ fixture.aplocal.Porcentaje }}%</td>
+                            <td>{{ fixture.apemp.Porcentaje }}%</td>
+                            <td>{{ fixture.apvis.Porcentaje }}%</td>
+                            {% else %}
+                            <td>{{ fixture.aplocal }}</td>
+                            <td>{{ fixture.apemp }}</td>
+                            <td>{{ fixture.apvis }}</td>
+                            {% endif %}
                         </tr>
                     </table>
                     <ul class="filaBotones">
-                        <li><a href="{% url 'Predicts' id=fixture.IdApiFixture_id %}" class="links">Predicciones</a></li>
-                        <li><a href="{% url 'Detalle' id=fixture.IdApiFixture_id %}" class="links">Ver mas</a></li>
+                        <li><a href="{% url 'Predicts' id=fixture.fixture.IdApiFixture_id %}" class="links">Predicciones</a></li>
+                        <li><a href="{% url 'Detalle' id=fixture.fixture.IdApiFixture_id %}" class="links">Ver mas</a></li>
                     </ul>
                 </article>
             {% endfor %}

@@ -169,3 +169,24 @@ class Tecnico(models.Model):
     Nacionalidad = models.CharField(max_length=200)
     Image_URL = models.CharField(max_length=200)
     IdApiEquipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
+
+class StatsJugador(models.Model):
+    IdApiJugador_id = models.IntegerField(primary_key=True)
+    Goles = models.IntegerField()
+    PorcentajePases = models.IntegerField()
+    PorcentajePasesF = models.IntegerField()
+    FaltasRecibidas = models.IntegerField()
+    FaltasDadas = models.IntegerField()
+    Asistencias = models.IntegerField()
+    Amarillas = models.IntegerField()
+    Rojas = models.IntegerField()
+    PasesClave = models.IntegerField()
+    Tiros = models.IntegerField()
+    Quites = models.IntegerField()
+    Minutos = models.IntegerField()
+    PartidosJugados = models.IntegerField()
+    Atajadas = models.IntegerField()
+    PromedioGoles = models.IntegerField()
+
+class StatsEquipo(models.Model):
+    IdApiEquipo_id = models.IntegerField(primary_key=True)

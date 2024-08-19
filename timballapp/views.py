@@ -17,13 +17,18 @@ def index(request):
     if request.method == 'GET':
         servicio = fixturesServicio()
         fixtures = servicio.fixturesPorCompetencia(128)
+        fixturesReal = []
 
-        servicio = prediccionesServicio()
-        apuestas_por_fixture = servicio.predictsResultado(fixtures)
+        for fixture in fixtures:
+            servicio = prediccionesServicio()
+            apuestas_por_fixture = servicio.predictsResultado(fixture)
+            if len(apuestas_por_fixture) == 0:
+                fixturesReal.append(FixtureIndex(fixture, "--", "--", "--"))
+            else:
+                fixturesReal.append(FixtureIndex(fixture, apuestas_por_fixture[0], apuestas_por_fixture[1], apuestas_por_fixture[2]))
 
         return render(request, 'index.html', {
-            'fixtures': fixtures,
-            'apuestas': apuestas_por_fixture,
+            'fixtures': fixturesReal,
             'form': barraBusqueda()
         })
     else:
@@ -84,20 +89,26 @@ def feed_busqueda(request, query):
             equipo = equipos[0]
         except:
             return redirect('Home')
-
-    servicio = fixturesServicio()
-    fixtures = servicio.fixturesPorEquipo(equipo.IdApiEquipo_id)
+        
+    fixturesReal = []
 
     servicio = jugadoresServicio()
     jugadores = servicio.jugadoresPorEquipo(equipo.IdApiEquipo_id)
 
-    servicio = prediccionesServicio()
-    apuestas_por_fixture = servicio.predictsResultado(fixtures)
+    servicio = fixturesServicio()
+    fixtures = servicio.fixturesPorEquipo(equipo.IdApiEquipo_id)
+
+    for fixture in fixtures:
+                servicio = prediccionesServicio()
+                apuestas_por_fixture = servicio.predictsResultado(fixture)
+                if len(apuestas_por_fixture) == 0:
+                    fixturesReal.append(FixtureIndex(fixture, "--", "--", "--"))
+                else:
+                    fixturesReal.append(FixtureIndex(fixture, apuestas_por_fixture[0], apuestas_por_fixture[1], apuestas_por_fixture[2]))
     
     return render(request, 'equipos/equipo.html', {
-        'fixtures': fixtures,
+        'fixtures': fixturesReal,
         'jugadores': jugadores,
-        'apuestas': apuestas_por_fixture,
         'equipo': equipo
     })
 

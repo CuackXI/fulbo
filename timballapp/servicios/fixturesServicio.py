@@ -35,4 +35,11 @@ class fixturesServicio():
                     IdApiEstadio_id=response[i]['fixture']['venue']['id'],
                     IdEquipoLocal_id=response[i]['teams']['home']['id'],
                     IdEquipoVisitante_id=response[i]['teams']['away']['id'],
-                    Status=response[i]['fixture']['status']['long'])
+                    Status=response[i]['fixture']['status']['long'])    
+
+class FixtureIndex():
+    def __init__(self, fixture, aplocal, apemp, apvis) -> None:
+        self.fixture = fixture
+        self.aplocal = aplocal
+        self.apemp = apemp
+        self.apvis = apvis
