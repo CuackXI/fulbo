@@ -99,13 +99,13 @@ def feed_busqueda(request, query):
     fixtures = servicio.fixturesPorEquipo(equipo.IdApiEquipo_id)
 
     for fixture in fixtures:
-                servicio = prediccionesServicio()
-                apuestas_por_fixture = servicio.predictsResultado(fixture)
-                if len(apuestas_por_fixture) == 0:
-                    fixturesReal.append(FixtureIndex(fixture, "--", "--", "--"))
-                else:
-                    fixturesReal.append(FixtureIndex(fixture, apuestas_por_fixture[0], apuestas_por_fixture[1], apuestas_por_fixture[2]))
-    
+        servicio = prediccionesServicio()
+        apuestas_por_fixture = servicio.predictsResultado(fixture)
+        if len(apuestas_por_fixture) == 0:
+            fixturesReal.append(FixtureIndex(fixture, "--", "--", "--"))
+        else:
+            fixturesReal.append(FixtureIndex(fixture, apuestas_por_fixture[0], apuestas_por_fixture[1], apuestas_por_fixture[2]))
+
     return render(request, 'equipos/equipo.html', {
         'fixtures': fixturesReal,
         'jugadores': jugadores,
