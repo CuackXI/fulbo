@@ -210,3 +210,4 @@ class StatsEquipo(models.Model):
     PartidosG = models.IntegerField()
     PartidosP = models.IntegerField()
     PartidosE = models.IntegerField()
+    # dsghjkfd
