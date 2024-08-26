@@ -2,12 +2,14 @@ from django.db import models
 
 # Create your models here.
 
+
 class Competiciones(models.Model):
     IdApiComp_id = models.IntegerField(primary_key=True)
     Pais = models.CharField(max_length=200)
     Nombre = models.CharField(max_length=200)
     Image_URL = models.CharField(max_length=200)
     Temporada = models.IntegerField()
+
 
 class Estadio(models.Model):
     IdApiEstadio_id = models.IntegerField(primary_key=True)
@@ -16,6 +18,7 @@ class Estadio(models.Model):
     Direccion = models.CharField(max_length=200)
     Capacidad = models.IntegerField()
     Image_URL = models.CharField(max_length=200)
+
 
 class Equipo(models.Model):
     IdApiEquipo_id = models.IntegerField(primary_key=True)
@@ -26,6 +29,7 @@ class Equipo(models.Model):
     Image_URL = models.CharField(max_length=200)
     Fundacion = models.IntegerField()
 
+
 class Fixture(models.Model):
     IdApiComp = models.ForeignKey(Competiciones, on_delete=models.CASCADE)
     IdApiFixture_id = models.IntegerField(primary_key=True)
@@ -33,8 +37,10 @@ class Fixture(models.Model):
     Fecha = models.DateField()
     Hora = models.TimeField()
     IdApiEstadio = models.ForeignKey(Estadio, on_delete=models.CASCADE)
-    IdEquipoLocal = models.ForeignKey(Equipo, on_delete=models.CASCADE, related_name="Local")
-    IdEquipoVisitante = models.ForeignKey(Equipo, on_delete=models.CASCADE, related_name="Visitante")
+    IdEquipoLocal = models.ForeignKey(
+        Equipo, on_delete=models.CASCADE, related_name="Local")
+    IdEquipoVisitante = models.ForeignKey(
+        Equipo, on_delete=models.CASCADE, related_name="Visitante")
     Status = models.CharField(max_length=200)
 
     def calcularHorarioArgentino(text):
@@ -60,12 +66,12 @@ class Fixture(models.Model):
                 mes += char
             elif contador == 2 and date == True and char != "-":
                 dia += char
-            elif time == True and char!="T":
+            elif time == True and char != "T":
                 timestr += char
-            elif char!="T" and char != "-":
+            elif char != "T" and char != "-":
                 hora += char
             if char == "-":
-                contador+=1
+                contador += 1
 
         hora = int(hora) - 3
 
@@ -121,13 +127,16 @@ class Fixture(models.Model):
 
         return [datestr, timestr]
 
+
 class Bookmaker(models.Model):
     Bookmaker_id = models.IntegerField(primary_key=True)
     Nombre = models.CharField(max_length=200)
 
+
 class ApiApuestas(models.Model):
     IdApiApuesta = models.IntegerField(primary_key=True)
     Nombre = models.CharField(max_length=200)
+
 
 class Apuesta(models.Model):
     IdApiFixture = models.ForeignKey(Fixture, on_delete=models.CASCADE)
@@ -151,7 +160,8 @@ class Apuesta(models.Model):
         for Valor in Valores_porcentaje:
             Porcentajes.append(round((Valor*100)/sumVal_P, 2))
 
-        return(Porcentajes)
+        return (Porcentajes)
+
 
 class Jugador(models.Model):
     IdApiJugador_id = models.IntegerField(primary_key=True)
@@ -162,6 +172,7 @@ class Jugador(models.Model):
     Posicion = models.CharField(max_length=200)
     Numero = models.IntegerField()
 
+
 class Tecnico(models.Model):
     IdApiTecnico_id = models.IntegerField(primary_key=True)
     Nombre = models.CharField(max_length=200)
@@ -169,6 +180,7 @@ class Tecnico(models.Model):
     Nacionalidad = models.CharField(max_length=200)
     Image_URL = models.CharField(max_length=200)
     IdApiEquipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
+
 
 class StatsJugador(models.Model):
     IdApiJugador_id = models.IntegerField(primary_key=True)
@@ -188,5 +200,13 @@ class StatsJugador(models.Model):
     Atajadas = models.IntegerField()
     PromedioGoles = models.IntegerField()
 
+
 class StatsEquipo(models.Model):
     IdApiEquipo_id = models.IntegerField(primary_key=True)
+    Goles = models.IntegerField()
+    GolesEC = models.IntegerField()
+    DifGol = models.IntegerField()
+    PartidosJ = models.IntegerField()
+    PartidosG = models.IntegerField()
+    PartidosP = models.IntegerField()
+    PartidosE = models.IntegerField()
