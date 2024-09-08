@@ -37,7 +37,6 @@ class apuestasServicio():
         multiplicadores = []
         porcentajes = []
         cant_apuestas = len(apuestas)
-        print(cant_apuestas)
         for apuesta in apuestas:
             if id != apuesta.IdApiApuesta:
                 id = apuesta.IdApiApuesta
