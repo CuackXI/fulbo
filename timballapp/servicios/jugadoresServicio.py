@@ -2,8 +2,8 @@ from ..models import *
 
 class jugadoresServicio():
 
-    def jugadoresPorEquipo(self, id):
-        return Jugador.objects.filter(IdApiEquipo_id = id).order_by("Posicion")
+    def jugadoresPorEquipo(self, id, limit = None):
+        return Jugador.objects.filter(IdApiEquipo_id = id).order_by("Posicion")[:limit]
     
     def crearJugadores(self, jugadores):
         for jugador in jugadores[0]['players']:

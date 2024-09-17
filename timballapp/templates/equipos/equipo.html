@@ -61,6 +61,7 @@
             <td>{{ jugador.Edad }} años</td>
         </tr>
     {% endfor %}
+    <tr><td><a class="equipoLink" href="{% url 'Players' query=equipo.IdApiEquipo_id %}">JUGADORES</a></td></tr>
 </table>
 
 <div class="artCont artPartido">

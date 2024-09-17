@@ -1,0 +1,18 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <p>Jugadores de {{ equipo.Nombre }}</p>
+    <table class="tabEstad">
+        {% for jugador in jugadores %}
+        <tr>
+            <td>{{ jugador.Nombre }}</td>
+            <td><img src="{{ jugador.Image_URL }}" alt="{{ jugador.Nombre }}" width="50px" height="50px"></td>
+            <td>{{ jugador.Posicion }}</td>
+            <td>{{ jugador.Numero }}</td>
+            <td>{{ jugador.Edad }} años</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -9,7 +9,8 @@ urlpatterns = [
     path('IniciarSesion', views.login, name="Login"),
     path('fixture/<int:id>/', views.fixture_detalle, name="Detalle"),
     path('fixture_predicts/<int:id>/', views.fixture_predicts, name="Predicts"),
-    path('busqueda/<str:query>/', views.feed_busqueda, name="Search"),
+    path('equipo/<str:query>/', views.feed_busqueda, name="Search"),
+    path('jugadores/<str:query>/', views.jugadores_equipo, name="Players"),
 
     # Estas no son urls de uso común hay que ver como hacer esto sin urls
     path('post_equipos', views.post_equipos, name="post_equipos"),
@@ -20,5 +21,6 @@ urlpatterns = [
     path('post_apuestas', views.post_apuestas, name="post_apuestas"),
     path('post_apuestas_id', views.post_apuestas_id, name="post_apuestas_id"),
     path('post_porcentajes', views.post_porcentajes, name="post_porcentajes"),
-    path('post_jugadores', views.post_jugadores, name="post_jugadores")
+    path('post_jugadores', views.post_jugadores, name="post_jugadores"),
+    path('post_equipos_estadisticas', views.post_equipos_estadisticas, name="post_equipos_estadisticas")
 ]

@@ -100,3 +100,12 @@ class apiFutbolServicio():
         self.__set_url("https://api-football-v1.p.rapidapi.com/v3/odds/bets")
 
         return self.Respuesta
+    
+    def equipoEstadisticas(self, equipo):
+        self.__set_url("https://api-football-v1.p.rapidapi.com/v3/teams/statistics")
+
+        self.__set_querystring('league', 128)
+        self.__set_querystring('season', 2024)
+        self.__set_querystring('team', equipo)
+
+        return self.Respuesta

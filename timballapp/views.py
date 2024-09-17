@@ -93,7 +93,7 @@ def feed_busqueda(request, query):
     fixturesReal = []
 
     servicio = jugadoresServicio()
-    jugadores = servicio.jugadoresPorEquipo(equipo.IdApiEquipo_id)
+    jugadores = servicio.jugadoresPorEquipo(equipo.IdApiEquipo_id, limit = 4)
 
     servicio = fixturesServicio()
     fixtures = servicio.fixturesPorEquipo(equipo.IdApiEquipo_id)
@@ -108,6 +108,18 @@ def feed_busqueda(request, query):
 
     return render(request, 'equipos/equipo.html', {
         'fixtures': fixturesReal,
+        'jugadores': jugadores,
+        'equipo': equipo
+    })
+
+def jugadores_equipo(request, query):
+    servicio = equiposServicio()
+    equipo = servicio.equipoPorID(query)
+
+    servicio = jugadoresServicio()
+    jugadores = servicio.jugadoresPorEquipo(equipo.IdApiEquipo_id)
+
+    return render(request, 'jugadores/jugadores.html', {
         'jugadores': jugadores,
         'equipo': equipo
     })
@@ -249,6 +261,24 @@ def post_porcentajes(request):
         return redirect('Home')
     
 def post_jugadores(request):
+    if request.method == 'GET':
+        return render(request, 'post_requests/post_jugadores.html', {
+            'form': activateRequest()
+        })
+    else:
+        servicio = equiposServicio()
+        equipos = servicio.obtenerEquiposPorCompetencia(128)
+
+        servicio = apiFutbolServicio()
+        for equipo in equipos:
+            jugadores = servicio.Jugadores(equipo.IdApiEquipo_id)
+            
+            servicio_jugadores = jugadoresServicio()
+            servicio_jugadores.crearJugadores(jugadores)
+
+        return redirect('Home')
+
+def post_equipos_estadisticas(request):
     if request.method == 'GET':
         return render(request, 'post_requests/post_jugadores.html', {
             'form': activateRequest()
