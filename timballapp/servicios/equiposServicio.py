@@ -24,29 +24,62 @@ class equiposServicio():
                 Fundacion=response['response'][i]['team']['founded']
             )
 
-    def obtenerEstadisticasEquipo(self, response):
-        respuesta = response['response']
-        print(respuesta['goals']['for']['total']['total'])
-        print(respuesta['goals']['against']['total'])
-        print(respuesta['goals']['for']['total']['total'] - respuesta['goals']['against']['total']['total'])
-        print(respuesta['fixtures']['played']['total'])
-        print(respuesta['fixtures']['wins']['total'])
-        print(respuesta['fixtures']['draws']['total'])
-        print(respuesta['fixtures']['loses']['total'])
-        print(int(respuesta['fixtures']['wins']['total'])*3+int(respuesta['fixtures']['draws']['total']))
-        print(respuesta['fixtures']['wins']['home'])
-        print(respuesta['fixtures']['wins']['away'])
-        print(respuesta['fixtures']['draws']['home'])
-        print(respuesta['fixtures']['draws']['away'])
-        print(respuesta['fixtures']['loses']['home'])
-        print(respuesta['fixtures']['loses']['away'])
-        print(respuesta['goals']['for']['total']['home'])
-        print(respuesta['goals']['for']['total']['away'])
-        print(respuesta['goals']['against']['total']['home'])
-        print(respuesta['goals']['against']['total']['away'])
-        print(respuesta['clean_sheet']['total'])
-        print(respuesta['clean_sheet']['home'])
-        print(respuesta['clean_sheet']['away'])
-        print(respuesta['penalties']['total'])
-        print(respuesta['penalties']['scored']['total'])
-        print(respuesta['penalties']['missed']['total'])
+    def actualizarEstadisticasEquipo(self, response, equipo):
+        try:
+            StatsEquipo.objects.get(IdApiEquipo_id=equipo) #Except
+            StatsEquipo.objects.filter(IdApiEquipo_id=equipo).update(
+            IdApiEquipo_id = equipo,
+            GolesFavor = response['goals']['for']['total']['total'],
+            GolesFavorLocal= response['goals']['for']['total']['home'],
+            GolesFavorVisitante=response['goals']['for']['total']['away'],
+            GolesContra=response['goals']['against']['total']['total'],
+            GolesContraLocal=response['goals']['against']['total']['home'],
+            GolesContraVisitante=response['goals']['against']['total']['away'],
+            DiferenciaGoles=response['goals']['for']['total']['total'] - response['goals']['against']['total']['total'],
+            PartidosJugados=response['fixtures']['played']['total'],
+            PartidosGanados=response['fixtures']['wins']['total'],
+            PartidosPerdidos=response['fixtures']['loses']['total'],
+            PartidosEmpatados=response['fixtures']['draws']['total'],
+            Puntos=int(response['fixtures']['wins']['total'])*3+int(response['fixtures']['draws']['total']),
+            PartidosGanadosLocal=response['fixtures']['wins']['home'],
+            PartidosPerdidosLocal=response['fixtures']['loses']['home'],
+            PartidosEmpatadosLocal=response['fixtures']['draws']['home'],
+            PartidosGanadosVisitante=response['fixtures']['wins']['away'],
+            PartidosEmpatadosVisitante=response['fixtures']['draws']['away'],
+            PartidosPerdidosVisitante=response['fixtures']['loses']['away'],
+            SinGoles=response['clean_sheet']['total'],
+            SinGolesLocal=response['clean_sheet']['home'],
+            SinGolesVisitante=response['clean_sheet']['away'],
+            Penales=response['penalty']['total']
+            )
+
+        except:
+            StatsEquipo.objects.create(
+                IdApiEquipo_id = equipo,
+                GolesFavor = response['goals']['for']['total']['total'],
+                GolesFavorLocal= response['goals']['for']['total']['home'],
+                GolesFavorVisitante=response['goals']['for']['total']['away'],
+                GolesContra=response['goals']['against']['total']['total'],
+                GolesContraLocal=response['goals']['against']['total']['home'],
+                GolesContraVisitante=response['goals']['against']['total']['away'],
+                DiferenciaGoles=response['goals']['for']['total']['total'] - response['goals']['against']['total']['total'],
+                PartidosJugados=response['fixtures']['played']['total'],
+                PartidosGanados=response['fixtures']['wins']['total'],
+                PartidosPerdidos=response['fixtures']['loses']['total'],
+                PartidosEmpatados=response['fixtures']['draws']['total'],
+                Puntos=int(response['fixtures']['wins']['total'])*3+int(response['fixtures']['draws']['total']),
+                PartidosGanadosLocal=response['fixtures']['wins']['home'],
+                PartidosPerdidosLocal=response['fixtures']['loses']['home'],
+                PartidosEmpatadosLocal=response['fixtures']['draws']['home'],
+                PartidosGanadosVisitante=response['fixtures']['wins']['away'],
+                PartidosEmpatadosVisitante=response['fixtures']['draws']['away'],
+                PartidosPerdidosVisitante=response['fixtures']['loses']['away'],
+                SinGoles=response['clean_sheet']['total'],
+                SinGolesLocal=response['clean_sheet']['home'],
+                SinGolesVisitante=response['clean_sheet']['away'],
+                Penales=response['penalty']['total']
+            )
+
+        # Por agregar
+        print("Penales metidos en total: ", response['penalty']['scored']['total'])
+        print("Penales errados en total: ", response['penalty']['missed']['total'])

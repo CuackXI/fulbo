@@ -280,7 +280,7 @@ def post_jugadores(request):
 
 def post_equipos_estadisticas(request):
     if request.method == 'GET':
-        return render(request, 'post_requests/post_jugadores.html', {
+        return render(request, 'post_requests/post_equipos_estadisticas.html', {
             'form': activateRequest()
         })
     else:
@@ -289,9 +289,9 @@ def post_equipos_estadisticas(request):
 
         servicio = apiFutbolServicio()
         for equipo in equipos:
-            jugadores = servicio.Jugadores(equipo.IdApiEquipo_id)
+            estadisticas = servicio.equipoEstadisticas(equipo.IdApiEquipo_id)
             
-            servicio_jugadores = jugadoresServicio()
-            servicio_jugadores.crearJugadores(jugadores)
+            servicio_equipos = equiposServicio()
+            servicio_equipos.actualizarEstadisticasEquipo(estadisticas, equipo)
 
         return redirect('Home')
