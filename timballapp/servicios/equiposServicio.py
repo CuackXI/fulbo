@@ -41,6 +41,8 @@ class equiposServicio():
             PartidosPerdidos=response['fixtures']['loses']['total'],
             PartidosEmpatados=response['fixtures']['draws']['total'],
             Puntos=int(response['fixtures']['wins']['total'])*3+int(response['fixtures']['draws']['total']),
+            PuntosLocal=int(response['fixtures']['wins']['home'])*3+int(response['fixtures']['draws']['home']),
+            PuntosVisitante=int(response['fixtures']['wins']['away'])*3+int(response['fixtures']['draws']['away']),
             PartidosGanadosLocal=response['fixtures']['wins']['home'],
             PartidosPerdidosLocal=response['fixtures']['loses']['home'],
             PartidosEmpatadosLocal=response['fixtures']['draws']['home'],
@@ -68,6 +70,8 @@ class equiposServicio():
                 PartidosPerdidos=response['fixtures']['loses']['total'],
                 PartidosEmpatados=response['fixtures']['draws']['total'],
                 Puntos=int(response['fixtures']['wins']['total'])*3+int(response['fixtures']['draws']['total']),
+                PuntosLocal=int(response['fixtures']['wins']['home'])*3+int(response['fixtures']['draws']['home']),
+                PuntosVisitante=int(response['fixtures']['wins']['away'])*3+int(response['fixtures']['draws']['away']),
                 PartidosGanadosLocal=response['fixtures']['wins']['home'],
                 PartidosPerdidosLocal=response['fixtures']['loses']['home'],
                 PartidosEmpatadosLocal=response['fixtures']['draws']['home'],
@@ -77,9 +81,7 @@ class equiposServicio():
                 SinGoles=response['clean_sheet']['total'],
                 SinGolesLocal=response['clean_sheet']['home'],
                 SinGolesVisitante=response['clean_sheet']['away'],
-                Penales=response['penalty']['total']
+                Penales=response['penalty']['total'],
+                PenalesMetidos = response['penalty']['scored']['total'],
+                PenalesErrados = response['penalty']['missed']['total'],
             )
-
-        # Por agregar
-        print("Penales metidos en total: ", response['penalty']['scored']['total'])
-        print("Penales errados en total: ", response['penalty']['missed']['total'])

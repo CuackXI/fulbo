@@ -224,6 +224,8 @@ class StatsEquipo(models.Model):
     SinGolesLocal=models.IntegerField(default = 0)
     SinGolesVisitante=models.IntegerField(default = 0)
     Penales=models.IntegerField(default = 0)
+    PenalesErrados = models.IntegerField(default = 0)
+    PenalesMetidos = models.IntegerField(default = 0)
     Amarillas=models.IntegerField(null=True, default = None)
     Rojas=models.IntegerField(null=True, default = None)
     GolesContraLocal=models.IntegerField(default = 0)
