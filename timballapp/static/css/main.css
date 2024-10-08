@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
 body {font-family: "Josefin Sans", sans-serif;}
-* {scroll-behavior: smooth;}
+* {scroll-behavior: smooth;
+}
 
 
 /* Testing */
@@ -8,6 +9,10 @@ body {font-family: "Josefin Sans", sans-serif;}
     height: 100%;
 }*/
 
+.highlight {
+    color: rgb(3, 3, 3);
+    background-color: rgb(255, 255, 255);
+}
 .space-beetwen{
     margin: 10px;
 }
@@ -307,7 +312,6 @@ p.aviso {
     font-size: 1.1rem;
     border-radius: 10px;
 }
-
 
 /* Articles */
 

@@ -90,10 +90,25 @@ def feed_busqueda(request, query):
         except:
             return redirect('Home')
         
+    servicio = equiposServicio()
+
+    equipo_stats = servicio.obtenerEstadisticasPorEquipo(equipo)
+    equipo_con_posicion = EquipoConPosicion(equipo_stats, servicio.obtenerPosicionDeUnEquipo(equipo), equipo)
+
+    equipos = servicio.obtenerEquiposPorCompetencia(128)
+
+    stats_equipos = []
+
+    for equipo_ in equipos:
+        equipo_stats = servicio.obtenerEstadisticasPorEquipo(equipo_)
+        stats_equipos.append(EquipoConPosicion(equipo_stats, servicio.obtenerPosicionDeUnEquipo(equipo_), equipo_))
+
+    stats_equipos.sort(key=lambda x: x.posicion)
+
     fixturesReal = []
 
     servicio = jugadoresServicio()
-    jugadores = servicio.jugadoresPorEquipo(equipo.IdApiEquipo_id, limit = 4)
+    jugadores = servicio.jugadoresPorEquipo(equipo.IdApiEquipo_id)
 
     servicio = fixturesServicio()
     fixtures = servicio.fixturesPorEquipo(equipo.IdApiEquipo_id)
@@ -109,7 +124,8 @@ def feed_busqueda(request, query):
     return render(request, 'equipos/equipo.html', {
         'fixtures': fixturesReal,
         'jugadores': jugadores,
-        'equipo': equipo
+        'equipo': equipo_con_posicion,
+        'stats_equipos': stats_equipos
     })
 
 def jugadores_equipo(request, query):
@@ -293,5 +309,57 @@ def post_equipos_estadisticas(request):
             
             servicio_equipos = equiposServicio()
             servicio_equipos.actualizarEstadisticasEquipo(estadisticas, equipo)
+
+        return redirect('Home')
+    
+def actualizar_todo(request):
+    if request.method == 'GET':
+        return render(request, 'post_requests/post_equipos_estadisticas.html', {
+            'form': activateRequest()
+        })
+    else:
+        servicio = apiFutbolServicio()
+        fixtures = servicio.Fixtures(liga = "128", inicio = "2024-05-23", fin = "2024-12-16")
+
+        servicio = fixturesServicio()
+        servicio.actualizarFixtures(fixtures)
+
+        servicio = equiposServicio()
+        equipos = servicio.obtenerEquiposPorCompetencia(128)
+
+        servicio = apiFutbolServicio()
+        for equipo in equipos:
+            estadisticas = servicio.equipoEstadisticas(equipo.IdApiEquipo_id)
+            
+            servicio_equipos = equiposServicio()
+            servicio_equipos.actualizarEstadisticasEquipo(estadisticas, equipo)
+
+        servicio = equiposServicio()
+        equipos = servicio.obtenerEquiposPorCompetencia(128)
+        servicio = apiFutbolServicio()
+        for equipo in equipos:
+            jugadores = servicio.Jugadores(equipo.IdApiEquipo_id)
+            
+            servicio_jugadores = jugadoresServicio()
+            servicio_jugadores.crearJugadores(jugadores)
+
+        pages = [1,2,3]
+
+        for page in pages:
+            competicion = 128
+            servicio = apiFutbolServicio()
+            apuestas = servicio.Apuestas(competicion, page)
+
+            servicio = apuestasServicio()
+            servicio.actualizarApuestas(apuestas)
+
+        servicio = apuestasServicio()
+        apuestas = servicio.obtenerApuestas()
+
+        servicio = apuestasServicio()
+        porcentajes = servicio.generarPorcentajes(apuestas)
+
+        servicio = apuestasServicio()
+        servicio.actualizarPorcentaje(porcentajes, apuestas)
 
         return redirect('Home')

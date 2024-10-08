@@ -22,5 +22,6 @@ urlpatterns = [
     path('post_apuestas_id', views.post_apuestas_id, name="post_apuestas_id"),
     path('post_porcentajes', views.post_porcentajes, name="post_porcentajes"),
     path('post_jugadores', views.post_jugadores, name="post_jugadores"),
-    path('post_equipos_estadisticas', views.post_equipos_estadisticas, name="post_equipos_estadisticas")
+    path('post_equipos_estadisticas', views.post_equipos_estadisticas, name="post_equipos_estadisticas"),
+    path('update', views.actualizar_todo, name="actualizar")
 ]

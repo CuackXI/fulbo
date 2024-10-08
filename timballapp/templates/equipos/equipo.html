@@ -17,10 +17,10 @@
         <td>País</td>
     </tr>
     <tr>
-        <td>{{ equipo.Nombre }}</td>
-        <td><img src="{{ equipo.Image_URL }}" alt="Equipo" width = "200px" height = "200px"></td>
-        <td>{{ equipo.Fundacion }}</td>
-        <td>{{ equipo.Pais }}</td>
+        <td>{{ equipo.equipo.Nombre }}</td>
+        <td><img src="{{ equipo.equipo.Image_URL }}" alt="Equipo" width = "200px" height = "200px"></td>
+        <td>{{ equipo.equipo.Fundacion }}</td>
+        <td>{{ equipo.equipo.Pais }}</td>
     </tr>
 </table>
 
@@ -39,9 +39,45 @@
     </tr>
 
     <tr>
-        <td>{{ equipo.IdApiEstadio.Nombre }}</td>
-        <td><img src="{{ equipo.IdApiEstadio.Image_URL }}" alt="Estadio" width="200px" height="200px"></td>
+        <td>{{ equipo.equipo.IdApiEstadio.Nombre }}</td>
+        <td><img src="{{ equipo.equipo.IdApiEstadio.Image_URL }}" alt="Estadio" width="200px" height="200px"></td>
     </tr>
+</table>
+
+<table class="tabEstad">
+    <tr>
+        <td>Posicion</td>
+        <td>Equipo</td>
+        <td>Pts</td>
+        <td>PJ</td>
+        <td>PG</td>
+        <td>PE</td>
+        <td>PP</td>
+        <td>GF</td>
+        <td>GC</td>
+        <td>DIF</td>
+    </tr>
+    {% for stats_equipo in stats_equipos %}
+    {% if stats_equipo.equipo.IdApiEquipo_id == equipo.equipo.IdApiEquipo_id %}
+        <tr class="highlight">
+    {% else %}
+        <tr>
+    {% endif %}
+        <td>{{ stats_equipo.posicion }}</td>
+        <td>
+            <img src="{{ stats_equipo.equipo.Image_URL }}" alt="Estadio" width="20px" height="20px"> 
+            {{ stats_equipo.equipo.Nombre }}
+        </td>
+        <td>{{ stats_equipo.stat.Puntos }}</td>
+        <td>{{ stats_equipo.stat.PartidosJugados }}</td>
+        <td>{{ stats_equipo.stat.PartidosGanados }}</td>
+        <td>{{ stats_equipo.stat.PartidosEmpatados }}</td>
+        <td>{{ stats_equipo.stat.PartidosPerdidos }}</td>
+        <td>{{ stats_equipo.stat.GolesFavor }}</td>
+        <td>{{ stats_equipo.stat.GolesContra }}</td>
+        <td>{{ stats_equipo.stat.DiferenciaGoles }}</td>
+    </tr>
+{% endfor %}
 </table>
 
 <table class="tabEstad">
@@ -55,13 +91,13 @@
     {% for jugador in jugadores %}
         <tr>
             <td>{{ jugador.Nombre }}</td>
-            <td><img src="{{ jugador.Image_URL }}" alt="{{ jugador.Nombre }}" width="50px" height="50px"></td>
+            <td><img src="{{ jugador.Image_URL }}" alt="{{ jugador.Nombre }}" width="200px" height="200px"></td>
             <td>{{ jugador.Posicion }}</td>
             <td>{{ jugador.Numero }}</td>
             <td>{{ jugador.Edad }} años</td>
         </tr>
     {% endfor %}
-    <tr><td><a class="equipoLink" href="{% url 'Players' query=equipo.IdApiEquipo_id %}">JUGADORES</a></td></tr>
+    <tr><td><a class="equipoLink" href="{% url 'Players' query=equipo.equipo.IdApiEquipo_id %}">JUGADORES</a></td></tr>
 </table>
 
 <div class="artCont artPartido">
@@ -122,7 +158,7 @@
     {% endfor %}
 
     <div class="centrar">
-        <iframe src="{{ equipo.IdApiEstadio.Direccion }}" width = "1000px" height = "750px" frameborder="0"></iframe>
+        <iframe src="{{ equipo.equipo.IdApiEstadio.Direccion }}" width = "1000px" height = "750px" frameborder="0"></iframe>
     </div>
 </div>
 

@@ -114,10 +114,10 @@ class Fixture(models.Model):
                     dia = "30"
                 elif mes == "10":
                     mes = "09"
-                    dia = "31"
+                    dia = "30"
                 elif mes == "11":
                     mes = "10"
-                    dia = "30"
+                    dia = "31"
                 elif mes == "12":
                     mes = "11"
                     dia = "30"
@@ -162,16 +162,14 @@ class Apuesta(models.Model):
 
         return (Porcentajes)
 
-
 class Jugador(models.Model):
     IdApiJugador_id = models.IntegerField(primary_key=True)
-    Nombre = models.CharField(max_length=200)
-    Edad = models.IntegerField()
-    Image_URL = models.CharField(max_length=200)
-    IdApiEquipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
-    Posicion = models.CharField(max_length=200)
-    Numero = models.IntegerField()
-
+    Nombre = models.CharField(max_length=200, null = True)
+    Edad = models.IntegerField(null = True)
+    Image_URL = models.CharField(max_length=200, null = True)
+    IdApiEquipo = models.ForeignKey(Equipo, on_delete=models.CASCADE, null = True)
+    Posicion = models.CharField(max_length=200, null = True)
+    Numero = models.IntegerField(null = True)
 
 class Tecnico(models.Model):
     IdApiTecnico_id = models.IntegerField(primary_key=True)

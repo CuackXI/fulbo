@@ -24,6 +24,23 @@ class equiposServicio():
                 Fundacion=response['response'][i]['team']['founded']
             )
 
+    def obtenerPosicionDeUnEquipo(self, equipo):
+        stats_equipo = self.obtenerEstadisticasPorEquipo(equipo)
+
+        ranked_teams = (
+            StatsEquipo.objects.all()
+            .order_by(
+                '-Puntos',
+                '-DiferenciaGoles',
+                '-GolesFavor',
+                'GolesContra'
+            )
+        )
+
+        for position, stat in enumerate(ranked_teams, start=1):
+            if stat.IdApiEquipo_id == equipo:
+                return position
+
     def actualizarEstadisticasEquipo(self, response, equipo):
         try:
             StatsEquipo.objects.get(IdApiEquipo_id=equipo) #Except
@@ -85,3 +102,12 @@ class equiposServicio():
                 PenalesMetidos = response['penalty']['scored']['total'],
                 PenalesErrados = response['penalty']['missed']['total'],
             )
+
+    def obtenerEstadisticasPorEquipo(self, equipo):
+        return StatsEquipo.objects.get(IdApiEquipo_id = equipo.IdApiEquipo_id)
+
+class EquipoConPosicion:
+    def __init__(self, stats, posicion, equipo) -> None:
+        self.stat = stats
+        self.posicion = posicion
+        self.equipo = equipo
