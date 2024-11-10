@@ -1,0 +1,83 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+<section>
+    <div class="image-container">
+        <div class="overlay">
+            <div class="container-titulo">
+                <h1 class="Titulo_Timball">TIMBALL</h1>
+                <h2>Predice, Gana, Disfruta</h2>
+                <p>TIMBALL ofrece las predicciones más precisas y confiables para tus partidos favoritos.
+                    Nuestro equipo de expertos analiza cada detalle para brindarte las mejores probabilidades
+                    y ayudarte a tomar decisiones informadas. Únete a nosotros y lleva tus apuestas deportivas al
+                    siguiente nivel</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main CpagPartido">
+        <h2 id="pagInicioPartidos">Partidos</h2>
+
+        <div class="container-partido">
+            {% for fixture in fixtures %}
+                <div class="container-article">
+                    <h3 class="fecha">{{ fixture.fixture.Fecha }} - {{ fixture.fixture.Hora }}</h3>
+                    {% if fixture.fixture.Status == "Not Started" %}
+                    <p>No empezó</p>
+                    {% elif fixture.fixture.Status == "Time to be defined" %}
+                    <p>Tiempo a definir</p>
+                    {% elif fixture.fixture.Status == "Match Postponed" %}
+                    <p>Partido postpuesto</p>
+                    {% elif fixture.fixture.Status == "Match Cancelled" or fixture.fixture.Status == "Match Abandoned" or fixture.fixture.Status == "Match Suspended" %}
+                    <p>Partido cancelado</p>
+                    {% elif fixture.fixture.Status == "Match Finished" %}
+                    <p>Partido terminado</p>
+                    {% else %}
+                    <p>En juego</p>
+                    {% endif %}
+
+                    <table class="tabEquipo">
+                        <tr class="tabCabezal">
+                            <td><a class="equipoLink" href="{% url 'Search' query=fixture.fixture.IdEquipoLocal.IdApiEquipo_id %}">{{ fixture.fixture.IdEquipoLocal.Nombre }}</a></td>
+                            <td>vs.</td>
+                            <td><a class="equipoLink" href="{% url 'Search' query=fixture.fixture.IdEquipoVisitante.IdApiEquipo_id %}">{{ fixture.fixture.IdEquipoVisitante.Nombre }}</a></td>
+                            
+                        </tr>
+                        <tr class="container-escudo">
+                            <td><img class="escudo" src="{{ fixture.fixture.IdEquipoLocal.Image_URL }}" alt="" width="200px" height="200px"></td>
+                            <td><img class="escudo" src="{{ fixture.fixture.IdEquipoVisitante.Image_URL }}" alt="" width="200px" height="200px"></td>
+                        </tr>
+                    </table>
+                    <table class="tabEstad">
+                        <tr class="tabCabezal">
+                            <td>Competencia</td>
+                            <td>{{ fixture.fixture.IdEquipoLocal.Nombre }}</td>
+                            <td>Empate</td>
+                            <td>{{ fixture.fixture.IdEquipoVisitante.Nombre }}</td>
+                        </tr>
+                        <tr>
+                            <td><img width = "20px" height = "20px" src="{{ fixture.fixture.IdApiComp.Image_URL }}">{{ fixture.fixture.IdApiComp.Nombre }}</td>
+                            {% if fixture.aplocal != "--"  %}
+                            <td>{{ fixture.aplocal }}%</td>
+                            <td>{{ fixture.apemp }}%</td>
+                            <td>{{ fixture.apvis }}%</td>
+                            {% else %}
+                            <td>{{ fixture.aplocal }}</td>
+                            <td>{{ fixture.apemp }}</td>
+                            <td>{{ fixture.apvis }}</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <ul class="filaBotones">
+                                <li><a href="{% url 'Detalle' id=fixture.fixture.IdApiFixture_id %}" class="links">Apuestas</a></li>
+                                <li><a href="{% url 'Predicts' id=fixture.fixture.IdApiFixture_id %}" class="links">Predicciones</a></li>
+                            </ul>
+                        </tr>
+                    </table>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

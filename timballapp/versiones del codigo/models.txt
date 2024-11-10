@@ -1,0 +1,46 @@
+# class Estadisticas_Equipo(models.Model):
+#     IdApiEquipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
+#     IdApiComp = models.ForeignKey(Competiciones, on_delete=models.CASCADE)
+#     Partidos_jugados = models.IntegerField()
+#     IdStats_Local = models.IntegerField()
+#     IdStats_Visitante = models.IntegerField()                          
+#     VictoriasTot = models.IntegerField()
+#     EmpatesTot = models.IntegerField()
+#     DerrotasTot = models.IntegerField()
+#     GolesAFTot = models.IntegerField()
+#     GolesECTot = models.IntegerField()
+#     IdFormaciones = models.IntegerField()
+#     IdMinutosgol = models.IntegerField()
+#     Posicion = models.IntegerField()
+
+# class Stats_Local(models.Model):
+#     IdApiEquipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
+#     IdApiComp = models.ForeignKey(Competiciones, on_delete=models.CASCADE)
+#     Victorias = models.IntegerField()
+#     Derrotas = models.IntegerField()
+#     Empates = models.IntegerField()
+#     GolesAF = models.IntegerField()
+#     GolesEC = models.IntegerField()
+
+# class Stats_Visitante(models.Model):
+#     IdApiEquipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
+#     IdApiComp = models.ForeignKey(Competiciones, on_delete=models.CASCADE)
+#     Victorias = models.IntegerField()
+#     Derrotas = models.IntegerField()
+#     Empates = models.IntegerField()
+#     GolesAF = models.IntegerField()
+#     GolesEC = models.IntegerField()
+
+# class Formaciones(models.Model):
+#     IdApiEquipo = models.ForeignKey(Equipo, on_delete=models.CASCADE)
+#     IdApiComp = models.ForeignKey(Competiciones, on_delete=models.CASCADE))
+#     Formacion = models.CharField(max_length=200)
+#     Usadas = models.IntegerField()
+
+# class Fixture_stats(models.Model):
+#     IdApiFixture = models.IntegerField()
+#     IdEquipo = models.IntegerField()
+#     GolesAF = models.IntegerField()
+#     GolesEC = models.IntegerField()
+#     TirosArco = models.IntegerField()
+#     TirosDesviados = models.IntegerField()

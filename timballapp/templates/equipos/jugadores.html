@@ -1,0 +1,32 @@
+{% extends 'layouts/base2.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-equipo">
+
+    <section class="info-jugadores">
+        <div class="container-subtitulo">
+            <h3>Jugadores</h3>
+        </div>
+        <table class="container-table-equipo">
+            <tr>
+                <th>Foto</th>
+                <th>Jugador</th>
+                <th>Posición</th>
+                <th>Número</th>
+                <th>Edad</th>
+            </tr>
+            {% for jugador in jugadores %}
+            <tr>
+                <td><img src="{{ jugador.Image_URL }}" alt="{{ jugador.Nombre }}" width="50px" height="50px"></td>
+                <td>{{ jugador.Nombre }}</td>
+                <td>{{ jugador.Posicion }}</td>
+                <td>{{ jugador.Numero }}</td>
+                <td>{{ jugador.Edad }} años</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </section>
+
+
+    {% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'layouts/base2.html' %}
+{% load static %}
+
+{% block content %}
+<section class="partido-proximo-container">
+    <h1 class="titulo-apuesta">Apuestas</h1>
+    <div class="container-article">
+        <h2 class="titulo-apuesta">Partido Próximo</h2>
+        <div class="tabla-container">
+            <table class="tabla-apuestas">
+                <tr>
+                    <th>{{ fixture.IdEquipoLocal.Nombre }}</th>
+                    <th>vs</th>
+                    <th>{{ fixture.IdEquipoVisitante.Nombre }}</th>
+                </tr>
+                <tr>
+                    <td><img src="{{ fixture.IdEquipoLocal.Image_URL }}" alt="{{ fixture.IdEquipoLocal.Nombre }} width="
+                            300px" height="300px"></td>
+                    <td></td>
+                    <td><img src="{{ fixture.IdEquipoVisitante.Image_URL }}"
+                            alt="{{ fixture.IdEquipoVisitante.Nombre }}" width="300px" height="300px"></td>
+                </tr>
+            </table>
+            <table class="tabla-apuestas">
+                <tr>
+                    <th>Estado</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Liga</th>
+                    <th>Estadio</th>
+                </tr>
+                <tr>
+                    <td>{{ fixture.Status }}</td>
+                    <td>{{ fixture.Fecha }}</td>
+                    <td>{{ fixture.Hora }}</td>
+                    <td><img src="{{ fixture.IdApiComp.Image_URL }}" alt="{{ fixture.IdApiComp.Nombre }}" width="20px"
+                            height="20px">
+                        {{fixture.IdApiComp.Nombre }}</td>
+                    <td>{{ fixture.IdApiEstadio.Nombre }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="apuestas-container-background">
+        <h2>Apuestas: Betsson</h2>
+        <div class="apuestas-container">
+
+            {% for apuesta_n in apuestas_n %}
+            <div class="apuesta">
+                <h3 class="apuesta-titulo">
+                    {% if apuesta_n.Nombre == "Match Winner" %}
+                    Resultado
+                    {% elif apuesta_n.Nombre == "Home/Away" %}
+                    Local/Visitante
+                    {% elif apuesta_n.Nombre == "Goals Over/Under" %}
+                    Cantidad de goles
+                    {% else %}
+                    {{ apuesta_n.Nombre }}
+                    {% endif %}
+                </h3>
+
+                <details class="apuesta-detalles">
+                    <summary>Ver opciones</summary>
+                    {% for apuesta in apuestas %}
+                    {% if apuesta.IdApiApuesta.Nombre == apuesta_n.Nombre %}
+                    <div class="apuesta-opcion">
+                        <div class="apuesta-info">
+                            <span class="apuesta-equipo">
+                                {% if apuesta.Tipo == "Home" %}
+                                {{ fixture.IdEquipoLocal.Nombre }}
+                                {% elif apuesta.Tipo == "Away" %}
+                                {{ fixture.IdEquipoVisitante.Nombre }}
+                                {% else %}
+                                {{ apuesta.Tipo }}
+                                {% endif %}
+                            </span>
+                            <span class="apuesta-multiplicador">x {{ apuesta.Multiplicador }}</span>
+                            <span class="apuesta-porcentaje">{{ apuesta.Porcentaje }}%</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </details>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

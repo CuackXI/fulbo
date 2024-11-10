@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="icon" href="{% static 'img/icon.png' %}" type="image/png">
+    <title>TIMBALL</title>
+</head>
+<body>
+    <nav>
+        <ul class="timball">
+            <li>
+                <a href="{%url 'Home' %}">TIMBALL</a>
+            </li>
+        </ul>
+        <ul class="nav-item">
+            <li><a href="{%url 'Home' %}">Inicio</a></li>
+            <li><a href="{%url 'About' %}">Acerca de</a></li>
+        </ul>
+        <ul class="searcher-item">
+            <li>
+                <form class="container-form" method="POST" action="{% url 'Home' %}">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <button class="boton-submit">Buscar</button>
+                </form>
+            </li>
+        </ul>
+    </nav>
+
+
+    <section>
+        {% block content %}
+        {% endblock %}
+    </section>
+    <footer class="footer">
+        <p class="footer-text">@INTELIGENCIA MURUCHi</p>
+        <p class="footer-warning">Para apostar debes tener más de 18 años y saber sus consecuencias. Tené cuidado al momento de apostar. El juego en exceso es perjudicial para vos y tus seres queridos.</p>
+    </footer>
+    
+</body>
+</html>

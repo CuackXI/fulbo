@@ -1,0 +1,171 @@
+{% extends 'layouts/base2.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-equipo">
+
+    <div class="image-container-equipo">
+        <div class="overlay-equipo">
+            <div class="container-titulo-equipo">
+                <h1 class="Titulo_Equipo">{{ equipo.equipo.Nombre.upper }}</h1>
+            </div>
+        </div>
+        <div class="container-image">
+            <img src="{{ equipo.equipo.Image_URL }}" alt="Equipo" width="600px" height="600px">
+        </div>
+    </div>
+
+    <div class="container-subtitulo">
+        <h2>Información del Equipo</h2>
+    </div>
+
+    <section class="info-estadio">
+        <div class="container-subtitulo">
+            <h3>Estadio</h3>
+        </div>
+        <div class="container-image-equipo">
+            <div>
+                <img src="{{ equipo.equipo.IdApiEstadio.Image_URL }}" class="img-table-equipo" alt="Estadio"
+                    width="200px" height="200px" style="border-radius: 20px;">
+            </div>
+        </div>
+    </section>
+
+    <section class="info-estadisticas">
+        <div class="container-subtitulo">
+            <h3>Estadísticas del Equipo</h3>
+        </div>
+        <table class="container-table-equipo">
+            <tr>
+                <th>Posición</th>
+                <th>Equipo</th>
+                <th>Pts</th>
+                <th>PJ</th>
+                <th>PG</th>
+                <th>PE</th>
+                <th>PP</th>
+                <th>GF</th>
+                <th>GC</th>
+                <th>DIF</th>
+            </tr>
+            {% for stats_equipo in stats_equipos %}
+                {% if stats_equipo.equipo.IdApiEquipo_id == equipo.equipo.IdApiEquipo_id %}
+                    <td>{{ stats_equipo.posicion }}</td>
+                        <td>
+                            <img src="{{ stats_equipo.equipo.Image_URL }}" alt="Escudo" width="20px" height="20px">
+                            {{ stats_equipo.equipo.Nombre }}
+                        </td>
+                        <td>{{ stats_equipo.stat.Puntos }}</td>
+                        <td>{{ stats_equipo.stat.PartidosJugados }}</td>
+                        <td>{{ stats_equipo.stat.PartidosGanados }}</td>
+                        <td>{{ stats_equipo.stat.PartidosEmpatados }}</td>
+                        <td>{{ stats_equipo.stat.PartidosPerdidos }}</td>
+                        <td>{{ stats_equipo.stat.GolesFavor }}</td>
+                        <td>{{ stats_equipo.stat.GolesContra }}</td>
+                        <td>{{ stats_equipo.stat.DiferenciaGoles }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+    </section>
+
+    <section class="info-jugadores">
+        <div class="container-subtitulo">
+            <h3>Jugadores</h3>
+        </div>
+        <div class="container-tarjeta-jugador">
+            <div class="jugadores-grid">
+                {% for jugador in jugadores %}
+                <div class="container-jugador">
+                    <div class="container-img-jugador">
+                        <img src="{{ jugador.Image_URL }}" alt="{{ jugador.Nombre }}" width="250px" height="250px">
+                    </div>
+                    <div class="container-det-jugador">
+                        <h3>{{ jugador.Nombre }}</h3>
+                        <h3 style="font-size: 30px;">{{ jugador.Posicion }}</h3>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="ver-mas">
+                <a href="{% url 'Players' query=equipo.equipo.IdApiEquipo_id %}" class="ver-mas">Ver Más</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="container-partidos-equipo">
+        <div class="container-subtitulo">
+            <h3>Próximos Partidos</h3>
+        </div>
+        <div class="container-partido">
+            {% for fixture in fixtures %}
+            <div class="container-article">
+                <h4 class="fecha">{{ fixture.fixture.Fecha }} - {{ fixture.fixture.Hora }}</h4>
+                <p class="{% if fixture.fixture.Status == " Not Started" %}status-not-started{%
+                    eliffixture.fixture.Status=="Match Finished" %}status-finished{% else %}status-ongoing{% endif %}">
+                    {{fixture.fixture.Status }}</p>
+
+                <table class="tabEquipo">
+                    <tr class="tabCabezal">
+                        <td><a class="equipoLink"
+                                href="{% url 'Search' query=fixture.fixture.IdEquipoLocal.IdApiEquipo_id %}">
+                                {{fixture.fixture.IdEquipoLocal.Nombre }}</a></td>
+                        <td>vs.</td>
+                        <td><a class="equipoLink"
+                                href="{% url 'Search' query=fixture.fixture.IdEquipoVisitante.IdApiEquipo_id %}">
+                                {{fixture.fixture.IdEquipoVisitante.Nombre }}</a></td>
+                    </tr>
+                    <tr class="container-escudo">
+                        <td><img class="escudo" src="{{ fixture.fixture.IdEquipoLocal.Image_URL }}" alt="" width="200px"
+                                height="200px"></td>
+                        <td><img class="escudo" src="{{ fixture.fixture.IdEquipoVisitante.Image_URL }}" alt=""
+                                width="200px" height="200px"></td>
+                    </tr>
+                </table>
+
+                <table class="tabEquipo">
+                    <tr class="tabCabezal">
+                        <td>Competencia</td>
+                        <td>{{ fixture.fixture.IdEquipoLocal.Nombre }}</td>
+                        <td>Empate</td>
+                        <td>{{ fixture.fixture.IdEquipoVisitante.Nombre }}</td>
+                    </tr>
+                    <tr>
+                        <td><img width="20px" height="20px" src="{{ fixture.fixture.IdApiComp.Image_URL }}">
+                            {{fixture.fixture.IdApiComp.Nombre }}</td>
+                        {% if fixture.aplocal != "--" %}
+                        <td>{{ fixture.aplocal }}%</td>
+                        <td>{{ fixture.apemp }}%</td>
+                        <td>{{ fixture.apvis }}%</td>
+                        {% else %}
+                        <td>{{ fixture.aplocal }}</td>
+                        <td>{{ fixture.apemp }}</td>
+                        <td>{{ fixture.apvis }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <ul class="filaBotones">
+                            <li><a href="{% url 'Predicts' id=fixture.fixture.IdApiFixture_id %}"
+                                    class="links">Predicciones</a></li>
+                            <li><a href="{% url 'Detalle' id=fixture.fixture.IdApiFixture_id %}" class="links">Apuestas</a></li>
+                        </ul>
+                    </tr>
+                </table>
+
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="info-mapa">
+        <div class="container-subtitulo">
+            <h3>Ubicación del Estadio</h3>
+        </div>
+        <div class="container-google-map">
+            <iframe src="{{ equipo.equipo.IdApiEstadio.Direccion }}" width="90%" height="750px"
+                frameborder="0"></iframe>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

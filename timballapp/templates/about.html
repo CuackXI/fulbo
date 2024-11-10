@@ -1,0 +1,41 @@
+{% extends 'layouts/base2.html' %}
+{% load static %}
+
+{% block content %}
+
+<section>
+    <div class="main">
+        <div class="container-about">
+            <article class="container-dev">
+                <img src="https://lh3.googleusercontent.com/a/ACg8ocI1t5ZpdWWZDy2xgkpV8OWFSJ3VSMpBUD2mpK1PYFRIl8iXe4MJ=s288-c-no"
+                    alt="Santino Nicolas Andreatta" class="dev-img">
+                <h3 class="titulo-dev">Santino Nicolas Andreatta</h3>
+                <p class="subtitulo-dev">Backend</p>
+            </article>
+            <article class="container-dev">
+                <img src="https://lh3.googleusercontent.com/a-/ALV-UjVEZey-auZ4EI15l6P9qIz4D9wsF5LTcqhuPkDWKdAsK_BN6qEY=s500-c"
+                    alt="Joaquin Berzunces" class="dev-img">
+                <h3 class="titulo-dev">Joaquin Berzunces</h3>
+                <p class="subtitulo-dev">Backend</p>
+            </article>
+            <article class="container-dev">
+                <img src="https://lh3.googleusercontent.com/a-/ALV-UjUDDmSzYvVKoYn0TlYUn_hR0eKqvR0_SMEmH_bl4XviH8PtNml6=s500-c"
+                    alt="Nahuel Gaston Gonzalez Aran" class="dev-img">
+                <h3 class="titulo-dev">Nahuel Gaston Gonzalez Aran</h3>
+                <p class="subtitulo-dev">Backend</p>
+            </article>
+            <article class="container-dev">
+                <img src="{% static 'img/developers/sebastianmarcos.jpg' %}" alt="Sebastian Daniel Marcos"
+                    class="dev-img">
+                <h3 class="titulo-dev">Sebastian Daniel Marcos</h3>
+                <p class="subtitulo-dev">Diseño frontend</p>
+            </article>
+            <article class="container-dev">
+                <img src="{% static 'img/developers/tomasmuruchi.jpg' %}" alt="Tomas Valentin Muruchi" class="dev-img">
+                <h3 class="titulo-dev">Tomas Valentin Muruchi</h3>
+                <p class="subtitulo-dev">Diseño frontend</p>
+            </article>
+        </div>
+    </div>
+</section>
+{% endblock %}

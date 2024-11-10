@@ -1,0 +1,1 @@
+# Se hacen por equipo, asi que eso queda para futuro, es decir, hay que hacerlo de a poco para no saturar de requests la subscripcion.

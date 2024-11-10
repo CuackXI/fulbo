@@ -1,0 +1,1 @@
+Pasar los post aca como comandos (algun día), se siguen haciendo a mano pero igual
