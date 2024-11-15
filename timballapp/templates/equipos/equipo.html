@@ -19,21 +19,9 @@
         <h2>Información del Equipo</h2>
     </div>
 
-    <section class="info-estadio">
-        <div class="container-subtitulo">
-            <h3>Estadio</h3>
-        </div>
-        <div class="container-image-equipo">
-            <div>
-                <img src="{{ equipo.equipo.IdApiEstadio.Image_URL }}" class="img-table-equipo" alt="Estadio"
-                    width="200px" height="200px" style="border-radius: 20px;">
-            </div>
-        </div>
-    </section>
-
     <section class="info-estadisticas">
         <div class="container-subtitulo">
-            <h3>Estadísticas del Equipo</h3>
+            <h3>Estadísticas del Equipo en la liga</h3>
         </div>
         <table class="container-table-equipo">
             <tr>
@@ -154,6 +142,18 @@
 
             </div>
             {% endfor %}
+        </div>
+    </section>
+
+    <section class="info-estadio">
+        <div class="container-subtitulo">
+            <h3>Estadio</h3>
+        </div>
+        <div class="container-image-equipo">
+            <div>
+                <img src="{{ equipo.equipo.IdApiEstadio.Image_URL }}" class="img-table-equipo" alt="Estadio"
+                    width="200px" height="200px" style="border-radius: 20px;">
+            </div>
         </div>
     </section>
 

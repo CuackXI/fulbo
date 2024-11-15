@@ -8,4 +8,4 @@ class activateRequest(forms.Form):
 
 class barraBusqueda(forms.Form):
     query = forms.CharField(label="", max_length=200, widget=forms.TextInput(
-        attrs={'class': 'input-search', 'placeholder': 'Buscar...'}))
+        attrs={'class': 'input-search', 'placeholder': 'Busca tu equipo favorito...'}))
